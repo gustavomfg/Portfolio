@@ -50,11 +50,20 @@ export function NocturneCore({ phase, segments }: NocturneCoreProps) {
       <group ref={groupRef} scale={0.7} position={[0, 0.56, 0]}>
         <mesh geometry={crescentGeometry} rotation={[-0.08, -0.18, -0.2]} position={[0, 0, -0.06]}>
           <meshStandardMaterial
-            color="#4d337d"
-            emissive="#211333"
-            emissiveIntensity={0.18}
-            metalness={0.34}
-            roughness={0.58}
+            attach="material-0"
+            color="#2a2034"
+            emissive="#130d1b"
+            emissiveIntensity={0.06}
+            metalness={0.24}
+            roughness={0.72}
+          />
+          <meshStandardMaterial
+            attach="material-1"
+            color="#7a5aaa"
+            emissive="#2d1948"
+            emissiveIntensity={0.1}
+            metalness={0.36}
+            roughness={0.52}
           />
         </mesh>
 
