@@ -94,7 +94,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .intro-mark-ring { position: absolute; top: 50%; left: 50%; border: 1px solid rgba(135,101,218,.18); border-radius: 50%; translate: -50% -50%; rotate: -9deg; opacity: .12; transition: opacity .45s ease, scale .45s cubic-bezier(.22,1,.36,1); }
 .intro-mark-ring-outer { width: 100%; height: 58%; }
 .intro-mark-ring-inner { width: 76%; height: 49%; border-color: rgba(151,116,234,.28); }
-.intro-mark-crescent { position: absolute; top: 50%; left: 50%; width: 140px; height: 182px; translate: -50% -50%; rotate: -12deg; overflow: hidden; border: 1px solid rgba(143,111,221,.22); border-radius: 50%; background: #34206f; box-shadow: inset -9px -3px 18px rgba(7,5,12,.52); transition: scale .38s cubic-bezier(.22,1,.36,1), opacity .25s ease; }
+.intro-mark-crescent { position: absolute; top: 50%; left: 50%; width: 140px; height: 182px; translate: -50% -50%; rotate: -12deg; overflow: hidden; border: 1px solid rgba(122,90,170,.34); border-radius: 50%; background: linear-gradient(105deg, #624788 0%, #2a2034 10%, #17121f 38%, #0c0a0f 100%); box-shadow: inset 8px 0 16px rgba(122,90,170,.1), inset -9px -3px 18px rgba(5,4,8,.68); transition: scale .38s cubic-bezier(.22,1,.36,1), opacity .25s ease; }
 .intro-mark-crescent::after { content: ""; position: absolute; top: -3%; left: 31%; width: 82%; height: 94%; border-radius: 50%; background: #050507; }
 .intro-mark-2d[data-phase="orbit"] .intro-mark-ring,
 .intro-mark-2d[data-phase="identity"] .intro-mark-ring,
