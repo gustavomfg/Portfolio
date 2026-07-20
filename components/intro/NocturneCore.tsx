@@ -2,8 +2,8 @@
 
 import { Float } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-import { MathUtils } from "three";
+import { useMemo, useRef } from "react";
+import { ExtrudeGeometry, MathUtils, Shape } from "three";
 import type { Group, Mesh, MeshBasicMaterial, MeshStandardMaterial } from "three";
 import type { IntroPhase } from "@/lib/intro-timeline";
 
@@ -21,6 +21,7 @@ export function NocturneCore({ phase, segments }: NocturneCoreProps) {
   const revealOrbit = phase !== "core";
   const settling = phase === "settle";
   const collapsing = phase === "collapse" || phase === "text-exit" || phase === "veil" || phase === "reveal" || phase === "complete";
+  const crescentGeometry = useMemo(() => createCrescentGeometry(segments), [segments]);
 
   useFrame((state, delta) => {
     if (groupRef.current) {
@@ -60,20 +61,14 @@ export function NocturneCore({ phase, segments }: NocturneCoreProps) {
   return (
     <Float speed={collapsing ? 0.04 : settling ? 0.16 : 0.55} rotationIntensity={collapsing ? 0 : 0.08} floatIntensity={collapsing ? 0 : 0.12}>
       <group ref={groupRef} scale={0.7}>
-        <mesh>
-          <sphereGeometry args={[0.62, segments, segments]} />
+        <mesh geometry={crescentGeometry} rotation={[-0.08, -0.18, -0.2]} position={[0, 0, -0.06]}>
           <meshStandardMaterial
-            color="#7754d8"
-            emissive="#5f35c9"
-            emissiveIntensity={1.5}
-            metalness={0.5}
-            roughness={0.26}
+            color="#4d337d"
+            emissive="#211333"
+            emissiveIntensity={0.18}
+            metalness={0.34}
+            roughness={0.58}
           />
-        </mesh>
-
-        <mesh scale={1.08}>
-          <sphereGeometry args={[0.62, Math.max(segments / 2, 16), Math.max(segments / 2, 16)]} />
-          <meshBasicMaterial color="#cbbcff" transparent opacity={0.09} wireframe />
         </mesh>
 
         <group ref={ringsRef}>
@@ -95,6 +90,31 @@ export function NocturneCore({ phase, segments }: NocturneCoreProps) {
       </group>
     </Float>
   );
+}
+
+function createCrescentGeometry(segments: number) {
+  const shape = new Shape();
+  const outerRadius = 0.72;
+  const innerRadius = 0.61;
+  const innerOffset = 0.2;
+
+  shape.moveTo(0, outerRadius);
+  shape.absarc(0, 0, outerRadius, Math.PI / 2, Math.PI * 1.5, false);
+  shape.absarc(innerOffset, 0, innerRadius, Math.PI * 1.5, Math.PI / 2, true);
+  shape.closePath();
+
+  const geometry = new ExtrudeGeometry(shape, {
+    depth: 0.12,
+    bevelEnabled: true,
+    bevelSegments: 3,
+    bevelSize: 0.025,
+    bevelThickness: 0.025,
+    curveSegments: Math.max(segments, 24),
+    steps: 1,
+  });
+
+  geometry.center();
+  return geometry;
 }
 
 interface OrbitRingProps {

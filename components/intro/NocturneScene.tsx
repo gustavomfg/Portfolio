@@ -27,9 +27,9 @@ export default function NocturneScene({ phase, active }: NocturneSceneProps) {
           powerPreference: "high-performance",
         }}
       >
-        <ambientLight intensity={0.22} color="#82749f" />
-        <pointLight position={[2.8, 2.2, 3.2]} color="#a58aff" intensity={12} distance={8} />
-        <pointLight position={[-2.4, -1.8, 2]} color="#44306f" intensity={7} distance={7} />
+        <ambientLight intensity={0.14} color="#514763" />
+        <directionalLight position={[-3.2, 2.4, 4]} color="#b6a0ef" intensity={2.2} />
+        <pointLight position={[2.3, -1.2, 2.6]} color="#65469d" intensity={4.2} distance={7} />
         <NocturneCore phase={phase} segments={mobile ? 24 : 36} />
         <NocturneParticles count={mobile ? 80 : 160} phase={phase} />
         <CameraApproach />
