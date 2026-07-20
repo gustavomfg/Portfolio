@@ -18,7 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type PointerEvent as ReactPointerEvent } from "react";
 
 const navItems = [
   { label: "Ecossistema", href: "#ecossistema" },
@@ -96,6 +96,24 @@ const stack = [
   "Python",
   "Rust",
   "Tailwind",
+];
+
+const capabilities = [
+  {
+    number: "01",
+    title: "Interfaces web",
+    description: "React, Next.js, TypeScript e experiências responsivas com atenção aos detalhes.",
+  },
+  {
+    number: "02",
+    title: "Aplicações desktop",
+    description: "Electron, integração com recursos nativos e comunicação IPC com fronteiras claras.",
+  },
+  {
+    number: "03",
+    title: "Ferramentas de engenharia",
+    description: "Python, Rust e automações criadas para compreender e resolver problemas reais.",
+  },
 ];
 
 function BrandMark() {
@@ -197,6 +215,13 @@ export function NocturnePortfolio() {
     document.body.classList.toggle("dialog-open", selectedProject !== null);
     return () => document.body.classList.remove("dialog-open");
   }, [selectedProject]);
+
+  const updatePointerGlow = (event: ReactPointerEvent<HTMLElement>) => {
+    if (reduceMotion) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--pointer-x", `${event.clientX - bounds.left}px`);
+    event.currentTarget.style.setProperty("--pointer-y", `${event.clientY - bounds.top}px`);
+  };
 
   return (
     <main id="conteudo">
@@ -309,7 +334,9 @@ export function NocturnePortfolio() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.18, duration: 0.9 }}
             aria-label="Fluxo do ecossistema Nocturne"
+            onPointerMove={updatePointerGlow}
           >
+            <div className="pointer-glow" aria-hidden="true" />
             <div className="visual-grid" />
             <div className="visual-orbit orbit-one" />
             <div className="visual-orbit orbit-two" />
@@ -326,6 +353,7 @@ export function NocturnePortfolio() {
                   type="button"
                   onClick={() => setActiveProject(index)}
                   aria-label={`Destacar ${project.name}`}
+                  aria-pressed={activeProject === index}
                 >
                   <span className="node-icon"><Icon size={18} /></span>
                   <span><small>0{index + 1}</small>{project.name.replace("Nocturne ", "")}</span>
@@ -333,6 +361,20 @@ export function NocturnePortfolio() {
               );
             })}
             <div className="system-status"><span /> SYSTEMS CONNECTED</div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                className="active-readout"
+                key={projects[activeProject].key}
+                initial={reduceMotion ? false : { opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -8 }}
+                transition={{ duration: 0.24 }}
+              >
+                <small>ACTIVE / {projects[activeProject].id}</small>
+                <strong>{projects[activeProject].name}</strong>
+                <span>{projects[activeProject].role}</span>
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
         </div>
 
@@ -345,6 +387,7 @@ export function NocturnePortfolio() {
                 key={project.key}
                 className={`featured-mini ${activeProject === index ? "is-active" : ""}`}
                 onClick={() => setActiveProject(index)}
+                aria-pressed={activeProject === index}
               >
                 <span className="featured-number">{project.id}</span>
                 <Icon size={19} />
@@ -373,6 +416,7 @@ export function NocturnePortfolio() {
                 <article
                   className={`project-card project-${project.accent}`}
                   id={project.key}
+                  onPointerMove={updatePointerGlow}
                 >
                   <button
                     className="project-card-trigger"
@@ -431,6 +475,15 @@ export function NocturnePortfolio() {
               </div>
             ))}
           </Reveal>
+        </div>
+        <div className="capabilities-grid" aria-label="Áreas de atuação">
+          {capabilities.map((capability) => (
+            <Reveal className="capability-card" key={capability.number}>
+              <span>{capability.number}</span>
+              <h3>{capability.title}</h3>
+              <p>{capability.description}</p>
+            </Reveal>
+          ))}
         </div>
       </section>
 
