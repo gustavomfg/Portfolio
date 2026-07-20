@@ -36,6 +36,14 @@ const projects = [
     description:
       "Observa projetos, reúne evidências e transforma complexidade em inteligência de engenharia confiável.",
     tags: ["Python", "Analysis", "Read-only"],
+    status: "v0.1 em desenvolvimento",
+    problem:
+      "Analisar um projeto antes da implementação, separando observação, evidência e recomendação sem alterar o workspace inspecionado.",
+    highlights: [
+      "Scanner determinístico de workspace",
+      "Relatório JSON versionado",
+      "Arquitetura de inspetores independentes",
+    ],
     icon: ScanSearch,
     accent: "violet",
   },
@@ -47,6 +55,14 @@ const projects = [
     description:
       "Organiza contexto, decisões e planos para transformar entendimento em mudanças claras e validadas.",
     tags: ["Electron", "React", "IPC"],
+    status: "Em desenvolvimento",
+    problem:
+      "Manter conhecimento, decisões técnicas e contexto de desenvolvimento acessíveis durante todo o ciclo de uma mudança.",
+    highlights: [
+      "Aplicação desktop com Electron e React",
+      "Renderer isolado de recursos nativos",
+      "Fronteira IPC controlada",
+    ],
     icon: BrainCircuit,
     accent: "blue",
   },
@@ -58,6 +74,14 @@ const projects = [
     description:
       "Explora interfaces, componentes e experiências de controle dentro da identidade visual Nocturne.",
     tags: ["Web", "Interface", "Systems"],
+    status: "Em evolução",
+    problem:
+      "Explorar como ferramentas técnicas podem oferecer controle e densidade de informação sem sacrificar clareza visual.",
+    highlights: [
+      "Sistema visual dark próprio",
+      "Experimentos de interface e controle",
+      "Biblioteca de padrões do ecossistema",
+    ],
     icon: Radar,
     accent: "cyan",
   },
@@ -124,6 +148,7 @@ export function NocturnePortfolio() {
   const [activeSection, setActiveSection] = useState("#ecossistema");
   const [scrollProgress, setScrollProgress] = useState(0);
   const [headerCompact, setHeaderCompact] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -135,7 +160,10 @@ export function NocturnePortfolio() {
       setHeaderCompact(window.scrollY > 32);
     };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        setSelectedProject(null);
+      }
     };
     const sections = navItems
       .map((item) => document.querySelector(item.href))
@@ -164,6 +192,11 @@ export function NocturnePortfolio() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle("dialog-open", selectedProject !== null);
+    return () => document.body.classList.remove("dialog-open");
+  }, [selectedProject]);
 
   return (
     <main id="conteudo">
@@ -337,7 +370,17 @@ export function NocturnePortfolio() {
             const Icon = project.icon;
             return (
               <Reveal key={project.key}>
-                <article className={`project-card project-${project.accent}`}>
+                <article
+                  className={`project-card project-${project.accent}`}
+                  id={project.key}
+                >
+                  <button
+                    className="project-card-trigger"
+                    type="button"
+                    aria-label={`Abrir detalhes de ${project.name}`}
+                    aria-haspopup="dialog"
+                    onClick={() => setSelectedProject(index)}
+                  />
                   <div className="project-index">{project.id}<span>/03</span></div>
                   <div className="project-icon"><Icon size={28} strokeWidth={1.6} /></div>
                   <div className="project-content">
@@ -348,9 +391,9 @@ export function NocturnePortfolio() {
                   <div className="project-tags">
                     {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
                   </div>
-                  <button className="project-link" type="button" aria-label={`Ver detalhes de ${project.name}`}>
-                    <ArrowUpRight size={21} />
-                  </button>
+                  <span className="project-link" aria-hidden="true">
+                    <span>Abrir projeto</span><ArrowUpRight size={21} />
+                  </span>
                   {index < projects.length - 1 && (
                     <div className="flow-label"><span />{index === 0 ? "INFORMS" : "EXPRESSES"}<span /></div>
                   )}
@@ -448,6 +491,78 @@ export function NocturnePortfolio() {
         <p>Projetado e construído com intenção.</p>
         <a href="#inicio">Voltar ao topo <ArrowUpRight size={15} /></a>
       </footer>
+
+      <AnimatePresence>
+        {selectedProject !== null && (() => {
+          const project = projects[selectedProject];
+          const Icon = project.icon;
+
+          return (
+            <motion.div
+              className="project-dialog-backdrop"
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onMouseDown={(event) => {
+                if (event.target === event.currentTarget) setSelectedProject(null);
+              }}
+            >
+              <motion.section
+                className={`project-dialog project-${project.accent}`}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="project-dialog-title"
+                initial={reduceMotion ? false : { opacity: 0, y: 24, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 16, scale: 0.99 }}
+                transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="dialog-topbar">
+                  <span>PROJECT / {project.id}</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedProject(null)}
+                    aria-label="Fechar detalhes do projeto"
+                    autoFocus
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+                <div className="dialog-heading">
+                  <span className="dialog-project-icon"><Icon size={27} /></span>
+                  <div>
+                    <p>{project.role}</p>
+                    <h2 id="project-dialog-title">{project.name}</h2>
+                  </div>
+                </div>
+                <div className="dialog-status">
+                  <span /><strong>{project.status}</strong>
+                </div>
+                <div className="dialog-content">
+                  <div>
+                    <small>O QUE O PROJETO RESOLVE</small>
+                    <p>{project.problem}</p>
+                  </div>
+                  <div>
+                    <small>DESTAQUES TÉCNICOS</small>
+                    <ul>
+                      {project.highlights.map((highlight) => (
+                        <li key={highlight}><Check size={15} />{highlight}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="dialog-footer">
+                  <div className="dialog-tags">
+                    {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                  </div>
+                  <span className="dialog-note">Mais informações e links em breve.</span>
+                </div>
+              </motion.section>
+            </motion.div>
+          );
+        })()}
+      </AnimatePresence>
     </main>
   );
 }
