@@ -64,9 +64,20 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
           <div className="visual-orbit orbit-one" />
           <div className="visual-orbit orbit-two" />
           <div className="core-mark"><BrandMark /></div>
-          <div className="signal-line signal-one" />
-          <div className="signal-line signal-two" />
-          <div className="signal-line signal-three" />
+          <span className="core-caption">NOCTURNE / CORE</span>
+          <svg
+            className="map-connections"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path className="connection-base" d="M50 50 L20 31" />
+            <path className="connection-base" d="M50 50 L82 35" />
+            <path className="connection-base" d="M50 50 L50 83" />
+            <path className="connection-flow flow-one" pathLength="1" d="M50 50 L20 31" />
+            <path className="connection-flow flow-two" pathLength="1" d="M50 50 L82 35" />
+            <path className="connection-flow flow-three" pathLength="1" d="M50 50 L50 83" />
+          </svg>
           {projects.map((project, index) => {
             const Icon = project.icon;
             return (
