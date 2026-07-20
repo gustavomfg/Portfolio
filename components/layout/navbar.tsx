@@ -3,13 +3,12 @@
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { BrandMark } from "@/components/ui/brand-mark";
+import { useScrollProgress } from "@/hooks/use-scroll-progress";
 import type { NavItem } from "@/types/portfolio";
 
 interface NavbarProps {
   items: readonly NavItem[];
   activeSection: string;
-  scrollProgress: number;
-  compact: boolean;
   menuOpen: boolean;
   onToggleMenu: () => void;
   onCloseMenu: () => void;
@@ -18,18 +17,17 @@ interface NavbarProps {
 export function Navbar({
   items,
   activeSection,
-  scrollProgress,
-  compact,
   menuOpen,
   onToggleMenu,
   onCloseMenu,
 }: NavbarProps) {
   const reduceMotion = useReducedMotion();
+  const { headerRef, progressRef } = useScrollProgress();
 
   return (
-    <header className={`site-header ${compact ? "is-compact" : ""}`}>
+    <header className="site-header" ref={headerRef}>
       <span className="scroll-progress" aria-hidden="true">
-        <span style={{ transform: `scaleX(${scrollProgress / 100})` }} />
+        <span ref={progressRef} />
       </span>
       <a className="brand" href="#inicio" aria-label="Nocturne, voltar ao início">
         <BrandMark />

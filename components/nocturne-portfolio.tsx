@@ -31,8 +31,6 @@ export function NocturnePortfolio() {
       <Navbar
         items={NAV_ITEMS}
         activeSection={navigation.activeSection}
-        scrollProgress={navigation.scrollProgress}
-        compact={navigation.headerCompact}
         menuOpen={navigation.menuOpen}
         onToggleMenu={navigation.toggleMenu}
         onCloseMenu={navigation.closeMenu}

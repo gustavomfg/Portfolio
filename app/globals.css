@@ -84,7 +84,7 @@ button { font: inherit; }
 .site-header::before { content: ""; position: absolute; inset: 0 12px auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); pointer-events: none; }
 .site-header.is-compact { top: 9px; height: 60px; border-color: rgba(255,255,255,.14); background: rgba(9,9,13,.78); }
 .scroll-progress { position: absolute; overflow: hidden; right: 14px; bottom: -1px; left: 14px; height: 1px; }
-.scroll-progress span { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--violet), var(--cyan)); transform-origin: left; }
+.scroll-progress span { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--violet), var(--cyan)); transform: scaleX(0); transform-origin: left; will-change: transform; }
 
 .brand, .footer-brand { display: flex; align-items: center; gap: 11px; }
 .brand-mark { position: relative; display: inline-block; width: 28px; height: 28px; flex: 0 0 auto; }
