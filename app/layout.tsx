@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Nocturne — Full Stack Developer",
   description:
     "Portfólio de desenvolvimento Full Stack e apresentação do ecossistema Nocturne.",
+  icons: {
+    icon: "/nocturne-mark.svg",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

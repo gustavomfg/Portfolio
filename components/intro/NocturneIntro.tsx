@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { IntroFallback } from "@/components/intro/IntroFallback";
+import { IntroMark2D } from "@/components/intro/IntroMark2D";
 import { IntroOverlay } from "@/components/intro/IntroOverlay";
 import { useIntroSession } from "@/hooks/use-intro-session";
 import { useWebGLSupport } from "@/hooks/use-webgl-support";
@@ -20,11 +21,16 @@ export function NocturneIntro() {
   const reduceMotion = useReducedMotion();
   const [phase, setPhase] = useState<IntroPhase>("core");
   const [pageVisible, setPageVisible] = useState(true);
+  const [canvasReady, setCanvasReady] = useState(false);
   const skipRequested = useRef(false);
   const shouldPlay = sessionState === "play" && !reduceMotion;
 
   const requestSkip = useCallback(() => {
     skipRequested.current = true;
+  }, []);
+
+  const handleCanvasReady = useCallback(() => {
+    setCanvasReady(true);
   }, []);
 
   useEffect(() => {
@@ -98,10 +104,15 @@ export function NocturneIntro() {
         transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
         aria-hidden="true"
       />
-      {webGLSupported === true ? (
-        <NocturneScene phase={phase} active={pageVisible} />
-      ) : (
+      {webGLSupported === false ? (
         <IntroFallback phase={phase} />
+      ) : (
+        <>
+          <IntroMark2D phase={phase} canvasReady={canvasReady} />
+          {webGLSupported === true && (
+            <NocturneScene phase={phase} active={pageVisible} onReady={handleCanvasReady} />
+          )}
+        </>
       )}
       <IntroOverlay phase={phase} onSkip={requestSkip} />
     </motion.div>
