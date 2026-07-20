@@ -1,37 +1,18 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { motion, useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { IntroFallback } from "@/components/intro/IntroFallback";
+import { useReducedMotion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { IntroMark2D } from "@/components/intro/IntroMark2D";
 import { IntroOverlay } from "@/components/intro/IntroOverlay";
 import { useIntroSession } from "@/hooks/use-intro-session";
-import { useWebGLSupport } from "@/hooks/use-webgl-support";
 import { getIntroPhase, type IntroPhase } from "@/lib/intro-timeline";
-
-const NocturneScene = dynamic(() => import("@/components/intro/NocturneScene"), {
-  ssr: false,
-  loading: () => null,
-});
 
 export function NocturneIntro() {
   const { sessionState, completeIntro } = useIntroSession();
-  const webGLSupported = useWebGLSupport();
   const reduceMotion = useReducedMotion();
-  const [phase, setPhase] = useState<IntroPhase>("core");
-  const [pageVisible, setPageVisible] = useState(true);
-  const [canvasReady, setCanvasReady] = useState(false);
+  const [phase, setPhase] = useState<IntroPhase>("dark");
   const skipRequested = useRef(false);
   const shouldPlay = sessionState === "play" && !reduceMotion;
-
-  const requestSkip = useCallback(() => {
-    skipRequested.current = true;
-  }, []);
-
-  const handleCanvasReady = useCallback(() => {
-    setCanvasReady(true);
-  }, []);
 
   useEffect(() => {
     if (!shouldPlay) return;
@@ -52,11 +33,14 @@ export function NocturneIntro() {
     let animationFrame = 0;
     let elapsedMs = 0;
     let previousTime = performance.now();
-    let currentPhase: IntroPhase = "core";
+    let currentPhase: IntroPhase = "dark";
 
     const handleVisibility = () => {
       previousTime = performance.now();
-      setPageVisible(!document.hidden);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") skipRequested.current = true;
     };
 
     const tick = (time: number) => {
@@ -64,7 +48,7 @@ export function NocturneIntro() {
       previousTime = time;
 
       if (!document.hidden) elapsedMs += delta;
-      if (skipRequested.current) elapsedMs = Math.max(elapsedMs, 3_500);
+      if (skipRequested.current) elapsedMs = Math.max(elapsedMs, 4_350);
 
       const nextPhase = getIntroPhase(elapsedMs);
       if (nextPhase !== currentPhase) {
@@ -81,11 +65,13 @@ export function NocturneIntro() {
     };
 
     document.addEventListener("visibilitychange", handleVisibility);
+    document.addEventListener("keydown", handleKeyDown);
     animationFrame = window.requestAnimationFrame(tick);
 
     return () => {
       window.cancelAnimationFrame(animationFrame);
       document.removeEventListener("visibilitychange", handleVisibility);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [completeIntro, shouldPlay]);
 
@@ -96,25 +82,10 @@ export function NocturneIntro() {
   if (!shouldPlay) return null;
 
   return (
-    <motion.div className="nocturne-intro" data-phase={phase} initial={false}>
-      <motion.div
-        className="intro-veil"
-        initial={false}
-        animate={{ opacity: phase === "reveal" || phase === "complete" ? 0 : 1 }}
-        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-        aria-hidden="true"
-      />
-      {webGLSupported === false ? (
-        <IntroFallback phase={phase} />
-      ) : (
-        <>
-          <IntroMark2D phase={phase} canvasReady={canvasReady} />
-          {webGLSupported === true && (
-            <NocturneScene phase={phase} active={pageVisible} onReady={handleCanvasReady} />
-          )}
-        </>
-      )}
-      <IntroOverlay phase={phase} onSkip={requestSkip} />
-    </motion.div>
+    <div className="nocturne-intro" data-phase={phase}>
+      <div className="intro-veil" aria-hidden="true" />
+      <IntroMark2D phase={phase} />
+      <IntroOverlay phase={phase} />
+    </div>
   );
 }
