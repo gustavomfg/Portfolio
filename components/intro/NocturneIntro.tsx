@@ -30,8 +30,14 @@ export function NocturneIntro() {
   useEffect(() => {
     if (!shouldPlay) return;
 
+    const portfolio = document.getElementById("conteudo");
     document.body.classList.add("intro-active");
-    return () => document.body.classList.remove("intro-active");
+    portfolio?.setAttribute("inert", "");
+
+    return () => {
+      document.body.classList.remove("intro-active");
+      portfolio?.removeAttribute("inert");
+    };
   }, [shouldPlay]);
 
   useEffect(() => {

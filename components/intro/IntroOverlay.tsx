@@ -61,7 +61,7 @@ export function IntroOverlay({ phase, onSkip }: IntroOverlayProps) {
       </div>
 
       {!exiting && (
-        <button className="intro-skip" type="button" onClick={onSkip}>
+        <button className="intro-skip" type="button" onClick={onSkip} autoFocus>
           Pular introdução <ArrowRight size={16} />
         </button>
       )}
