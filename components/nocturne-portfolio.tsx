@@ -121,20 +121,60 @@ function SectionHeading({
 export function NocturnePortfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeProject, setActiveProject] = useState(1);
+  const [activeSection, setActiveSection] = useState("#ecossistema");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [headerCompact, setHeaderCompact] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const closeMenu = () => setMenuOpen(false);
+    const handleScroll = () => {
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+      setScrollProgress(progress);
+      setHeaderCompact(window.scrollY > 32);
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    const sections = navItems
+      .map((item) => document.querySelector(item.href))
+      .filter((section): section is Element => section !== null);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSection = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+
+        if (visibleSection) setActiveSection(`#${visibleSection.target.id}`);
+      },
+      { rootMargin: "-28% 0px -58%", threshold: [0, 0.2, 0.5] },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    handleScroll();
     window.addEventListener("resize", closeMenu);
-    return () => window.removeEventListener("resize", closeMenu);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", closeMenu);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
-    <main>
+    <main id="conteudo">
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
+      <a className="skip-link" href="#ecossistema">Pular para o conteúdo</a>
 
-      <header className="site-header">
+      <header className={`site-header ${headerCompact ? "is-compact" : ""}`}>
+        <span className="scroll-progress" aria-hidden="true">
+          <span style={{ transform: `scaleX(${scrollProgress / 100})` }} />
+        </span>
         <a className="brand" href="#inicio" aria-label="Nocturne, voltar ao início">
           <BrandMark />
           <span className="brand-copy">
@@ -145,7 +185,14 @@ export function NocturnePortfolio() {
 
         <nav className="desktop-nav" aria-label="Navegação principal">
           {navItems.map((item) => (
-            <a href={item.href} key={item.href}>{item.label}</a>
+            <a
+              className={activeSection === item.href ? "is-active" : ""}
+              href={item.href}
+              key={item.href}
+              aria-current={activeSection === item.href ? "location" : undefined}
+            >
+              {item.label}
+            </a>
           ))}
         </nav>
 
@@ -160,6 +207,7 @@ export function NocturnePortfolio() {
           type="button"
           aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={menuOpen}
+          aria-controls="menu-mobile"
           onClick={() => setMenuOpen((current) => !current)}
         >
           {menuOpen ? <X /> : <Menu />}
@@ -169,13 +217,20 @@ export function NocturnePortfolio() {
           {menuOpen && (
             <motion.nav
               className="mobile-nav"
+              id="menu-mobile"
               aria-label="Navegação móvel"
               initial={reduceMotion ? false : { opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
             >
               {navItems.map((item) => (
-                <a href={item.href} key={item.href} onClick={() => setMenuOpen(false)}>
+                <a
+                  className={activeSection === item.href ? "is-active" : ""}
+                  href={item.href}
+                  key={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={activeSection === item.href ? "location" : undefined}
+                >
                   {item.label}<ArrowUpRight size={17} />
                 </a>
               ))}
