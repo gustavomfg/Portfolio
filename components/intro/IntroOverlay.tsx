@@ -29,16 +29,6 @@ export function IntroOverlay({ phase, onSkip }: IntroOverlayProps) {
 
   return (
     <div className="intro-overlay">
-      <motion.div
-        className="intro-telemetry"
-        aria-hidden="true"
-        animate={{ opacity: exiting ? 0 : 1 }}
-        transition={{ duration: 0.18 }}
-      >
-        <span><i />NOCTURNE CORE</span>
-        <span>BOOT SEQUENCE / 01</span>
-      </motion.div>
-
       <div className="intro-identity" aria-live="polite">
         <AnimatePresence>
           {showIdentity && !exiting && (
@@ -70,7 +60,7 @@ export function IntroOverlay({ phase, onSkip }: IntroOverlayProps) {
       </div>
 
       {!exiting && (
-        <button className="intro-skip" type="button" onClick={onSkip} autoFocus>
+        <button className="intro-skip" type="button" onClick={onSkip}>
           Pular introdução <ArrowRight size={16} />
         </button>
       )}

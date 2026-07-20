@@ -82,9 +82,6 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .nocturne-intro[data-phase="reveal"] .intro-canvas { opacity: 0; }
 .intro-canvas canvas { display: block; width: 100%; height: 100%; }
 .intro-overlay { position: absolute; z-index: 5; inset: 0; pointer-events: none; }
-.intro-telemetry { position: absolute; top: clamp(22px, 4vw, 48px); right: clamp(22px, 4vw, 56px); left: clamp(22px, 4vw, 56px); display: flex; align-items: center; justify-content: space-between; color: #817d8a; font-size: var(--font-label); letter-spacing: .1em; }
-.intro-telemetry span { display: flex; align-items: center; gap: 9px; }
-.intro-telemetry i { width: 5px; height: 5px; border-radius: 50%; background: #8f6bea; box-shadow: 0 0 10px rgba(143,107,234,.75); }
 .intro-identity { position: absolute; top: 70%; left: 50%; width: min(680px, calc(100% - 40px)); translate: -50% -50%; text-align: center; }
 .intro-identity p { margin: 0; color: #b8b2c1; font-size: var(--font-label); letter-spacing: .2em; }
 .intro-identity h1 { margin: 10px 0 0; color: #f1eef6; font-size: clamp(36px, 4.8vw, 64px); font-weight: 440; line-height: 1; letter-spacing: .18em; text-indent: .18em; text-shadow: 0 0 28px rgba(149,115,235,.12); }
@@ -354,7 +351,6 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 }
 
 @media (max-width: 700px) {
-  .intro-telemetry span:last-child { display: none; }
   .intro-identity { top: 71%; }
   .intro-identity h1 { font-size: clamp(32px, 11vw, 48px); letter-spacing: .14em; text-indent: .14em; }
   .intro-mark-2d { top: 39%; width: min(360px, 92vw); }
