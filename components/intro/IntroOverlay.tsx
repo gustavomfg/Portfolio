@@ -14,21 +14,30 @@ const PHASE_ORDER: Record<IntroPhase, number> = {
   orbit: 1,
   identity: 2,
   initialized: 3,
-  dissolve: 4,
-  complete: 5,
+  settle: 4,
+  collapse: 5,
+  "text-exit": 6,
+  veil: 7,
+  reveal: 8,
+  complete: 9,
 };
 
 export function IntroOverlay({ phase, onSkip }: IntroOverlayProps) {
   const showIdentity = PHASE_ORDER[phase] >= PHASE_ORDER.identity;
   const showInitialized = PHASE_ORDER[phase] >= PHASE_ORDER.initialized;
-  const exiting = phase === "dissolve" || phase === "complete";
+  const exiting = PHASE_ORDER[phase] >= PHASE_ORDER["text-exit"];
 
   return (
     <div className="intro-overlay">
-      <div className="intro-telemetry" aria-hidden="true">
+      <motion.div
+        className="intro-telemetry"
+        aria-hidden="true"
+        animate={{ opacity: exiting ? 0 : 1 }}
+        transition={{ duration: 0.18 }}
+      >
         <span><i />NOCTURNE CORE</span>
         <span>BOOT SEQUENCE / 01</span>
-      </div>
+      </motion.div>
 
       <div className="intro-identity" aria-live="polite">
         <AnimatePresence>
@@ -36,7 +45,7 @@ export function IntroOverlay({ phase, onSkip }: IntroOverlayProps) {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
+              exit={{ opacity: 0, y: -4, transition: { duration: 0.16 } }}
               transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
             >
               <p>ECOSYSTEM CORE</p>
@@ -51,7 +60,7 @@ export function IntroOverlay({ phase, onSkip }: IntroOverlayProps) {
               className="intro-initialized"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.14 } }}
               transition={{ duration: 0.55 }}
             >
               <span />SYSTEM INITIALIZED

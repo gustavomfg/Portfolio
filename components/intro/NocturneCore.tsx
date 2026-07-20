@@ -3,7 +3,8 @@
 import { Float } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
-import type { Group, Mesh, MeshBasicMaterial } from "three";
+import { MathUtils } from "three";
+import type { Group, Mesh, MeshBasicMaterial, MeshStandardMaterial } from "three";
 import type { IntroPhase } from "@/lib/intro-timeline";
 
 interface NocturneCoreProps {
@@ -16,19 +17,34 @@ export function NocturneCore({ phase, segments }: NocturneCoreProps) {
   const ringsRef = useRef<Group>(null);
   const pulseRef = useRef<Mesh>(null);
   const pulseMaterialRef = useRef<MeshBasicMaterial>(null);
+  const ringMaterialRefs = useRef<Array<MeshStandardMaterial | null>>([]);
   const revealOrbit = phase !== "core";
+  const settling = phase === "settle";
+  const collapsing = phase === "collapse" || phase === "text-exit" || phase === "veil" || phase === "reveal" || phase === "complete";
 
   useFrame((state, delta) => {
     if (groupRef.current) {
-      const targetScale = phase === "core" ? 0.82 : 1;
+      const targetScale = collapsing ? 0.42 : phase === "core" ? 0.82 : 1;
       const nextScale = groupRef.current.scale.x + (targetScale - groupRef.current.scale.x) * Math.min(delta * 2.8, 1);
       groupRef.current.scale.setScalar(nextScale);
     }
 
     if (ringsRef.current) {
-      ringsRef.current.rotation.y += delta * 0.09;
-      ringsRef.current.rotation.z -= delta * 0.035;
+      const motionScale = collapsing ? 0.08 : settling ? 0.32 : 1;
+      ringsRef.current.rotation.y += delta * 0.09 * motionScale;
+      ringsRef.current.rotation.z -= delta * 0.035 * motionScale;
     }
+
+    const ringTargets = collapsing
+      ? [0, 0, 0]
+      : revealOrbit
+        ? [0.44, 0.3, 0.2]
+        : [0.08, 0.05, 0.03];
+
+    ringMaterialRefs.current.forEach((material, index) => {
+      if (!material) return;
+      material.opacity = MathUtils.damp(material.opacity, ringTargets[index] ?? 0, collapsing ? 7 : 4, delta);
+    });
 
     if (pulseRef.current && pulseMaterialRef.current) {
       if (phase === "initialized") {
@@ -42,7 +58,7 @@ export function NocturneCore({ phase, segments }: NocturneCoreProps) {
   });
 
   return (
-    <Float speed={0.55} rotationIntensity={0.08} floatIntensity={0.12}>
+    <Float speed={collapsing ? 0.04 : settling ? 0.16 : 0.55} rotationIntensity={collapsing ? 0 : 0.08} floatIntensity={collapsing ? 0 : 0.12}>
       <group ref={groupRef} scale={0.7}>
         <mesh>
           <sphereGeometry args={[0.62, segments, segments]} />
@@ -61,9 +77,9 @@ export function NocturneCore({ phase, segments }: NocturneCoreProps) {
         </mesh>
 
         <group ref={ringsRef}>
-          <OrbitRing rotation={[Math.PI / 2.4, 0.2, 0]} opacity={revealOrbit ? 0.44 : 0.08} segments={segments * 2} />
-          <OrbitRing rotation={[0.55, 0.1, Math.PI / 2.8]} radius={1.38} opacity={revealOrbit ? 0.3 : 0.05} segments={segments * 2} />
-          <OrbitRing rotation={[1.2, 0.45, -0.65]} radius={1.7} opacity={revealOrbit ? 0.2 : 0.03} segments={segments * 2} />
+          <OrbitRing materialRef={(material) => { ringMaterialRefs.current[0] = material; }} rotation={[Math.PI / 2.4, 0.2, 0]} opacity={0.08} segments={segments * 2} />
+          <OrbitRing materialRef={(material) => { ringMaterialRefs.current[1] = material; }} rotation={[0.55, 0.1, Math.PI / 2.8]} radius={1.38} opacity={0.05} segments={segments * 2} />
+          <OrbitRing materialRef={(material) => { ringMaterialRefs.current[2] = material; }} rotation={[1.2, 0.45, -0.65]} radius={1.7} opacity={0.03} segments={segments * 2} />
         </group>
 
         <mesh ref={pulseRef} rotation={[Math.PI / 2, 0, 0]}>
@@ -82,17 +98,19 @@ export function NocturneCore({ phase, segments }: NocturneCoreProps) {
 }
 
 interface OrbitRingProps {
+  materialRef: (material: MeshStandardMaterial | null) => void;
   rotation: [number, number, number];
   radius?: number;
   opacity: number;
   segments: number;
 }
 
-function OrbitRing({ rotation, radius = 1.12, opacity, segments }: OrbitRingProps) {
+function OrbitRing({ materialRef, rotation, radius = 1.12, opacity, segments }: OrbitRingProps) {
   return (
     <mesh rotation={rotation}>
       <torusGeometry args={[radius, 0.012, 8, segments]} />
       <meshStandardMaterial
+        ref={materialRef}
         color="#a990f4"
         emissive="#4e347f"
         emissiveIntensity={0.35}

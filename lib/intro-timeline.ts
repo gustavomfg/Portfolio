@@ -1,12 +1,16 @@
 export const INTRO_SESSION_KEY = "nocturne-intro-viewed";
-export const INTRO_DURATION_MS = 4_200;
+export const INTRO_DURATION_MS = 4_500;
 
 export type IntroPhase =
   | "core"
   | "orbit"
   | "identity"
   | "initialized"
-  | "dissolve"
+  | "settle"
+  | "collapse"
+  | "text-exit"
+  | "veil"
+  | "reveal"
   | "complete";
 
 const INTRO_STAGES: ReadonlyArray<{ phase: IntroPhase; startsAt: number }> = [
@@ -14,7 +18,11 @@ const INTRO_STAGES: ReadonlyArray<{ phase: IntroPhase; startsAt: number }> = [
   { phase: "orbit", startsAt: 650 },
   { phase: "identity", startsAt: 1_500 },
   { phase: "initialized", startsAt: 2_500 },
-  { phase: "dissolve", startsAt: 3_550 },
+  { phase: "settle", startsAt: 3_250 },
+  { phase: "collapse", startsAt: 3_500 },
+  { phase: "text-exit", startsAt: 3_820 },
+  { phase: "veil", startsAt: 4_050 },
+  { phase: "reveal", startsAt: 4_150 },
   { phase: "complete", startsAt: INTRO_DURATION_MS },
 ];
 

@@ -2,20 +2,31 @@
 
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
-import type { Points } from "three";
+import { MathUtils } from "three";
+import type { Points, PointsMaterial } from "three";
+import type { IntroPhase } from "@/lib/intro-timeline";
 
 interface NocturneParticlesProps {
   count: number;
+  phase: IntroPhase;
 }
 
-export function NocturneParticles({ count }: NocturneParticlesProps) {
+export function NocturneParticles({ count, phase }: NocturneParticlesProps) {
   const pointsRef = useRef<Points>(null);
+  const materialRef = useRef<PointsMaterial>(null);
   const positions = useMemo(() => createParticlePositions(count), [count]);
+  const settling = phase === "settle";
+  const exiting = phase === "collapse" || phase === "text-exit" || phase === "veil" || phase === "reveal" || phase === "complete";
 
   useFrame((_, delta) => {
     if (!pointsRef.current) return;
-    pointsRef.current.rotation.y += delta * 0.025;
-    pointsRef.current.rotation.z -= delta * 0.008;
+    const motionScale = exiting ? 0 : settling ? 0.25 : 1;
+    pointsRef.current.rotation.y += delta * 0.025 * motionScale;
+    pointsRef.current.rotation.z -= delta * 0.008 * motionScale;
+    if (materialRef.current) {
+      const targetOpacity = exiting ? 0 : settling ? 0.16 : 0.58;
+      materialRef.current.opacity = MathUtils.damp(materialRef.current.opacity, targetOpacity, 6, delta);
+    }
   });
 
   return (
@@ -24,6 +35,7 @@ export function NocturneParticles({ count }: NocturneParticlesProps) {
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial
+        ref={materialRef}
         color="#bca7ff"
         size={0.026}
         sizeAttenuation

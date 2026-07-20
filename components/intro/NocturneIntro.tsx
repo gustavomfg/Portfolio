@@ -58,7 +58,7 @@ export function NocturneIntro() {
       previousTime = time;
 
       if (!document.hidden) elapsedMs += delta;
-      if (skipRequested.current) elapsedMs = Math.max(elapsedMs, 3_550);
+      if (skipRequested.current) elapsedMs = Math.max(elapsedMs, 3_500);
 
       const nextPhase = getIntroPhase(elapsedMs);
       if (nextPhase !== currentPhase) {
@@ -90,13 +90,14 @@ export function NocturneIntro() {
   if (!shouldPlay) return null;
 
   return (
-    <motion.div
-      className="nocturne-intro"
-      data-phase={phase}
-      initial={false}
-      animate={{ opacity: phase === "dissolve" ? 0 : 1 }}
-      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <motion.div className="nocturne-intro" data-phase={phase} initial={false}>
+      <motion.div
+        className="intro-veil"
+        initial={false}
+        animate={{ opacity: phase === "reveal" || phase === "complete" ? 0 : 1 }}
+        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+        aria-hidden="true"
+      />
       {webGLSupported === true ? (
         <NocturneScene phase={phase} active={pageVisible} />
       ) : (
