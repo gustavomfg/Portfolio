@@ -20,7 +20,7 @@ export default function NocturneScene({ phase, active }: NocturneSceneProps) {
       <Canvas
         dpr={mobile ? 1 : [1, 1.5]}
         frameloop={active ? "always" : "never"}
-        camera={{ position: [0, 0, 7.2], fov: mobile ? 48 : 42, near: 0.1, far: 40 }}
+        camera={{ position: [0, 0, 6.45], fov: mobile ? 46 : 40, near: 0.1, far: 40 }}
         gl={{
           alpha: true,
           antialias: !mobile,
@@ -31,7 +31,7 @@ export default function NocturneScene({ phase, active }: NocturneSceneProps) {
         <directionalLight position={[-3.2, 2.4, 4]} color="#b6a0ef" intensity={2.2} />
         <pointLight position={[2.3, -1.2, 2.6]} color="#65469d" intensity={4.2} distance={7} />
         <NocturneCore phase={phase} segments={mobile ? 24 : 36} />
-        <NocturneParticles count={mobile ? 80 : 160} phase={phase} />
+        <NocturneParticles count={mobile ? 36 : 70} phase={phase} />
         <CameraApproach />
       </Canvas>
     </div>
@@ -40,7 +40,7 @@ export default function NocturneScene({ phase, active }: NocturneSceneProps) {
 
 function CameraApproach() {
   useFrame(({ camera }, delta) => {
-    camera.position.z = MathUtils.damp(camera.position.z, 5.05, 0.58, delta);
+    camera.position.z = MathUtils.damp(camera.position.z, 6.05, 0.34, delta);
     camera.lookAt(0, 0, 0);
   });
 
