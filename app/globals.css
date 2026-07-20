@@ -95,7 +95,8 @@ button { font: inherit; }
 .scroll-progress span { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--violet), var(--cyan)); transform: scaleX(0); transform-origin: left; will-change: transform; }
 
 .brand, .footer-brand { display: flex; align-items: center; gap: 11px; }
-.brand-mark { position: relative; display: block; width: 32px; height: 32px; flex: 0 0 auto; background: url("/nocturne-mark.svg") center / contain no-repeat; filter: drop-shadow(0 0 7px rgba(145,103,255,.25)); }
+.brand-mark { position: relative; display: block; width: 32px; height: 32px; flex: 0 0 auto; filter: drop-shadow(0 0 7px rgba(145,103,255,.25)); }
+.brand-mark img { display: block; width: 100%; height: 100%; }
 .brand-copy { display: grid; gap: 1px; }
 .brand-copy strong { font-size: var(--font-label); letter-spacing: .16em; }
 .brand-copy small { color: var(--text-label); font-size: var(--font-label); letter-spacing: .07em; }
