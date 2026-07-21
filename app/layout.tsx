@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import "@fontsource-variable/jetbrains-mono/wght.css";
 import "@fontsource-variable/jetbrains-mono/wght-italic.css";
 import "./globals.css";
+import { LightField } from "@/components/atmosphere/light-field";
 import { INTRO_SESSION_KEY } from "@/lib/intro-timeline";
 
 export const metadata: Metadata = {
@@ -31,7 +32,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <script dangerouslySetInnerHTML={{ __html: introBootstrap }} />
         <noscript><style>{`.nocturne-intro { display: none !important; }`}</style></noscript>
       </head>
-      <body>{children}</body>
+      <body>
+        <LightField />
+        {children}
+      </body>
     </html>
   );
 }
