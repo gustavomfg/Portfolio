@@ -65,8 +65,8 @@ button { font: inherit; }
 
 .section-shell { width: min(1240px, calc(100% - 56px)); margin-inline: auto; }
 .ambient { position: fixed; z-index: -2; border-radius: 999px; filter: blur(120px); pointer-events: none; }
-.ambient-one { width: 420px; height: 420px; top: 10%; right: -230px; background: rgba(91, 50, 205, 0.11); }
-.ambient-two { width: 320px; height: 320px; top: 58%; left: -240px; background: rgba(38, 105, 178, 0.06); }
+.ambient-one { width: min(620px, 48vw); aspect-ratio: 1; top: 2%; right: -220px; background: radial-gradient(circle, rgb(113 65 184 / 16%), transparent 52%); }
+.ambient-two { width: min(480px, 38vw); aspect-ratio: 1; top: 54%; left: -200px; background: radial-gradient(circle, rgb(64 28 116 / 14%), transparent 48%); }
 .intro-active { overflow: hidden; }
 .nocturne-intro { position: fixed; z-index: 1000; inset: 0; overflow: hidden; isolation: isolate; background: transparent; color: #f4f2f8; }
 html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
@@ -448,25 +448,6 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 
   overflow: hidden;
   isolation: isolate;
-}
-
-.journey-atmosphere {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-
-  background:
-          radial-gradient(
-                  circle at 50% 42%,
-                  rgb(113 65 184 / 12%),
-                  transparent 32%
-          ),
-          radial-gradient(
-                  circle at 50% 105%,
-                  rgb(64 28 116 / 10%),
-                  transparent 38%
-          );
 }
 
 .journey-eclipse-container {

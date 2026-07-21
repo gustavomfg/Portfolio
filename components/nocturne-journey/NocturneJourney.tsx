@@ -18,11 +18,6 @@ export function NocturneJourney() {
             aria-label="Introdução ao portfólio"
         >
             <div className="journey-stage">
-                <div
-                    className="journey-atmosphere"
-                    aria-hidden="true"
-                />
-
                 <div className="journey-eclipse-container">
                     <EclipseVisual />
                 </div>
