@@ -558,16 +558,9 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 
 .journey-eclipse__rim {
   position: absolute;
-  inset: -1%;
-
+  inset: -0.5%;
   border-radius: 50%;
-  border-top: 1px solid rgb(166 112 255 / 30%);
-  border-right: 2px solid rgb(161 103 255 / 78%);
-
-  filter:
-          drop-shadow(
-                  5px 0 9px rgb(134 73 230 / 42%)
-          );
+  border-top: 0.5px solid rgba(255, 250, 245, 0.12);
 }
 
 .journey-eclipse__orbit {
