@@ -499,6 +499,16 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 
   background: rgb(126 72 214 / 18%);
   filter: blur(38px);
+
+  animation:
+          journey-eclipse-aura
+          8s
+          ease-in-out
+          infinite;
+
+  will-change:
+          transform,
+          opacity;
 }
 
 .journey-eclipse__disc {
@@ -513,6 +523,16 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   box-shadow:
           12px -1px 28px rgb(133 76 224 / 16%),
           inset -12px 2px 24px rgb(144 87 233 / 7%);
+
+  animation:
+          journey-eclipse-breathe
+          10s
+          ease-in-out
+          infinite;
+
+  transform-origin: center;
+
+  will-change: transform;
 }
 
 .journey-eclipse__surface {
@@ -576,9 +596,13 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   width: 94%;
   height: 34%;
 
-  transform:
-          translate3d(-50%, -50%, 0)
-          rotate(-16deg);
+  animation:
+          journey-orbit-primary
+          42s
+          linear
+          infinite;
+
+  will-change: transform;
 }
 
 .journey-eclipse__orbit--secondary {
@@ -587,9 +611,13 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 
   opacity: 0.42;
 
-  transform:
-          translate3d(-50%, -50%, 0)
-          rotate(21deg);
+  animation:
+          journey-orbit-secondary
+          58s
+          linear
+          infinite;
+
+  will-change: transform;
 }
 
 .journey-welcome {
@@ -708,6 +736,58 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   letter-spacing: -0.07em;
   line-height: 0.86;
   text-transform: uppercase;
+}
+
+@keyframes journey-eclipse-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.012);
+  }
+}
+
+@keyframes journey-eclipse-aura {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes journey-orbit-primary {
+  from {
+    transform:
+            translate3d(-50%, -50%, 0)
+            rotate(-16deg);
+  }
+
+  to {
+    transform:
+            translate3d(-50%, -50%, 0)
+            rotate(344deg);
+  }
+}
+
+@keyframes journey-orbit-secondary {
+  from {
+    transform:
+            translate3d(-50%, -50%, 0)
+            rotate(21deg);
+  }
+
+  to {
+    transform:
+            translate3d(-50%, -50%, 0)
+            rotate(-339deg);
+  }
 }
 
 @media (max-width: 768px) {
