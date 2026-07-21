@@ -6,20 +6,20 @@ interface Dot {
 }
 
 const DOTS: readonly (Dot & { glow?: boolean })[] = [
-  { x: 48, y: 36, size: 2, opacity: 0.22 },
-  { x: 53, y: 32, size: 1, opacity: 0.16 },
-  { x: 44, y: 39, size: 3, opacity: 0.18, glow: true },
-  { x: 56, y: 37, size: 1, opacity: 0.14 },
+  { x: 8, y: 12, size: 1, opacity: 0.09 },
+  { x: 88, y: 8, size: 2, opacity: 0.14 },
+  { x: 12, y: 82, size: 1, opacity: 0.07 },
+  { x: 85, y: 78, size: 1, opacity: 0.10 },
 
-  { x: 42, y: 33, size: 1, opacity: 0.10 },
-  { x: 50, y: 44, size: 1, opacity: 0.12 },
-  { x: 37, y: 28, size: 1, opacity: 0.08 },
-  { x: 62, y: 27, size: 2, opacity: 0.14 },
+  { x: 5, y: 48, size: 1, opacity: 0.07 },
+  { x: 92, y: 62, size: 1, opacity: 0.08 },
+  { x: 72, y: 15, size: 1, opacity: 0.09 },
+  { x: 25, y: 25, size: 2, opacity: 0.12 },
 
-  { x: 30, y: 44, size: 1, opacity: 0.07 },
-  { x: 66, y: 41, size: 1, opacity: 0.09 },
-  { x: 40, y: 20, size: 1, opacity: 0.07 },
-  { x: 58, y: 48, size: 4, opacity: 0.10, glow: true },
+  { x: 47, y: 38, size: 3, opacity: 0.20, glow: true },
+  { x: 55, y: 35, size: 1, opacity: 0.13 },
+  { x: 42, y: 44, size: 1, opacity: 0.11 },
+  { x: 68, y: 45, size: 4, opacity: 0.10, glow: true },
 ];
 
 export function LightField() {
