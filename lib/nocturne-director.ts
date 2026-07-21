@@ -10,6 +10,7 @@ export interface NocturneJourneyFrame {
     identityOpacity: number;
     identityTranslateY: number;
     identityClip: number;
+    identityGlow: number;
 }
 
 export function getNocturneJourneyFrame(
@@ -65,5 +66,10 @@ export function getNocturneJourneyFrame(
             100,
             0,
         ),
+
+        identityGlow:
+            identityEnterProgress > 0 && identityEnterProgress < 1
+                ? Math.sin(identityEnterProgress * Math.PI)
+                : 0,
     };
 }
