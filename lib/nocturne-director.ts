@@ -7,6 +7,8 @@ export interface NocturneJourneyFrame {
     welcomeOpacity: number;
     welcomeTranslateY: number;
 
+    eclipseOpacity: number;
+
     identityOpacity: number;
     identityTranslateY: number;
     identityClip: number;
@@ -38,8 +40,18 @@ export function getNocturneJourneyFrame(
     const easedWelcomeExit =
         easeInOutCubic(welcomeExitProgress);
 
+    const eclipseFadeProgress = mapRange(
+        progress,
+        0.65,
+        0.9,
+        0,
+        1,
+    );
+
     return {
         welcomeOpacity: 1 - easedWelcomeExit,
+
+        eclipseOpacity: 1 - easeInOutCubic(eclipseFadeProgress),
 
         welcomeTranslateY: mapRange(
             easedWelcomeExit,

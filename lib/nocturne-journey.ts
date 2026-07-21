@@ -45,9 +45,11 @@ export const nocturneJourneyTimeline = {
 
     eclipse: {
         approachStart: 0.08,
-        approachEnd: 0.85,
+        approachEnd: 0.65,
         initialScale: 0.75,
-        finalScale: 7,
+        finalScale: 1.3,
+        fadeStart: 0.65,
+        fadeEnd: 0.9,
     },
 
     nocturneTitle: {
