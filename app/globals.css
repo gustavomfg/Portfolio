@@ -433,6 +433,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   --identity-opacity: 0;
   --identity-translate-y: 32px;
   --identity-clip: 100%;
+  --identity-glow: 0;
 }
 
 .journey-stage {
@@ -736,6 +737,11 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   letter-spacing: -0.07em;
   line-height: 0.86;
   text-transform: uppercase;
+
+  text-shadow:
+          0 0
+          calc(4px + var(--identity-glow) * 8px)
+          rgb(164 105 255 / calc(0.20 + var(--identity-glow) * 0.15));
 }
 
 @keyframes journey-eclipse-breathe {
