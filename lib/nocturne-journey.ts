@@ -47,7 +47,7 @@ export const nocturneJourneyTimeline = {
         approachStart: 0.08,
         approachEnd: 0.65,
         initialScale: 0.75,
-        finalScale: 1.3,
+        finalScale: 5.75,
         fadeStart: 0.65,
         fadeEnd: 0.9,
     },
