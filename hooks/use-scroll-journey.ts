@@ -47,6 +47,11 @@ export function useScrollJourney({
             );
 
             section.style.setProperty(
+                "--eclipse-opacity",
+                frame.eclipseOpacity.toString(),
+            );
+
+            section.style.setProperty(
                 "--welcome-opacity",
                 frame.welcomeOpacity.toString(),
             );
