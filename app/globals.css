@@ -425,7 +425,11 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   --eclipse-scale: calc(
           0.75 +
           var(--journey-progress) * 5
+
   );
+
+  --welcome-opacity: 1;
+  --welcome-translate-y: 0px;
 }
 
 .journey-stage {
@@ -634,11 +638,23 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   top: 69%;
   left: 50%;
 
-  width: min(calc(100% - 2rem), 620px);
+  width: min(calc(100% - 2rem), 620px
+  );
 
   text-align: center;
 
-  transform: translateX(-50%);
+  opacity: var(--welcome-opacity);
+
+  transform:
+          translate3d(
+                  -50%,
+                  var(--welcome-translate-y),
+                  0
+          );
+
+  will-change:
+          transform,
+          opacity;
 }
 
 .journey-welcome__eyebrow {

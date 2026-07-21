@@ -6,6 +6,8 @@ interface UseScrollJourneyOptions {
     sectionRef: RefObject<HTMLElement | null>;
 }
 
+import { getNocturneJourneyFrame, } from "@/lib/nocturne-director";
+
 export function useScrollJourney({
                                      sectionRef,
                                  }: UseScrollJourneyOptions): void {
@@ -36,9 +38,22 @@ export function useScrollJourney({
                         ),
                     );
 
+            const frame =
+                getNocturneJourneyFrame(progress);
+
             section.style.setProperty(
                 "--journey-progress",
                 progress.toString(),
+            );
+
+            section.style.setProperty(
+                "--welcome-opacity",
+                frame.welcomeOpacity.toString(),
+            );
+
+            section.style.setProperty(
+                "--welcome-translate-y",
+                `${frame.welcomeTranslateY}px`,
             );
 
             section.dispatchEvent(
