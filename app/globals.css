@@ -433,3 +433,45 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 
   background: #050505;
 }
+
+.journey-progress{
+
+  position:absolute;
+
+  left:50%;
+
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:.5rem;
+
+  align-items:center;
+
+}
+
+.journey-progress span{
+
+  color:#888;
+
+  letter-spacing:.15em;
+
+  text-transform:uppercase;
+
+  font-size:.8rem;
+
+}
+
+.journey-progress strong{
+
+  color:white;
+
+  font-size:4rem;
+
+  font-weight:600;
+
+}
