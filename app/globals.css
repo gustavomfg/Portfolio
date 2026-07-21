@@ -423,8 +423,9 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 
   --journey-progress: 0;
   --eclipse-scale: calc(
-          0.75 + var(--journey-progress) * 5
+          0.75 + var(--journey-progress) * 0.55
   );
+  --eclipse-opacity: 1;
 
   --welcome-opacity: 1;
   --welcome-translate-y: 0px;
@@ -457,11 +458,15 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   width: min(34vw, 390px);
   aspect-ratio: 1;
 
+  opacity: var(--eclipse-opacity);
+
   transform:
           translate3d(-50%, -50%, 0)
           scale(var(--eclipse-scale));
 
-  will-change: transform;
+  will-change:
+          transform,
+          opacity;
 }
 
 .journey-eclipse {
