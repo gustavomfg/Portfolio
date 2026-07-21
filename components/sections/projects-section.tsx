@@ -8,7 +8,7 @@ import type { Project } from "@/types/portfolio";
 
 interface ProjectsSectionProps {
   projects: readonly Project[];
-  onOpenProject: (index: number) => void;
+  onOpenProject: (index: number, trigger: HTMLElement | null) => void;
 }
 
 export function ProjectsSection({ projects, onOpenProject }: ProjectsSectionProps) {
@@ -39,7 +39,7 @@ export function ProjectsSection({ projects, onOpenProject }: ProjectsSectionProp
                   type="button"
                   aria-label={`Abrir detalhes de ${project.name}`}
                   aria-haspopup="dialog"
-                  onClick={() => onOpenProject(index)}
+                  onClick={(e) => onOpenProject(index, e.currentTarget)}
                 />
                 <div className="project-index">{project.id}<span>/03</span></div>
                 <div className="project-icon"><Icon size={28} strokeWidth={1.6} /></div>
