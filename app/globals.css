@@ -780,3 +780,32 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
     top: 67%;
   }
 }
+
+/* ===========================================================
+   Light Field — ambiente sutil
+   =========================================================== */
+
+.light-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.light-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--violet);
+}
+
+@media (max-width: 700px) {
+  .light-dot:nth-child(n+5) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light-dot {
+    opacity: 0.02 !important;
+  }
+}
