@@ -67,6 +67,15 @@ button { font: inherit; }
 .ambient { position: fixed; z-index: -2; border-radius: 999px; filter: blur(120px); pointer-events: none; }
 .ambient-one { width: min(620px, 48vw); aspect-ratio: 1; top: 2%; right: -220px; background: radial-gradient(circle, rgb(113 65 184 / 16%), transparent 52%); }
 .ambient-two { width: min(480px, 38vw); aspect-ratio: 1; top: 54%; left: -200px; background: radial-gradient(circle, rgb(64 28 116 / 14%), transparent 48%); }
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, transparent 42%, rgba(0,0,0,.38) 100%);
+}
+
 .intro-active { overflow: hidden; }
 .nocturne-intro { position: fixed; z-index: 1000; inset: 0; overflow: hidden; isolation: isolate; background: transparent; color: #f4f2f8; }
 html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
