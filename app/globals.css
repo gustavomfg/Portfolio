@@ -313,7 +313,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 
 @media (max-width: 1000px) {
   .desktop-nav { display: none; }
-  .hero { padding-top: 130px; }
+  .hero { padding-top: 120px; }
   .hero-grid { grid-template-columns: 1fr; }
   .hero-copy { max-width: 760px; }
   .system-visual { height: 460px; }
@@ -338,9 +338,9 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   .mobile-nav a { min-height: 50px; padding: 0 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); color: #b4b0bb; font-size: 12px; }
   .mobile-nav a.is-active { color: var(--violet-soft); background: rgba(145,103,255,.07); }
   .mobile-nav a:last-child { border: 0; }
-  .hero { min-height: auto; padding-top: 120px; padding-bottom: 30px; }
+  .hero { min-height: auto; padding-top: 100px; padding-bottom: 30px; }
   .hero-copy { padding: 0; }
-  .hero h1 { margin-block: 20px; font-size: clamp(43px, 13vw, 64px); }
+  .hero h1 { margin-block: 16px; font-size: clamp(43px, 13vw, 64px); }
   .hero-intro { font-size: 14px; }
   .hero-actions { align-items: stretch; flex-direction: column; }
   .button { width: 100%; }
