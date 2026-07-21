@@ -71,6 +71,11 @@ export function useScrollJourney({
                 `${frame.identityClip}%`,
             );
 
+            section.style.setProperty(
+                "--identity-glow",
+                frame.identityGlow.toString(),
+            );
+
             section.dispatchEvent(
                 new CustomEvent<number>(
                     "nocturne-journey-progress",
