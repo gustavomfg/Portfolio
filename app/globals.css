@@ -790,22 +790,33 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 60% 45% at 50% 38%,
+      rgb(145 103 255 / 0.025) 0%,
+      transparent 100%
+    );
 }
 
 .light-dot {
   position: absolute;
   border-radius: 50%;
-  background: var(--violet);
+  background: var(--violet-soft);
+  filter: blur(0.5px);
+}
+
+.light-dot--glow {
+  box-shadow: 0 0 6px rgb(198 179 255 / 0.25);
 }
 
 @media (max-width: 700px) {
-  .light-dot:nth-child(n+5) {
+  .light-dot:nth-child(n+7) {
     display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .light-dot {
-    opacity: 0.02 !important;
+    opacity: 0.03 !important;
   }
 }

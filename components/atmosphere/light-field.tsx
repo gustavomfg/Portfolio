@@ -5,15 +5,21 @@ interface Dot {
   opacity: number;
 }
 
-const DOTS: readonly Dot[] = [
-  { x: 48, y: 36, size: 1, opacity: 0.07 },
-  { x: 52, y: 32, size: 1, opacity: 0.05 },
-  { x: 45, y: 40, size: 2, opacity: 0.04 },
-  { x: 55, y: 38, size: 1, opacity: 0.06 },
-  { x: 43, y: 34, size: 1, opacity: 0.04 },
-  { x: 50, y: 44, size: 1, opacity: 0.04 },
-  { x: 35, y: 30, size: 1, opacity: 0.03 },
-  { x: 62, y: 28, size: 1, opacity: 0.04 },
+const DOTS: readonly (Dot & { glow?: boolean })[] = [
+  { x: 48, y: 36, size: 2, opacity: 0.22 },
+  { x: 53, y: 32, size: 1, opacity: 0.16 },
+  { x: 44, y: 39, size: 3, opacity: 0.18, glow: true },
+  { x: 56, y: 37, size: 1, opacity: 0.14 },
+
+  { x: 42, y: 33, size: 1, opacity: 0.10 },
+  { x: 50, y: 44, size: 1, opacity: 0.12 },
+  { x: 37, y: 28, size: 1, opacity: 0.08 },
+  { x: 62, y: 27, size: 2, opacity: 0.14 },
+
+  { x: 30, y: 44, size: 1, opacity: 0.07 },
+  { x: 66, y: 41, size: 1, opacity: 0.09 },
+  { x: 40, y: 20, size: 1, opacity: 0.07 },
+  { x: 58, y: 48, size: 4, opacity: 0.10, glow: true },
 ];
 
 export function LightField() {
@@ -22,7 +28,7 @@ export function LightField() {
       {DOTS.map((dot, index) => (
         <span
           key={index}
-          className="light-dot"
+          className={`light-dot${dot.glow ? " light-dot--glow" : ""}`}
           style={{
             left: `${dot.x}%`,
             top: `${dot.y}%`,
