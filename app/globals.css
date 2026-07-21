@@ -246,7 +246,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .flow-label span { width: 3px; height: 3px; background: var(--violet); border-radius: 50%; }
 
 .about-intro .section-heading { grid-template-columns: 1fr 2fr; }
-.about-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 90px; margin-top: 75px; align-items: start; }
+.about-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 60px; margin-top: 75px; align-items: start; }
 .about-statement > p { margin: 0 0 24px; color: var(--text-dim); font-size: clamp(19px, 2.25vw, 28px); line-height: 1.46; letter-spacing: -.025em; }
 .about-statement em { color: var(--text-bright); font-style: normal; }
 .about-statement a { display: inline-flex; align-items: center; gap: 9px; margin-top: 15px; padding-bottom: 5px; border-bottom: 1px solid #66616e; color: var(--text-bright); font-size: var(--font-body-sm); }
