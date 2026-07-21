@@ -3,15 +3,12 @@
 import { useRef } from "react";
 
 import { useScrollJourney } from "@/hooks/use-scroll-journey";
-
 import { EclipseVisual } from "./EclipseVisual";
 
 export function NocturneJourney() {
     const sectionRef = useRef<HTMLElement | null>(null);
 
-    useScrollJourney({
-        sectionRef,
-    });
+    useScrollJourney({ sectionRef });
 
     return (
         <section

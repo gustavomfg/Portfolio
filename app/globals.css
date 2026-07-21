@@ -420,6 +420,12 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .journey {
   position: relative;
   height: 300vh;
+
+  --journey-progress: 0;
+  --eclipse-scale: calc(
+          0.75 +
+          var(--journey-progress) * 5
+  );
 }
 
 .journey-stage {
@@ -509,7 +515,11 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   width: min(34vw, 390px);
   aspect-ratio: 1;
 
-  transform: translate3d(-50%, -50%, 0);
+  transform:
+          translate3d(-50%, -50%, 0)
+          scale(var(--eclipse-scale));
+
+  will-change: transform;
 }
 
 .journey-eclipse {
