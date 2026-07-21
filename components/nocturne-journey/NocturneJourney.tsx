@@ -4,6 +4,7 @@ import { useRef } from "react";
 
 import { useScrollJourney } from "@/hooks/use-scroll-journey";
 import { EclipseVisual } from "./EclipseVisual";
+import { NocturneIdentity } from "./NocturneIdentity";
 
 export function NocturneJourney() {
     const sectionRef = useRef<HTMLElement | null>(null);
@@ -39,6 +40,9 @@ export function NocturneJourney() {
                         Role para entrar
                     </p>
                 </div>
+
+                <NocturneIdentity />
+
             </div>
         </section>
     );

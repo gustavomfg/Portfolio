@@ -6,6 +6,10 @@ import {
 export interface NocturneJourneyFrame {
     welcomeOpacity: number;
     welcomeTranslateY: number;
+
+    identityOpacity: number;
+    identityTranslateY: number;
+    identityClip: number;
 }
 
 export function getNocturneJourneyFrame(
@@ -19,6 +23,17 @@ export function getNocturneJourneyFrame(
         1,
     );
 
+    const identityEnterProgress = mapRange(
+        progress,
+        0.43,
+        0.61,
+        0,
+        1,
+    );
+
+    const easedIdentityEnter =
+        easeInOutCubic(identityEnterProgress);
+
     const easedWelcomeExit =
         easeInOutCubic(welcomeExitProgress);
 
@@ -31,6 +46,24 @@ export function getNocturneJourneyFrame(
             1,
             0,
             -24,
+        ),
+
+        identityOpacity: easedIdentityEnter,
+
+        identityTranslateY: mapRange(
+            easedIdentityEnter,
+            0,
+            1,
+            32,
+            0,
+        ),
+
+        identityClip: mapRange(
+            easedIdentityEnter,
+            0,
+            1,
+            100,
+            0,
         ),
     };
 }

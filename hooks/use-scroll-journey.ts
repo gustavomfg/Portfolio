@@ -56,6 +56,21 @@ export function useScrollJourney({
                 `${frame.welcomeTranslateY}px`,
             );
 
+            section.style.setProperty(
+                "--identity-opacity",
+                frame.identityOpacity.toString(),
+            );
+
+            section.style.setProperty(
+                "--identity-translate-y",
+                `${frame.identityTranslateY}px`,
+            );
+
+            section.style.setProperty(
+                "--identity-clip",
+                `${frame.identityClip}%`,
+            );
+
             section.dispatchEvent(
                 new CustomEvent<number>(
                     "nocturne-journey-progress",
