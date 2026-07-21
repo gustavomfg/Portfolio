@@ -164,7 +164,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .hero-meta strong { font-size: var(--font-body-sm); color: var(--text-bright); }
 .hero-meta span { color: var(--text-label); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .07em; }
 
-.system-visual { --pointer-x: 50%; --pointer-y: 50%; position: relative; height: 500px; overflow: hidden; border: 1px solid rgba(255,255,255,.06); border-radius: 20px; background: radial-gradient(circle at 50% 48%, rgba(112,73,209,.08), transparent 34%), rgba(12,12,18,.44); backdrop-filter: blur(var(--glass-blur)) saturate(110%); box-shadow: var(--glass-highlight), 0 20px 60px rgba(0,0,0,.15); }
+.system-visual { --pointer-x: 50%; --pointer-y: 50%; position: relative; height: 500px; overflow: hidden; border: 1px solid var(--glass-border); border-radius: 20px; background: radial-gradient(circle at 50% 48%, rgba(112,73,209,.08), transparent 34%), rgba(12,12,18,.44); backdrop-filter: blur(var(--glass-blur)) saturate(110%); box-shadow: var(--glass-highlight), 0 20px 60px rgba(0,0,0,.15); }
 .pointer-glow { position: absolute; z-index: 0; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(220px circle at var(--pointer-x) var(--pointer-y), rgba(151,114,255,.13), transparent 68%); transition: opacity var(--duration-normal) ease; }
 .system-visual:hover .pointer-glow { opacity: 1; }
 .visual-grid { position: absolute; z-index: 0; inset: 0; opacity: .3; background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: 44px 44px; mask-image: radial-gradient(circle at center, #000, transparent 72%); }
