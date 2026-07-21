@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #07070a;
+  --bg: #050505;
   --surface: #0d0d13;
   --surface-soft: #111119;
   --line: rgba(255, 255, 255, 0.1);
@@ -448,8 +448,6 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 
   overflow: hidden;
   isolation: isolate;
-
-  background: #050505;
 }
 
 .journey-atmosphere {
