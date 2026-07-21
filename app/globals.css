@@ -205,7 +205,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .featured-rail { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 42px; border: 1px solid var(--glass-border); border-radius: 12px; overflow: hidden; background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); box-shadow: var(--glass-highlight); }
 .featured-mini { min-height: 82px; padding: 16px 20px; border: 0; border-right: 1px solid var(--line); background: transparent; display: grid; grid-template-columns: auto auto 1fr auto; gap: 13px; align-items: center; color: #6e6b76; cursor: pointer; text-align: left; transition: .25s ease; }
 .featured-mini:last-child { border-right: 0; }
-.featured-mini:hover, .featured-mini.is-active { background: rgba(255,255,255,.025); color: var(--violet-soft); }
+.featured-mini:hover, .featured-mini.is-active { background: rgba(255,255,255,.06); color: var(--violet-soft); }
 .featured-number { font-family: monospace; font-size: var(--font-label); }
 .featured-mini > span:nth-child(3) { display: grid; gap: 3px; }
 .featured-mini small { font-size: var(--font-label); color: var(--text-label); text-transform: uppercase; letter-spacing: .07em; }
