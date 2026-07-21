@@ -200,7 +200,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .active-readout { position: absolute; z-index: 3; top: 17px; right: 18px; display: grid; min-width: 205px; padding-left: 13px; border-left: 1px solid rgba(169,141,255,.35); text-align: right; }
 .active-readout small { color: var(--violet-soft); font-size: var(--font-label); letter-spacing: .08em; }
 .active-readout strong { margin-top: 4px; color: var(--text-bright); font-size: var(--font-body-sm); font-weight: 500; }
-.active-readout span { margin-top: 3px; color: var(--text-label); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .06em; }
+.active-readout span { margin-top: 3px; color: var(--text-label); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .07em; }
 
 .featured-rail { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 42px; border: 1px solid var(--glass-border); border-radius: 12px; overflow: hidden; background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); box-shadow: var(--glass-highlight); }
 .featured-mini { min-height: 82px; padding: 16px 20px; border: 0; border-right: 1px solid var(--line); background: transparent; display: grid; grid-template-columns: auto auto 1fr auto; gap: 13px; align-items: center; color: #6e6b76; cursor: pointer; text-align: left; transition: .25s ease; }
@@ -208,7 +208,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .featured-mini:hover, .featured-mini.is-active { background: rgba(255,255,255,.025); color: var(--violet-soft); }
 .featured-number { font-family: monospace; font-size: var(--font-label); }
 .featured-mini > span:nth-child(3) { display: grid; gap: 3px; }
-.featured-mini small { font-size: var(--font-label); color: var(--text-label); text-transform: uppercase; letter-spacing: .06em; }
+.featured-mini small { font-size: var(--font-label); color: var(--text-label); text-transform: uppercase; letter-spacing: .07em; }
 .featured-mini strong { color: var(--text-bright); font-size: var(--font-body-sm); }
 .featured-arrow { justify-self: end; opacity: .4; }
 
@@ -236,13 +236,13 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .project-content h3 { margin: 0 0 10px; font-size: clamp(23px, 3vw, 34px); letter-spacing: -.035em; font-weight: 500; }
 .project-content > span { display: block; max-width: 600px; color: #aaa6b2; font-size: var(--font-body-sm); line-height: 1.65; }
 .project-tags { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; max-width: 230px; }
-.project-tags span { padding: 7px 9px; border: 1px solid var(--line);   border-radius: var(--radius-pill); color: var(--text-label); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .05em; }
+.project-tags span { padding: 7px 9px; border: 1px solid var(--line); border-radius: var(--radius-pill); color: var(--text-label); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .07em; }
 .project-link { min-height: 42px; padding: 0 10px 0 13px; border-radius: var(--radius-button); border: 1px solid var(--line); background: rgba(255,255,255,.02); display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #8b8793; transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease, background var(--duration-fast) ease; }
-.project-link span { font-size: var(--font-label); text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+.project-link span { font-size: var(--font-label); text-transform: uppercase; letter-spacing: .07em; white-space: nowrap; }
 .project-link svg { transition: transform .25s ease; }
 .project-card:hover .project-link, .project-card:focus-within .project-link { color: #fff; border-color: color-mix(in srgb, var(--project-accent) 55%, transparent); background: color-mix(in srgb, var(--project-accent) 10%, transparent); }
 .project-card:hover .project-link svg, .project-card:focus-within .project-link svg { transform: translate(2px, -2px); }
-.flow-label { position: absolute; z-index: 2; bottom: -7px; left: 50%; translate: -50% 50%; display: flex; align-items: center; gap: 5px; padding: 4px 9px; background: #0b0b10; border: 1px solid var(--line); border-radius: 4px; color: var(--text-label); font-size: var(--font-label); letter-spacing: .06em; }
+.flow-label { position: absolute; z-index: 2; bottom: -7px; left: 50%; translate: -50% 50%; display: flex; align-items: center; gap: 5px; padding: 4px 9px; background: #0b0b10; border: 1px solid var(--line); border-radius: 4px; color: var(--text-label); font-size: var(--font-label); letter-spacing: .07em; }
 .flow-label span { width: 3px; height: 3px; background: var(--violet); border-radius: 50%; }
 
 .about { padding-top: 130px; }
