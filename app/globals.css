@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #050505;
+  --bg: #000000;
   --surface: #0d0d13;
   --surface-soft: #111119;
   --line: rgba(255, 255, 255, 0.1);
@@ -64,17 +64,7 @@ button { font: inherit; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 .section-shell { width: min(1240px, calc(100% - 56px)); margin-inline: auto; }
-.ambient { position: fixed; z-index: -2; border-radius: 999px; filter: blur(120px); pointer-events: none; }
-.ambient-one { width: min(620px, 48vw); aspect-ratio: 1; top: 2%; right: -220px; background: radial-gradient(circle, rgb(113 65 184 / 16%), transparent 52%); }
-.ambient-two { width: min(480px, 38vw); aspect-ratio: 1; top: 54%; left: -200px; background: radial-gradient(circle, rgb(64 28 116 / 14%), transparent 48%); }
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(ellipse at 50% 50%, transparent 42%, rgba(0,0,0,.38) 100%);
-}
+
 
 .intro-active { overflow: hidden; }
 .nocturne-intro { position: fixed; z-index: 1000; inset: 0; overflow: hidden; isolation: isolate; background: transparent; color: #f4f2f8; }

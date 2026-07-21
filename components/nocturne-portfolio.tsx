@@ -24,8 +24,6 @@ export function NocturnePortfolio() {
 
   return (
     <main id="conteudo">
-      <div className="ambient ambient-one" />
-      <div className="ambient ambient-two" />
       <a className="skip-link" href="#ecossistema">Pular para o conteúdo</a>
 
       <Navbar
