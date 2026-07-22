@@ -131,8 +131,8 @@ button { font: inherit; }
     radial-gradient(circle at 65% 48%, rgb(126 72 214 / 18%) 0%, transparent 42%);
   opacity: .58;
   transform: translateX(-50%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 12%) 12%, rgb(0 0 0 / 38%) 36%, rgb(0 0 0 / 72%) 64%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 12%) 12%, rgb(0 0 0 / 38%) 36%, rgb(0 0 0 / 72%) 64%, #000 100%);
+  -webkit-mask-image: radial-gradient(ellipse 65% 95% at 65% 50%, #000 0%, rgb(0 0 0 / 82%) 20%, rgb(0 0 0 / 40%) 36%, transparent 52%);
+  mask-image: radial-gradient(ellipse 65% 95% at 65% 50%, #000 0%, rgb(0 0 0 / 82%) 20%, rgb(0 0 0 / 40%) 36%, transparent 52%);
 }
 .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(36px, 7vw, 100px); align-items: center; }
 .hero-kicker, .eyebrow { display: flex; align-items: center; gap: 8px; color: var(--violet-soft); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .14em; font-weight: 700; }
