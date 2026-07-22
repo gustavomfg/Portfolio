@@ -229,7 +229,9 @@ button { font: inherit; }
 .featured-mini strong { color: var(--text-bright); font-size: var(--font-body-sm); }
 .featured-arrow { justify-self: end; opacity: .4; }
 
-.ecosystem, .about, .timeline-section { padding-top: 150px; padding-bottom: 100px; }
+.ecosystem { padding-top: 150px; padding-bottom: 88px; }
+.about { padding-top: 132px; padding-bottom: 78px; }
+.timeline-section { padding-top: 132px; padding-bottom: 84px; }
 .section-heading { display: grid; grid-template-columns: 1fr 2fr; column-gap: 60px; align-items: start; }
 .section-heading .eyebrow { margin: 11px 0 0; }
 .eyebrow span { color: var(--violet); }
@@ -285,7 +287,12 @@ button { font: inherit; }
 .capability-card h3 { margin: 30px 0 11px; color: var(--text-bright); font-size: var(--font-subtitle); font-weight: 500; letter-spacing: -.02em; }
 .capability-card p { margin: 0; color: var(--text-dim); font-size: var(--font-body-sm); line-height: 1.7; }
 
-.stack-section { width: 100%; overflow: hidden; border-block: 1px solid var(--line); }
+.stack-section {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
 .stack-track { width: max-content; height: 62px; display: flex; align-items: center; animation: marquee 120s linear infinite; will-change: transform; }
 .stack-group { display: flex; flex: 0 0 auto; align-items: center; }
 .stack-track span { display: flex; flex: 0 0 auto; align-items: center; gap: 26px; padding-right: 26px; color: var(--text-dim); font-family: monospace; font-size: var(--font-label); text-transform: uppercase; letter-spacing: .08em; }
@@ -300,7 +307,7 @@ button { font: inherit; }
 .timeline-item h3 { margin: 12px 0 8px; font-size: 18px; font-weight: 500; }
 .timeline-item p { margin: 0; max-width: 230px; color: var(--text-dim); font-size: var(--font-body-sm); line-height: 1.65; }
 
-.contact { padding-top: 150px; padding-bottom: 100px; }
+.contact { padding-top: 132px; padding-bottom: 100px; }
 .contact-card { position: relative; overflow: hidden; min-height: 430px; padding: 64px; border: 1px solid var(--glass-border); border-radius: 18px; background: radial-gradient(circle at 82% 35%, rgba(116,73,222,.12), transparent 30%), var(--glass-bg-strong); backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate)); box-shadow: var(--glass-shadow-strong), var(--glass-highlight); }
 .contact-card::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size: 50px 50px; mask-image: linear-gradient(90deg, transparent, #000); }
 .contact-card > *:not(.contact-glow) { position: relative; z-index: 2; }
@@ -418,7 +425,9 @@ button { font: inherit; }
   .featured-rail { grid-template-columns: 1fr; margin-top: 26px; border: 1px solid var(--line);   border-radius: var(--radius-card); overflow: hidden; }
   .featured-mini { min-height: 69px; border-right: 0; border-bottom: 1px solid var(--line); }
   .featured-mini:last-child { border-bottom: 0; }
-  .ecosystem, .about, .timeline-section { padding-top: 100px; padding-bottom: 60px; }
+  .ecosystem { padding-top: 100px; padding-bottom: 52px; }
+  .about { padding-top: 88px; padding-bottom: 50px; }
+  .timeline-section { padding-top: 88px; padding-bottom: 56px; }
   .section-heading, .about-intro .section-heading { grid-template-columns: 1fr; gap: 22px; }
   .section-heading .eyebrow { margin: 0; }
   .section-copy { grid-column: 1; margin-top: 0; }
@@ -437,7 +446,7 @@ button { font: inherit; }
   .timeline-item { padding: 70px 20px 22px; min-height: 190px; }
   .timeline-marker { top: 18px; }
   .timeline-item p { max-width: none; }
-  .contact { padding-top: 100px; padding-bottom: 60px; }
+  .contact { padding-top: 88px; padding-bottom: 60px; }
   .contact-card { min-height: 530px; padding: 38px 24px; }
   .contact-card h2 { font-size: 43px; }
   .contact-glow { width: 180px; height: 180px; right: -35px; top: auto; bottom: 30px; opacity: .5; }
