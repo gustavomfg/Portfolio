@@ -464,6 +464,22 @@ button { font: inherit; }
     transparent 42%
   );
   transform: scale(1.08);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 52%,
+    rgb(0 0 0 / 78%) 66%,
+    rgb(0 0 0 / 28%) 82%,
+    transparent 94%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 52%,
+    rgb(0 0 0 / 78%) 66%,
+    rgb(0 0 0 / 28%) 82%,
+    transparent 94%
+  );
   will-change: opacity;
 }
 
