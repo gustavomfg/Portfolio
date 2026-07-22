@@ -13,6 +13,8 @@ export interface NocturneJourneyFrame {
     identityTranslateY: number;
     identityClip: number;
     identityGlow: number;
+
+    journeyBridgeOpacity: number;
 }
 
 export function getNocturneJourneyFrame(
@@ -44,6 +46,14 @@ export function getNocturneJourneyFrame(
         progress,
         0.65,
         0.9,
+        0,
+        1,
+    );
+
+    const journeyBridgeProgress = mapRange(
+        progress,
+        0.85,
+        0.95,
         0,
         1,
     );
@@ -83,5 +93,10 @@ export function getNocturneJourneyFrame(
             identityEnterProgress > 0 && identityEnterProgress < 1
                 ? Math.sin(identityEnterProgress * Math.PI)
                 : 0,
+
+        journeyBridgeOpacity: Math.min(
+            1,
+            Math.max(0, easeInOutCubic(journeyBridgeProgress)),
+        ),
     };
 }

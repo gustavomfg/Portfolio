@@ -484,6 +484,21 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
           opacity;
 }
 
+.journey-eclipse-container::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 48%,
+    rgb(126 72 214 / 18%) 0%,
+    transparent 34%
+  );
+  opacity: var(--journey-bridge-opacity, 0);
+  pointer-events: none;
+  z-index: -1;
+}
+
 .journey-eclipse {
   position: relative;
   width: 100%;

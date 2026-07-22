@@ -81,6 +81,11 @@ export function useScrollJourney({
                 frame.identityGlow.toString(),
             );
 
+            section.style.setProperty(
+                "--journey-bridge-opacity",
+                frame.journeyBridgeOpacity.toString(),
+            );
+
             section.dispatchEvent(
                 new CustomEvent<number>(
                     "nocturne-journey-progress",
