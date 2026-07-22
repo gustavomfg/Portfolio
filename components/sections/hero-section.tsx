@@ -25,7 +25,8 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
         <motion.div
           className="hero-copy"
           initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           <p className="hero-kicker"><span className="prompt-sign">~/</span> portfólio / 2026</p>
@@ -54,7 +55,8 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
         <motion.div
           className="system-visual"
           initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{ delay: 0.18, duration: 0.9 }}
           aria-label="Fluxo do ecossistema Nocturne"
           onPointerMove={updatePointerGlow}

@@ -6,7 +6,7 @@ interface UseScrollJourneyOptions {
     sectionRef: RefObject<HTMLElement | null>;
 }
 
-import { getNocturneJourneyFrame, } from "@/lib/nocturne-director";
+import { getNocturneJourneyFrame } from "@/lib/nocturne-director";
 
 export function useScrollJourney({
                                      sectionRef,
@@ -49,6 +49,16 @@ export function useScrollJourney({
             section.style.setProperty(
                 "--eclipse-opacity",
                 frame.eclipseOpacity.toString(),
+            );
+
+            section.style.setProperty(
+                "--eclipse-approach",
+                frame.eclipseApproach.toString(),
+            );
+
+            section.style.setProperty(
+                "--orbit-opacity",
+                frame.orbitOpacity.toString(),
             );
 
             section.style.setProperty(
