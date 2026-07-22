@@ -18,6 +18,10 @@ export function useScrollJourney({
             return;
         }
 
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            return;
+        }
+
         let animationFrameId: number | null = null;
 
         const updateProgress = () => {

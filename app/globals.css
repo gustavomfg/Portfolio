@@ -810,6 +810,11 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 }
 
 @media (max-width: 768px) {
+  .journey {
+    height: 240svh;
+    --eclipse-scale: calc(0.75 + var(--eclipse-approach) * 3.1);
+  }
+
   .journey-eclipse-container {
     top: 39%;
     width: min(82vw, 340px);
@@ -856,6 +861,20 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .journey {
+    height: 100svh;
+    --eclipse-scale: .82;
+    --eclipse-opacity: 1;
+    --welcome-opacity: 1;
+    --welcome-translate-y: 0px;
+  }
+
+  .journey-stage { position: relative; }
+  .journey-bridge,
+  .journey-identity { display: none; }
+  .journey-eclipse__aura,
+  .journey-eclipse__disc,
+  .journey-eclipse__orbit { animation: none; }
   .light-dot {
     opacity: 0.03 !important;
   }
