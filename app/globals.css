@@ -10,7 +10,7 @@
   --muted: #aaa6b2;
   --text-label: #9894a1;
   --text-dim: #827e8c;
-  --text-bright: var(--text-bright);
+  --text-bright: #d8d5df;
   --violet: #9167ff;
   --violet-soft: #c6b3ff;
   --blue: #5d8aff;
@@ -660,7 +660,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .journey-welcome__eyebrow {
   margin: 0 0 0.75rem;
 
-  color: rgb(187 150 239 / 62%);
+  color: rgb(187 150 239 / 74%);
 
   font-size: 0.75rem;
   font-weight: 500;
@@ -682,7 +682,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .journey-welcome__instruction {
   margin: 1rem 0 0;
 
-  color: rgb(204 192 221 / 54%);
+  color: rgb(204 192 221 / 66%);
 
   font-size: 0.75rem;
   letter-spacing: 0.17em;
@@ -727,7 +727,7 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
 .journey-identity__eyebrow {
   margin: 0 0 0.65rem;
 
-  color: rgb(187 150 239 / 68%);
+  color: rgb(187 150 239 / 76%);
 
   font-size: 0.75rem;
   font-weight: 500;

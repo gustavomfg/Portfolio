@@ -29,9 +29,9 @@ export function NocturneJourney() {
                         Nocturne
                     </p>
 
-                    <h1 className="journey-welcome__title">
+                    <p className="journey-welcome__title">
                         Bem-vindo.
-                    </h1>
+                    </p>
 
                     <p className="journey-welcome__instruction">
                         Role para entrar

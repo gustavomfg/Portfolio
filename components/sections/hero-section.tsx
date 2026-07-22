@@ -29,9 +29,9 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="hero-kicker"><span className="prompt-sign">~/</span> portfólio / 2026</p>
+          <p className="hero-kicker"><span className="prompt-sign">~/</span> Gustavo Fernandes</p>
           <h1>
-            Desenvolvedor Full Stack.
+            Full Stack Developer.
             <span>Criando o ecossistema Nocturne.</span>
           </h1>
           <p className="hero-intro">
