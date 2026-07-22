@@ -632,6 +632,12 @@ html[data-nocturne-intro="skip"] .nocturne-intro { display: none; }
   will-change: transform;
 }
 
+.journey[data-journey-active="false"] .journey-eclipse__aura,
+.journey[data-journey-active="false"] .journey-eclipse__disc,
+.journey[data-journey-active="false"] .journey-eclipse__orbit {
+  animation-play-state: paused;
+}
+
 .journey-welcome {
   position: absolute;
   z-index: 2;

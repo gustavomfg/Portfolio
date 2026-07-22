@@ -34,33 +34,3 @@ export function easeInOutCubic(value: number): number {
         ? 4 * progress * progress * progress
         : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 }
-
-export const nocturneJourneyTimeline = {
-    welcome: {
-        enterStart: 0,
-        enterEnd: 0.08,
-        exitStart: 0.16,
-        exitEnd: 0.3,
-    },
-
-    eclipse: {
-        approachStart: 0.08,
-        approachEnd: 0.65,
-        initialScale: 0.75,
-        finalScale: 5.75,
-        fadeStart: 0.65,
-        fadeEnd: 0.9,
-    },
-
-    nocturneTitle: {
-        enterStart: 0.34,
-        enterEnd: 0.5,
-        exitStart: 0.68,
-        exitEnd: 0.82,
-    },
-
-    hero: {
-        enterStart: 0.78,
-        enterEnd: 0.96,
-    },
-} as const;
