@@ -56,6 +56,24 @@ body {
 
 body.dialog-open { overflow: hidden; }
 
+main#conteudo {
+  background:
+    radial-gradient(
+      ellipse 72% 12% at 68% 58%,
+      rgb(96 60 155 / 4.2%) 0%,
+      rgb(80 49 132 / 2.4%) 38%,
+      rgb(62 39 101 / 0.8%) 68%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 68% 11% at 28% 76%,
+      rgb(75 54 126 / 3.6%) 0%,
+      rgb(61 44 103 / 1.7%) 46%,
+      rgb(48 34 81 / 0.6%) 72%,
+      transparent 100%
+    );
+}
+
 button, a { color: inherit; }
 a { text-decoration: none; }
 button { font: inherit; }
@@ -347,6 +365,24 @@ button { font: inherit; }
 }
 
 @media (max-width: 700px) {
+  main#conteudo {
+    background:
+      radial-gradient(
+        ellipse 92% 10% at 58% 57%,
+        rgb(96 60 155 / 3.4%) 0%,
+        rgb(80 49 132 / 1.8%) 40%,
+        rgb(62 39 101 / 0.6%) 70%,
+        transparent 100%
+      ),
+      radial-gradient(
+        ellipse 86% 9% at 42% 76%,
+        rgb(75 54 126 / 2.8%) 0%,
+        rgb(61 44 103 / 1.3%) 48%,
+        rgb(48 34 81 / 0.4%) 74%,
+        transparent 100%
+      );
+  }
+
   .section-shell { width: min(100% - 32px, 1240px); }
   .site-header { top: 10px; width: calc(100% - 20px); height: 60px; }
   .hero { min-height: auto; padding-top: 100px; padding-bottom: 30px; }
