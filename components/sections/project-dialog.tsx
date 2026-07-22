@@ -3,13 +3,15 @@
 import { Check, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Project } from "@/types/portfolio";
+import type { Ref } from "react";
 
 interface ProjectDialogProps {
   project: Project | null;
   onClose: () => void;
+  dialogRef: Ref<HTMLDivElement>;
 }
 
-export function ProjectDialog({ project, onClose }: ProjectDialogProps) {
+export function ProjectDialog({ project, onClose, dialogRef }: ProjectDialogProps) {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -25,6 +27,7 @@ export function ProjectDialog({ project, onClose }: ProjectDialogProps) {
           }}
         >
           <motion.section
+            ref={dialogRef}
             className={`project-dialog project-${project.accent}`}
             role="dialog"
             aria-modal="true"

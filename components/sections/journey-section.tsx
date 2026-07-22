@@ -8,7 +8,7 @@ interface JourneySectionProps {
 
 export function JourneySection({ items }: JourneySectionProps) {
   return (
-    <section className="journey section-shell" id="jornada">
+    <section className="timeline-section section-shell" id="jornada">
       <Reveal>
         <SectionHeading
           eyebrow="Jornada"

@@ -23,30 +23,30 @@ export function NocturnePortfolio() {
     : PROJECTS[projectDialog.selectedProject] ?? null;
 
   return (
-    <main id="conteudo">
-      <div className="ambient ambient-one" />
-      <div className="ambient ambient-two" />
-      <a className="skip-link" href="#ecossistema">Pular para o conteúdo</a>
+    <>
+      <main id="conteudo">
+        <a className="skip-link" href="#ecossistema">Pular para o conteúdo</a>
 
-      <Navbar
-        items={NAV_ITEMS}
-        activeSection={navigation.activeSection}
-        menuOpen={navigation.menuOpen}
-        onToggleMenu={navigation.toggleMenu}
-        onCloseMenu={navigation.closeMenu}
-      />
-      <HeroSection
-        projects={PROJECTS}
-        activeProject={activeProject}
-        onSelectProject={setActiveProject}
-      />
-      <ProjectsSection projects={PROJECTS} onOpenProject={projectDialog.openProject} />
-      <AboutSection capabilities={CAPABILITIES} />
-      <StackMarquee technologies={STACK} />
-      <JourneySection items={TIMELINE} />
-      <ContactSection />
-      <Footer />
-      <ProjectDialog project={selectedProject} onClose={projectDialog.closeProject} />
-    </main>
+        <Navbar
+          items={NAV_ITEMS}
+          activeSection={navigation.activeSection}
+          menuOpen={navigation.menuOpen}
+          onToggleMenu={navigation.toggleMenu}
+          onCloseMenu={navigation.closeMenu}
+        />
+        <HeroSection
+          projects={PROJECTS}
+          activeProject={activeProject}
+          onSelectProject={setActiveProject}
+        />
+        <ProjectsSection projects={PROJECTS} onOpenProject={projectDialog.openProject} />
+        <AboutSection capabilities={CAPABILITIES} />
+        <StackMarquee technologies={STACK} />
+        <JourneySection items={TIMELINE} />
+        <ContactSection />
+        <Footer />
+      </main>
+      <ProjectDialog project={selectedProject} onClose={projectDialog.closeProject} dialogRef={projectDialog.dialogRef} />
+    </>
   );
 }
