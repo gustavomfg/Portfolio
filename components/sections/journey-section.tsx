@@ -20,7 +20,7 @@ export function JourneySection({ items }: JourneySectionProps) {
         {items.map((item, index) => {
           const Icon = item.icon;
           return (
-            <Reveal className="timeline-item" key={item.year}>
+            <Reveal className="timeline-item" delay={index * 0.05} distance={16} key={item.year}>
               <span className="timeline-marker"><Icon size={18} /></span>
               <small>{item.year} / 0{index + 1}</small>
               <h3>{item.title}</h3>

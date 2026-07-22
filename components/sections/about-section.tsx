@@ -21,7 +21,7 @@ export function AboutSection({ capabilities }: AboutSectionProps) {
         <SectionHeading eyebrow="Sobre mim" title="Construir é a minha forma de aprender." />
       </Reveal>
       <div className="about-grid">
-        <Reveal className="about-statement">
+        <Reveal className="about-statement" distance={18}>
           <p>
             Gosto de entender <em>por que</em> sistemas funcionam antes de decidir <em>como</em> construí-los.
           </p>
@@ -30,7 +30,7 @@ export function AboutSection({ capabilities }: AboutSectionProps) {
           </p>
           <a href="#contato">Mais sobre minha trajetória <ArrowRight size={17} /></a>
         </Reveal>
-        <Reveal className="principles-panel">
+        <Reveal className="principles-panel" delay={0.06} distance={18}>
           <div className="panel-top"><span>NOCTURNE / PRINCIPLES</span><Braces size={17} /></div>
           {principles.map(([number, principle]) => (
             <div className="principle" key={number}>
@@ -40,8 +40,8 @@ export function AboutSection({ capabilities }: AboutSectionProps) {
         </Reveal>
       </div>
       <div className="capabilities-grid" aria-label="Áreas de atuação">
-        {capabilities.map((capability) => (
-          <Reveal className="capability-card" key={capability.number}>
+        {capabilities.map((capability, index) => (
+          <Reveal className="capability-card" delay={index * 0.04} distance={16} key={capability.number}>
             <span>{capability.number}</span>
             <h3>{capability.title}</h3>
             <p>{capability.description}</p>
