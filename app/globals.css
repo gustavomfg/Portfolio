@@ -127,12 +127,12 @@ button { font: inherit; }
   width: 100vw;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 68% 38% at 65% 8%, rgb(126 72 214 / 10%) 0%, rgb(91 51 145 / 3%) 42%, transparent 74%),
+    radial-gradient(ellipse 72% 66% at 65% 22%, rgb(126 72 214 / 8%) 0%, rgb(91 51 145 / 4%) 42%, rgb(70 39 112 / 1.5%) 72%, transparent 100%),
     radial-gradient(circle at 65% 48%, rgb(126 72 214 / 18%) 0%, transparent 42%);
   opacity: .58;
   transform: translateX(-50%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 14%, rgb(0 0 0 / 25%) 30%, #000 58%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, transparent 14%, rgb(0 0 0 / 25%) 30%, #000 58%, #000 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 12%) 12%, rgb(0 0 0 / 38%) 36%, rgb(0 0 0 / 72%) 64%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 12%) 12%, rgb(0 0 0 / 38%) 36%, rgb(0 0 0 / 72%) 64%, #000 100%);
 }
 .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(36px, 7vw, 100px); align-items: center; }
 .hero-kicker, .eyebrow { display: flex; align-items: center; gap: 8px; color: var(--violet-soft); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .14em; font-weight: 700; }
