@@ -145,6 +145,7 @@ This approach allows me to continuously improve both technical knowledge and sof
 # Notes
 
 This document is the canonical source of truth for my professional identity.
+Operational and architectural guidance for the portfolio lives in [README.md](README.md).
 
 Any AI or contributor updating portfolio content should:
 

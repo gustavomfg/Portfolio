@@ -2,6 +2,10 @@
   "name": "nocturne-portfolio",
   "version": "1.0.0",
   "description": "Portfólio pessoal e apresentação do ecossistema Nocturne.",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=11.15.1"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

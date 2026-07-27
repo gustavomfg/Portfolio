@@ -6,6 +6,44 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
   const firstResponse = await page.goto("/");
   const contentSecurityPolicy = firstResponse?.headers()["content-security-policy"];
 
+  await expect(page).toHaveTitle(
+    "Gustavo Maquias — Análise e Desenvolvimento de Sistemas",
+  );
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "http://localhost:3000",
+  );
+  await expect(page.locator('meta[property="og:type"]')).toHaveAttribute(
+    "content",
+    "website",
+  );
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    "content",
+    /^http:\/\/localhost:3000\/opengraph-image\?[a-f0-9]+$/,
+  );
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+    "content",
+    "summary_large_image",
+  );
+
+  const robotsResponse = await page.request.get("/robots.txt");
+  expect(robotsResponse.ok()).toBe(true);
+  expect(await robotsResponse.text()).toContain(
+    "Sitemap: http://localhost:3000/sitemap.xml",
+  );
+
+  const sitemapResponse = await page.request.get("/sitemap.xml");
+  expect(sitemapResponse.ok()).toBe(true);
+  expect(await sitemapResponse.text()).toContain(
+    "<loc>http://localhost:3000/</loc>",
+  );
+
+  for (const imagePath of ["/opengraph-image", "/twitter-image"]) {
+    const imageResponse = await page.request.get(imagePath);
+    expect(imageResponse.ok()).toBe(true);
+    expect(imageResponse.headers()["content-type"]).toContain("image/png");
+  }
+
   expect(contentSecurityPolicy).toBeDefined();
   const scriptSource = contentSecurityPolicy?.match(/script-src [^;]+/)?.[0];
   expect(scriptSource).toContain("script-src 'self' 'nonce-");
