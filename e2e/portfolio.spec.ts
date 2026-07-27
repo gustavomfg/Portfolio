@@ -3,7 +3,39 @@ import { expect, test } from "@playwright/test";
 
 test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium");
-  await page.goto("/");
+  const firstResponse = await page.goto("/");
+  const contentSecurityPolicy = firstResponse?.headers()["content-security-policy"];
+
+  expect(contentSecurityPolicy).toBeDefined();
+  const scriptSource = contentSecurityPolicy?.match(/script-src [^;]+/)?.[0];
+  expect(scriptSource).toContain("script-src 'self' 'nonce-");
+  expect(scriptSource).toContain("'strict-dynamic'");
+  expect(scriptSource).not.toContain("'unsafe-inline'");
+  expect(scriptSource).not.toContain("'unsafe-eval'");
+
+  const nonceMatch = contentSecurityPolicy?.match(/'nonce-([^']+)'/);
+  const nonce = nonceMatch?.[1];
+  expect(nonce).toBeTruthy();
+
+  const scriptNonces = await page.locator("script").evaluateAll(
+    (scripts) => scripts.map((script) => script.nonce),
+  );
+  expect(scriptNonces.length).toBeGreaterThan(0);
+  expect(scriptNonces.every((scriptNonce) => scriptNonce === nonce)).toBe(true);
+
+  const secondResponse = await page.request.get("/");
+  const secondContentSecurityPolicy = secondResponse.headers()["content-security-policy"];
+  const secondNonce = secondContentSecurityPolicy.match(/'nonce-([^']+)'/)?.[1];
+  expect(secondNonce).toBeTruthy();
+  expect(secondNonce).not.toBe(nonce);
+
+  const notFoundResponse = await page.request.get("/rota-inexistente");
+  const notFoundContentSecurityPolicy =
+    notFoundResponse.headers()["content-security-policy"];
+  expect(notFoundResponse.status()).toBe(404);
+  expect(notFoundContentSecurityPolicy).toContain("script-src 'self' 'nonce-");
+  expect(notFoundContentSecurityPolicy.match(/script-src [^;]+/)?.[0])
+    .not.toContain("'unsafe-inline'");
 
   const mainNavigation = page.getByRole("navigation", { name: "Navegação principal" });
   await expect(mainNavigation.getByRole("link")).toHaveCount(4);
