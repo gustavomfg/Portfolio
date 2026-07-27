@@ -8,17 +8,19 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ projects }: HeroSectionProps) {
+  const projectTotal = String(projects.length).padStart(2, "0");
+
   return (
     <section className="hero section-shell" id="inicio">
       <div className="hero-grid">
         <Reveal className="hero-copy" distance={28}>
           <p className="hero-kicker"><span className="prompt-sign">~/</span> Gustavo Maquias</p>
           <h1>
-            Análise e Desenvolvimento.
-            <span>Aprendendo ao construir.</span>
+            Software com propósito.
+            <span>Engenharia aprendida na prática.</span>
           </h1>
           <p className="hero-intro">
-            Sou estudante de Análise e Desenvolvimento de Sistemas e estou construindo meu caminho para o desenvolvimento Full Stack por meio de projetos reais, arquitetura e aprendizado contínuo.
+            Sou estudante de Análise e Desenvolvimento de Sistemas. Construo aplicações web e desktop para aprofundar Full Stack, arquitetura e práticas de engenharia.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#ecossistema">
@@ -29,7 +31,7 @@ export function HeroSection({ projects }: HeroSectionProps) {
             </a>
           </div>
           <div className="hero-meta" aria-label="Resumo profissional">
-            <div><strong>04</strong><span>projetos Nocturne</span></div>
+            <div><strong>{projectTotal}</strong><span>projetos Nocturne</span></div>
             <div><strong>Full Stack</strong><span>foco profissional</span></div>
             <div><strong>BR / remoto</strong><span>base de trabalho</span></div>
           </div>

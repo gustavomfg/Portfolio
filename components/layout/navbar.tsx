@@ -24,6 +24,19 @@ export function Navbar({ items }: NavbarProps) {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileNavRef = useRef<HTMLElement>(null);
 
+  const closeMenuAndFocusTarget = (href: NavItem["href"]) => {
+    closeMenu();
+    window.requestAnimationFrame(() => {
+      const target = document.getElementById(href.slice(1));
+
+      if (!target) return;
+
+      target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
+      target.addEventListener("blur", () => target.removeAttribute("tabindex"), { once: true });
+    });
+  };
+
   useEffect(() => {
     if (!menuOpen) return;
 
@@ -114,10 +127,7 @@ export function Navbar({ items }: NavbarProps) {
                 className={activeSection === item.href ? "is-active" : ""}
                 href={item.href}
                 key={item.href}
-                onClick={() => {
-                  closeMenu();
-                  window.requestAnimationFrame(() => menuButtonRef.current?.focus());
-                }}
+                onClick={() => closeMenuAndFocusTarget(item.href)}
                 aria-current={activeSection === item.href ? "location" : undefined}
               >
                 {item.label}<ArrowUpRight size={17} />
