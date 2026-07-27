@@ -3,6 +3,7 @@
 import { ArrowDown, ArrowRight, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { BrandMark } from "@/components/ui/brand-mark";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { usePointerGlow } from "@/hooks/use-pointer-glow";
 import type { Project } from "@/types/portfolio";
 
@@ -13,7 +14,9 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ projects, activeProject, onSelectProject }: HeroSectionProps) {
+  const hydrated = useHydrated();
   const reduceMotion = useReducedMotion();
+  const shouldAnimate = hydrated && !reduceMotion;
   const updatePointerGlow = usePointerGlow();
   const selectedProject = projects[activeProject];
 
@@ -23,9 +26,10 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
     <section className="hero section-shell" id="inicio">
       <div className="hero-grid">
         <motion.div
+          key={shouldAnimate ? "animated-copy" : "static-copy"}
           className="hero-copy"
-          initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={shouldAnimate ? { opacity: 0, y: 28 } : false}
+          whileInView={shouldAnimate ? { opacity: 1, y: 0 } : undefined}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
@@ -53,9 +57,10 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
         </motion.div>
 
         <motion.div
+          key={shouldAnimate ? "animated-visual" : "static-visual"}
           className="system-visual"
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={shouldAnimate ? { opacity: 0, scale: 0.95 } : false}
+          whileInView={shouldAnimate ? { opacity: 1, scale: 1 } : undefined}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ delay: 0.18, duration: 0.9 }}
           aria-label="Fluxo do ecossistema Nocturne"
@@ -99,7 +104,7 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
             );
           })}
           <div className="system-status"><span /> SYSTEMS CONNECTED</div>
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               className="active-readout"
               key={selectedProject.key}
