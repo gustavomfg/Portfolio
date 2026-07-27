@@ -2,6 +2,7 @@
 
 import { Check, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { createPortal } from "react-dom";
 import { ProjectIcon } from "@/components/ui/project-icon";
 import type { Project } from "@/types/portfolio";
 import type { Ref } from "react";
@@ -15,7 +16,9 @@ interface ProjectDialogProps {
 export function ProjectDialog({ project, onClose, dialogRef }: ProjectDialogProps) {
   const reduceMotion = useReducedMotion();
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <AnimatePresence>
       {project && (
         <motion.div
@@ -42,7 +45,8 @@ export function ProjectDialog({ project, onClose, dialogRef }: ProjectDialogProp
           </motion.section>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }
 
