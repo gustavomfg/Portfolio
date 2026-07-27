@@ -1,0 +1,38 @@
+:root {
+  --bg: #000000;
+  --surface: #0d0d13;
+  --surface-soft: #111119;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.17);
+  --text: #f4f2f8;
+  --muted: #b3afbb;
+  --text-label: #9d99a6;
+  --text-dim: #8d8996;
+  --text-bright: #d8d5df;
+  --violet: #9167ff;
+  --violet-soft: #c6b3ff;
+  --blue: #5d8aff;
+  --cyan: #55d9e8;
+  --green: #78e0b2;
+  --glass-bg: rgba(16, 16, 24, 0.55);
+  --glass-bg-strong: rgba(22, 21, 31, 0.72);
+  --glass-bg-overlay: rgba(10, 10, 16, 0.82);
+  --glass-blur: 18px;
+  --glass-blur-strong: 24px;
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --glass-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+  --glass-shadow-strong: 0 24px 64px rgba(0, 0, 0, 0.25);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --glass-saturate: 115%;
+  --radius-card: 14px;
+  --radius-pill: 99px;
+  --radius-button: 9px;
+  --radius-dialog: 17px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 0.2s;
+  --duration-normal: 0.35s;
+  --font-label: 0.75rem;
+  --font-body-sm: 0.8125rem;
+  --font-body: 0.9375rem;
+  --font-subtitle: 1.125rem;
+}

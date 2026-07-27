@@ -1,0 +1,39 @@
+.project-dialog-backdrop { position: fixed; z-index: 80; inset: 0; display: grid; place-items: center; padding: 24px; background: rgba(2,2,5,.78); backdrop-filter: blur(var(--glass-blur)) saturate(80%); }
+.project-dialog { --project-accent: var(--violet); position: relative; overflow: hidden; width: min(760px, 100%); max-height: min(760px, calc(100svh - 48px)); overflow-y: auto; border: 1px solid color-mix(in srgb, var(--project-accent) 30%, var(--glass-border)); border-radius: var(--radius-dialog); background: var(--glass-bg-overlay); box-shadow: var(--glass-shadow-strong), var(--glass-highlight); }
+.project-dialog::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 88% 6%, color-mix(in srgb, var(--project-accent) 14%, transparent), transparent 32%); }
+.dialog-topbar { position: relative; z-index: 1; min-height: 58px; padding: 0 18px 0 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); color: var(--text-label); font-size: var(--font-label); letter-spacing: .07em; }
+.dialog-topbar button { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.025); color: #a9a5b1; cursor: pointer; transition: var(--duration-fast) ease; }
+.dialog-topbar button:hover { border-color: var(--line-strong); background: rgba(255,255,255,.06); color: #fff; }
+.dialog-topbar button:active { transform: scale(0.92); }
+.dialog-heading { position: relative; z-index: 1; display: flex; align-items: center; gap: 18px; padding: 34px 34px 22px; }
+.dialog-project-icon { width: 60px; height: 60px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid color-mix(in srgb, var(--project-accent) 40%, transparent); border-radius: var(--radius-card); color: var(--project-accent); background: color-mix(in srgb, var(--project-accent) 8%, transparent); }
+.dialog-heading p { margin: 0 0 7px; color: var(--project-accent); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .08em; }
+.dialog-heading h2 { margin: 0; font-size: clamp(27px, 4vw, 42px); line-height: 1.08; letter-spacing: -.045em; font-weight: 500; }
+.dialog-status { position: relative; z-index: 1; width: fit-content; margin: 0 34px 30px; padding: 7px 10px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 6px; color: #bbb7c2; background: rgba(255,255,255,.025); font-size: var(--font-label); }
+.dialog-status span { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 9px rgba(120,224,178,.7); }
+.dialog-status strong { font-weight: 500; }
+.dialog-content { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; border-block: 1px solid var(--line); }
+.dialog-content > div { min-height: 210px; padding: 30px 34px; }
+.dialog-content > div + div { border-left: 1px solid var(--line); }
+.dialog-content small { color: var(--text-label); font-size: var(--font-label); letter-spacing: .07em; }
+.dialog-content p { margin: 17px 0 0; color: var(--muted); font-size: var(--font-body-sm); line-height: 1.75; }
+.dialog-content ul { display: grid; gap: 14px; margin: 17px 0 0; padding: 0; list-style: none; }
+.dialog-content li { display: flex; align-items: flex-start; gap: 10px; color: var(--muted); font-size: var(--font-body-sm); line-height: 1.55; }
+.dialog-content li svg { flex: 0 0 auto; margin-top: 1px; color: var(--project-accent); }
+.dialog-footer { position: relative; z-index: 1; min-height: 76px; padding: 17px 34px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.dialog-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.dialog-tags span { padding: 6px 8px; border: 1px solid var(--line); border-radius: 5px; color: var(--text-label); font-size: var(--font-label); text-transform: uppercase; }
+.dialog-note { color: var(--text-label); font-size: var(--font-label); text-align: right; }
+
+@media (max-width: 700px) {
+  .project-dialog-backdrop { align-items: end; padding: 10px; }
+  .project-dialog { max-height: calc(100svh - 20px); border-radius: var(--radius-dialog); }
+  .dialog-heading { padding: 26px 20px 18px; }
+  .dialog-project-icon { width: 48px; height: 48px; }
+  .dialog-status { margin: 0 20px 24px; }
+  .dialog-content { grid-template-columns: 1fr; }
+  .dialog-content > div { min-height: auto; padding: 24px 20px; }
+  .dialog-content > div + div { border-top: 1px solid var(--line); border-left: 0; }
+  .dialog-footer { padding: 18px 20px; align-items: flex-start; flex-direction: column; }
+  .dialog-note { text-align: left; }
+}

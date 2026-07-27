@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import type { ReactNode } from "react";
 import "@fontsource-variable/jetbrains-mono/wght.css";
-import "@fontsource-variable/jetbrains-mono/wght-italic.css";
 import "./globals.css";
 import { LightField } from "@/components/atmosphere/light-field";
 
