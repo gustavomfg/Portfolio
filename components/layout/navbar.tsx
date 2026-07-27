@@ -33,7 +33,7 @@ export function Navbar({
         <BrandMark />
         <span className="brand-copy">
           <strong>NOCTURNE</strong>
-          <small>FULL STACK DEVELOPER</small>
+          <small>ADS • FULL STACK</small>
         </span>
       </a>
 

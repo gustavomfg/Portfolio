@@ -1,8 +1,9 @@
 import {
-  ArrowUpRight,
   BrainCircuit,
   Code2,
+  FileText,
   Layers3,
+  PanelsTopLeft,
   Radar,
   ScanSearch,
   TerminalSquare,
@@ -19,57 +20,76 @@ export const NAV_ITEMS = [
 export const PROJECTS = [
   {
     id: "01",
+    key: "studio",
+    name: "Nocturne Studio",
+    role: "AI Engineering Workspace",
+    description:
+      "Um workspace de engenharia de software com inteligência artificial, organizado ao redor de projetos em vez de prompts isolados.",
+    tags: ["Electron", "React", "AI"],
+    status: "Em desenvolvimento",
+    problem:
+      "Manter memória, contexto e decisões de engenharia conectados ao projeto durante todo o processo de desenvolvimento.",
+    highlights: [
+      "Memória de workspace e Second Brain",
+      "Review Mode e suporte a múltiplos provedores",
+      "Arquitetura Electron segura e documentação contínua",
+    ],
+    icon: BrainCircuit,
+    accent: "violet",
+  },
+  {
+    id: "02",
+    key: "portfolio",
+    name: "Nocturne Portfolio",
+    role: "Professional Identity",
+    description:
+      "Este portfólio: um espaço para reunir projetos, documentação e minha identidade profissional em evolução.",
+    tags: ["Next.js", "React", "TypeScript"],
+    status: "Em evolução contínua",
+    problem:
+      "Apresentar o que estou construindo e aprendendo de forma clara, honesta e consistente com a identidade do ecossistema.",
+    highlights: [
+      "Interface responsiva e acessível",
+      "Conteúdo centralizado e fácil de atualizar",
+      "Identidade visual compartilhada com o Nocturne",
+    ],
+    icon: PanelsTopLeft,
+    accent: "blue",
+  },
+  {
+    id: "03",
     key: "inspector",
     name: "Nocturne Inspector",
-    role: "Engineering Intelligence",
+    role: "Monitoring & Diagnostics",
     description:
-      "Observa projetos, reúne evidências e transforma complexidade em inteligência de engenharia confiável.",
-    tags: ["Python", "Analysis", "Read-only"],
-    status: "v0.1 em desenvolvimento",
+      "Aplicação desktop criada para explorar monitoramento, diagnóstico e conceitos de engenharia de software.",
+    tags: ["Desktop", "Diagnostics", "Engineering"],
+    status: "Em desenvolvimento",
     problem:
-      "Analisar um projeto antes da implementação, separando observação, evidência e recomendação sem alterar o workspace inspecionado.",
+      "Transformar conceitos de monitoramento e diagnóstico em uma ferramenta prática para aprofundar conhecimentos de engenharia.",
     highlights: [
-      "Scanner determinístico de workspace",
-      "Relatório JSON versionado",
-      "Arquitetura de inspetores independentes",
+      "Exploração de monitoramento de software",
+      "Diagnósticos apresentados com clareza",
+      "Aprendizado orientado por uma aplicação real",
     ],
     icon: ScanSearch,
     accent: "violet",
   },
   {
-    id: "02",
-    key: "codex",
-    name: "Nocturne Codex",
-    role: "Engineering Execution",
-    description:
-      "Organiza contexto, decisões e planos para transformar entendimento em mudanças claras e validadas.",
-    tags: ["Electron", "React", "IPC"],
-    status: "Em desenvolvimento",
-    problem:
-      "Manter conhecimento, decisões técnicas e contexto de desenvolvimento acessíveis durante todo o ciclo de uma mudança.",
-    highlights: [
-      "Aplicação desktop com Electron e React",
-      "Renderer isolado de recursos nativos",
-      "Fronteira IPC controlada",
-    ],
-    icon: BrainCircuit,
-    accent: "blue",
-  },
-  {
-    id: "03",
+    id: "04",
     key: "control",
     name: "Nocturne Control",
-    role: "Visual Systems",
+    role: "Ecosystem Hub",
     description:
-      "Explora interfaces, componentes e experiências de controle dentro da identidade visual Nocturne.",
-    tags: ["Web", "Interface", "Systems"],
+      "Aplicação web que centraliza os serviços e as ferramentas que fazem parte do ecossistema Nocturne.",
+    tags: ["Web", "React", "Services"],
     status: "Em evolução",
     problem:
-      "Explorar como ferramentas técnicas podem oferecer controle e densidade de informação sem sacrificar clareza visual.",
+      "Oferecer um ponto central para acessar e acompanhar ferramentas do ecossistema sem perder clareza ou consistência.",
     highlights: [
-      "Sistema visual dark próprio",
-      "Experimentos de interface e controle",
-      "Biblioteca de padrões do ecossistema",
+      "Centralização dos serviços Nocturne",
+      "Experiência web consistente",
+      "Interface alinhada ao restante do ecossistema",
     ],
     icon: Radar,
     accent: "cyan",
@@ -77,31 +97,33 @@ export const PROJECTS = [
 ] as const satisfies readonly Project[];
 
 export const STACK = [
+  "Java",
   "TypeScript",
+  "JavaScript",
   "React",
-  "Next.js",
   "Node.js",
   "Electron",
+  "HTML",
+  "CSS",
   "Python",
   "Rust",
-  "Tailwind",
 ] as const;
 
 export const CAPABILITIES = [
   {
     number: "01",
-    title: "Interfaces web",
-    description: "React, Next.js, TypeScript e experiências responsivas com atenção aos detalhes.",
+    title: "Desenvolvimento Full Stack",
+    description: "Aplicações modernas com React, TypeScript, JavaScript e Node.js, conectando interface e lógica.",
   },
   {
     number: "02",
-    title: "Aplicações desktop",
-    description: "Electron, integração com recursos nativos e comunicação IPC com fronteiras claras.",
+    title: "Arquitetura e desktop",
+    description: "Exploração de arquitetura de software e aplicações Electron com atenção à segurança e à manutenção.",
   },
   {
     number: "03",
-    title: "Ferramentas de engenharia",
-    description: "Python, Rust e automações criadas para compreender e resolver problemas reais.",
+    title: "Experiência de desenvolvimento",
+    description: "Documentação, UI/UX, desempenho e ferramentas pensadas para tornar o software agradável de usar e evoluir.",
   },
 ] as const satisfies readonly Capability[];
 
@@ -109,25 +131,25 @@ export const TIMELINE = [
   {
     year: "BASE",
     title: "Fundamentos",
-    text: "Web, lógica e a curiosidade de construir ferramentas próprias.",
+    text: "Java como linguagem principal e uma base construída com lógica, web e engenharia de software.",
     icon: Code2,
   },
   {
-    year: "EXPAND",
-    title: "Sistemas",
-    text: "Aplicações desktop, Rust, Python e novas camadas de complexidade.",
+    year: "PRÁTICA",
+    title: "Projetos reais",
+    text: "React, TypeScript, Node.js e Electron aplicados em experiências web e desktop.",
     icon: Layers3,
   },
   {
-    year: "NOW",
-    title: "Nocturne",
-    text: "Um ecossistema que reúne inteligência, execução e experiência visual.",
+    year: "AGORA",
+    title: "Ecossistema Nocturne",
+    text: "Projetos conectados por arquitetura, documentação, inteligência artificial e uma identidade comum.",
     icon: TerminalSquare,
   },
   {
-    year: "NEXT",
-    title: "Próximo capítulo",
-    text: "Produtos mais maduros, colaboração e impacto em problemas reais.",
-    icon: ArrowUpRight,
+    year: "CONTÍNUO",
+    title: "Evolução",
+    text: "Aprofundar Full Stack, Rust e Python enquanto contribuo para software aberto, seguro e bem construído.",
+    icon: FileText,
   },
 ] as const satisfies readonly TimelineItem[];

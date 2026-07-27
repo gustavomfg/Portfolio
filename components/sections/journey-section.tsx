@@ -11,9 +11,9 @@ export function JourneySection({ items }: JourneySectionProps) {
     <section className="timeline-section section-shell" id="jornada">
       <Reveal>
         <SectionHeading
-          eyebrow="Jornada"
-          title="Até aqui."
-          copy="Uma linha simples do que venho estudando, construindo e conectando ao longo do caminho."
+          eyebrow="Como eu aprendo"
+          title="Evoluir através da prática."
+          copy="Em vez de estudar tecnologias de forma isolada, prefiro criar aplicações que me desafiem a compreender arquitetura, fluxos de trabalho e decisões de engenharia."
         />
       </Reveal>
       <div className="timeline">

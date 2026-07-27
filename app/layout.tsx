@@ -6,9 +6,9 @@ import "./globals.css";
 import { LightField } from "@/components/atmosphere/light-field";
 
 export const metadata: Metadata = {
-  title: "Gustavo Fernandes — Full Stack Developer",
+  title: "Gustavo Maquias — Análise e Desenvolvimento de Sistemas",
   description:
-    "Portfólio de Gustavo Fernandes e apresentação do ecossistema Nocturne.",
+    "Portfólio de Gustavo Maquias, estudante de Análise e Desenvolvimento de Sistemas, e apresentação do ecossistema Nocturne.",
   icons: {
     icon: "/nocturne-mark.svg",
   },

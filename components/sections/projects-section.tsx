@@ -20,7 +20,7 @@ export function ProjectsSection({ projects, onOpenProject }: ProjectsSectionProp
         <SectionHeading
           eyebrow="Ecossistema Nocturne"
           title="O núcleo do Nocturne."
-          copy="Três projetos independentes que compartilham contexto, princípios de engenharia e uma mesma identidade."
+          copy="Quatro projetos que compartilham princípios de engenharia, documentação e uma mesma identidade."
         />
       </Reveal>
 
@@ -41,7 +41,7 @@ export function ProjectsSection({ projects, onOpenProject }: ProjectsSectionProp
                   aria-haspopup="dialog"
                   onClick={(e) => onOpenProject(index, e.currentTarget)}
                 />
-                <div className="project-index">{project.id}<span>/03</span></div>
+                <div className="project-index">{project.id}<span>/04</span></div>
                 <div className="project-icon"><Icon size={28} strokeWidth={1.6} /></div>
                 <div className="project-content">
                   <p>{project.role}</p>

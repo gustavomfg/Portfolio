@@ -8,27 +8,27 @@ interface AboutSectionProps {
 }
 
 const principles = [
-  ["01", "Entender antes de construir"],
-  ["02", "Evidência antes de suposição"],
-  ["03", "Clareza antes de complexidade"],
-  ["04", "Identidade em cada detalhe"],
+  ["01", "Construir software com propósito"],
+  ["02", "Arquitetura antes da complexidade"],
+  ["03", "Documentação como parte do produto"],
+  ["04", "Segurança desde o início"],
 ] as const;
 
 export function AboutSection({ capabilities }: AboutSectionProps) {
   return (
     <section className="about section-shell" id="sobre">
       <Reveal className="about-intro">
-        <SectionHeading eyebrow="Sobre mim" title="Construir é a minha forma de aprender." />
+        <SectionHeading eyebrow="Sobre mim" title="Aprendo construindo projetos reais." />
       </Reveal>
       <div className="about-grid">
         <Reveal className="about-statement" distance={18}>
           <p>
-            Gosto de entender <em>por que</em> sistemas funcionam antes de decidir <em>como</em> construí-los.
+            Gosto de entender <em>como o software é pensado</em> antes de partir para a implementação.
           </p>
           <p>
-            Minha prática combina engenharia, design de interfaces e pensamento de produto para criar soluções coerentes — por dentro e por fora.
+            Em cada projeto, exploro arquitetura, aplicações desktop, ferramentas para desenvolvedores e tecnologias web enquanto fortaleço meus fundamentos de engenharia.
           </p>
-          <a href="#contato">Mais sobre minha trajetória <ArrowRight size={17} /></a>
+          <a href="#jornada">Conhecer minha trajetória <ArrowRight size={17} /></a>
         </Reveal>
         <Reveal className="principles-panel" delay={0.06} distance={18}>
           <div className="panel-top"><span>NOCTURNE / PRINCIPLES</span><Braces size={17} /></div>

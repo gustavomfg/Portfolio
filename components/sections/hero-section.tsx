@@ -29,13 +29,13 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="hero-kicker"><span className="prompt-sign">~/</span> Gustavo Fernandes</p>
+          <p className="hero-kicker"><span className="prompt-sign">~/</span> Gustavo Maquias</p>
           <h1>
-            Full Stack Developer.
-            <span>Criando o ecossistema Nocturne.</span>
+            Análise e Desenvolvimento.
+            <span>Aprendendo ao construir.</span>
           </h1>
           <p className="hero-intro">
-            Trabalho com TypeScript, React, Electron, Python e Rust. Aqui reúno os projetos, as decisões e o que aprendi construindo cada um.
+            Sou estudante de Análise e Desenvolvimento de Sistemas e estou construindo meu caminho para o desenvolvimento Full Stack por meio de projetos reais, arquitetura e aprendizado contínuo.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#ecossistema">
@@ -46,8 +46,8 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
             </a>
           </div>
           <div className="hero-meta" aria-label="Resumo profissional">
-            <div><strong>03</strong><span>produtos Nocturne</span></div>
-            <div><strong>Full Stack</strong><span>software e interface</span></div>
+            <div><strong>04</strong><span>projetos Nocturne</span></div>
+            <div><strong>Full Stack</strong><span>foco profissional</span></div>
             <div><strong>BR / remoto</strong><span>base de trabalho</span></div>
           </div>
         </motion.div>
@@ -75,10 +75,12 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
           >
             <path className="connection-base" d="M50 50 L20 31" />
             <path className="connection-base" d="M50 50 L82 35" />
-            <path className="connection-base" d="M50 50 L50 83" />
+            <path className="connection-base" d="M50 50 L20 78" />
+            <path className="connection-base" d="M50 50 L82 78" />
             <path className="connection-flow flow-one" pathLength="1" d="M50 50 L20 31" />
             <path className="connection-flow flow-two" pathLength="1" d="M50 50 L82 35" />
-            <path className="connection-flow flow-three" pathLength="1" d="M50 50 L50 83" />
+            <path className="connection-flow flow-three" pathLength="1" d="M50 50 L20 78" />
+            <path className="connection-flow flow-four" pathLength="1" d="M50 50 L82 78" />
           </svg>
           {projects.map((project, index) => {
             const Icon = project.icon;

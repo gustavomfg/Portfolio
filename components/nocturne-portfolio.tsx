@@ -15,7 +15,7 @@ import { usePortfolioNavigation } from "@/hooks/use-portfolio-navigation";
 import { useProjectDialog } from "@/hooks/use-project-dialog";
 
 export function NocturnePortfolio() {
-  const [activeProject, setActiveProject] = useState(1);
+  const [activeProject, setActiveProject] = useState(0);
   const navigation = usePortfolioNavigation(NAV_ITEMS);
   const projectDialog = useProjectDialog();
   const selectedProject = projectDialog.selectedProject === null
