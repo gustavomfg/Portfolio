@@ -43,7 +43,7 @@ Defina a URL pública completa na implantação:
 NEXT_PUBLIC_SITE_URL=https://seu-dominio.example
 ```
 
-Essa variável alimenta a URL canônica, Open Graph, Twitter Cards, `robots.txt` e `sitemap.xml`. Implantações na Vercel também reconhecem `VERCEL_PROJECT_PRODUCTION_URL` e `VERCEL_URL`. Sem uma URL pública, o desenvolvimento usa `http://localhost:3000` e bloqueia indexação em `robots.txt`.
+Essa variável alimenta a URL canônica, Open Graph, Twitter Cards, `robots.txt` e `sitemap.xml`. Implantações na Vercel também reconhecem `VERCEL_PROJECT_PRODUCTION_URL`; previews continuam bloqueados para indexação. Sem uma URL pública, o desenvolvimento usa `http://localhost:3000` e bloqueia indexação em `robots.txt`. Um deploy na Vercel falha de forma explícita quando nenhuma URL pública está disponível.
 
 O projeto não requer credenciais, banco de dados ou serviços de backend.
 

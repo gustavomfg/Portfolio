@@ -14,9 +14,18 @@ function normalizeUrl(value: string | undefined) {
 
 const configuredUrl = normalizeUrl(
   process.env.NEXT_PUBLIC_SITE_URL
-    ?? process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ?? process.env.VERCEL_URL,
+    ?? process.env.VERCEL_PROJECT_PRODUCTION_URL,
 );
 
+if (process.env.VERCEL === "1" && !configuredUrl) {
+  throw new Error(
+    "A URL pública do portfólio não está configurada. Defina NEXT_PUBLIC_SITE_URL.",
+  );
+}
+
+const isPreviewDeployment =
+  process.env.VERCEL_ENV !== undefined
+  && process.env.VERCEL_ENV !== "production";
+
 export const siteUrl = configuredUrl ?? new URL(localUrl);
-export const isPublicDeployment = configuredUrl !== undefined;
+export const isPublicDeployment = configuredUrl !== undefined && !isPreviewDeployment;
