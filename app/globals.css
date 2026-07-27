@@ -358,7 +358,7 @@ button { font: inherit; }
 .contact-card h2 em { color: #aa8cff; font-style: normal; }
 .contact-copy { max-width: 520px; color: #aaa6b2; font-size: var(--font-body); line-height: 1.7; }
 .contact-actions { display: flex; gap: 15px; align-items: center; margin-top: 34px; }
-.button-light { background: #f2eef8; color: #111014; box-shadow: 0 12px 34px rgba(173,145,236,.13); }
+.button-light { border: 0; background: #f2eef8; color: #111014; box-shadow: 0 12px 34px rgba(173,145,236,.13); cursor: pointer; }
 .button-light:hover { box-shadow: 0 16px 42px rgba(173,145,236,.23); }
 .social-links { display: flex; gap: 8px; }
 .social-links a { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius-button); color: #a29eaa; transition: var(--duration-fast) ease; }
