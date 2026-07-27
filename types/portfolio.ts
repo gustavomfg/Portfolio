@@ -1,6 +1,6 @@
-import type { LucideIcon } from "lucide-react";
-
 export type ProjectAccent = "violet" | "blue" | "cyan";
+export type ProjectIconKey = "brain-circuit" | "panels-top-left" | "scan-search" | "radar";
+export type TimelineIconKey = "code" | "layers" | "terminal" | "file-text";
 
 export interface NavItem {
   label: string;
@@ -17,7 +17,7 @@ export interface Project {
   status: string;
   problem: string;
   highlights: readonly string[];
-  icon: LucideIcon;
+  icon: ProjectIconKey;
   accent: ProjectAccent;
 }
 
@@ -31,5 +31,5 @@ export interface TimelineItem {
   year: string;
   title: string;
   text: string;
-  icon: LucideIcon;
+  icon: TimelineIconKey;
 }

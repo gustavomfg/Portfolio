@@ -2,6 +2,7 @@
 
 import { Check, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { ProjectIcon } from "@/components/ui/project-icon";
 import type { Project } from "@/types/portfolio";
 import type { Ref } from "react";
 
@@ -46,8 +47,6 @@ export function ProjectDialog({ project, onClose, dialogRef }: ProjectDialogProp
 }
 
 function DialogContent({ project, onClose }: { project: Project; onClose: () => void }) {
-  const Icon = project.icon;
-
   return (
     <>
       <div className="dialog-topbar">
@@ -57,7 +56,7 @@ function DialogContent({ project, onClose }: { project: Project; onClose: () => 
         </button>
       </div>
       <div className="dialog-heading">
-        <span className="dialog-project-icon"><Icon size={27} /></span>
+        <span className="dialog-project-icon"><ProjectIcon icon={project.icon} size={27} /></span>
         <div>
           <p>{project.role}</p>
           <h2 id="project-dialog-title">{project.name}</h2>

@@ -1,13 +1,3 @@
-import {
-  BrainCircuit,
-  Code2,
-  FileText,
-  Layers3,
-  PanelsTopLeft,
-  Radar,
-  ScanSearch,
-  TerminalSquare,
-} from "lucide-react";
 import type { Capability, NavItem, Project, TimelineItem } from "@/types/portfolio";
 
 export const NAV_ITEMS = [
@@ -34,7 +24,7 @@ export const PROJECTS = [
       "Review Mode e suporte a múltiplos provedores",
       "Arquitetura Electron segura e documentação contínua",
     ],
-    icon: BrainCircuit,
+    icon: "brain-circuit",
     accent: "violet",
   },
   {
@@ -53,7 +43,7 @@ export const PROJECTS = [
       "Conteúdo centralizado e fácil de atualizar",
       "Identidade visual compartilhada com o Nocturne",
     ],
-    icon: PanelsTopLeft,
+    icon: "panels-top-left",
     accent: "blue",
   },
   {
@@ -72,7 +62,7 @@ export const PROJECTS = [
       "Diagnósticos apresentados com clareza",
       "Aprendizado orientado por uma aplicação real",
     ],
-    icon: ScanSearch,
+    icon: "scan-search",
     accent: "violet",
   },
   {
@@ -91,7 +81,7 @@ export const PROJECTS = [
       "Experiência web consistente",
       "Interface alinhada ao restante do ecossistema",
     ],
-    icon: Radar,
+    icon: "radar",
     accent: "cyan",
   },
 ] as const satisfies readonly Project[];
@@ -132,24 +122,24 @@ export const TIMELINE = [
     year: "BASE",
     title: "Fundamentos",
     text: "Java como linguagem principal e uma base construída com lógica, web e engenharia de software.",
-    icon: Code2,
+    icon: "code",
   },
   {
     year: "PRÁTICA",
     title: "Projetos reais",
     text: "React, TypeScript, Node.js e Electron aplicados em experiências web e desktop.",
-    icon: Layers3,
+    icon: "layers",
   },
   {
     year: "AGORA",
     title: "Ecossistema Nocturne",
     text: "Projetos conectados por arquitetura, documentação, inteligência artificial e uma identidade comum.",
-    icon: TerminalSquare,
+    icon: "terminal",
   },
   {
     year: "CONTÍNUO",
     title: "Evolução",
     text: "Aprofundar Full Stack, Rust e Python enquanto contribuo para software aberto, seguro e bem construído.",
-    icon: FileText,
+    icon: "file-text",
   },
 ] as const satisfies readonly TimelineItem[];

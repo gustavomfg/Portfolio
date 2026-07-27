@@ -4,24 +4,21 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
 import { BrandMark } from "@/components/ui/brand-mark";
+import { usePortfolioNavigation } from "@/hooks/use-portfolio-navigation";
 import { useScrollProgress } from "@/hooks/use-scroll-progress";
 import type { NavItem } from "@/types/portfolio";
 
 interface NavbarProps {
   items: readonly NavItem[];
-  activeSection: string;
-  menuOpen: boolean;
-  onToggleMenu: () => void;
-  onCloseMenu: () => void;
 }
 
-export function Navbar({
-  items,
-  activeSection,
-  menuOpen,
-  onToggleMenu,
-  onCloseMenu,
-}: NavbarProps) {
+export function Navbar({ items }: NavbarProps) {
+  const {
+    activeSection,
+    menuOpen,
+    toggleMenu,
+    closeMenu,
+  } = usePortfolioNavigation(items);
   const reduceMotion = useReducedMotion();
   const { headerRef, progressRef } = useScrollProgress();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -33,7 +30,7 @@ export function Navbar({
     mobileNavRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
 
     const closeAndRestoreFocus = () => {
-      onCloseMenu();
+      closeMenu();
       window.requestAnimationFrame(() => menuButtonRef.current?.focus());
     };
     const handlePointerDown = (event: PointerEvent) => {
@@ -55,7 +52,7 @@ export function Navbar({
       document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [headerRef, menuOpen, onCloseMenu]);
+  }, [closeMenu, headerRef, menuOpen]);
 
   return (
     <header className="site-header" ref={headerRef}>
@@ -96,7 +93,7 @@ export function Navbar({
         aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
         aria-expanded={menuOpen}
         aria-controls="menu-mobile"
-        onClick={onToggleMenu}
+        onClick={toggleMenu}
       >
         {menuOpen ? <X /> : <Menu />}
       </button>
@@ -118,7 +115,7 @@ export function Navbar({
                 href={item.href}
                 key={item.href}
                 onClick={() => {
-                  onCloseMenu();
+                  closeMenu();
                   window.requestAnimationFrame(() => menuButtonRef.current?.focus());
                 }}
                 aria-current={activeSection === item.href ? "location" : undefined}

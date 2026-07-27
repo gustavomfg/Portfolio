@@ -1,6 +1,14 @@
+import { Code2, FileText, Layers3, TerminalSquare } from "lucide-react";
 import { Reveal } from "@/components/animations/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
-import type { TimelineItem } from "@/types/portfolio";
+import type { TimelineIconKey, TimelineItem } from "@/types/portfolio";
+
+const TIMELINE_ICONS = {
+  code: Code2,
+  layers: Layers3,
+  terminal: TerminalSquare,
+  "file-text": FileText,
+} satisfies Record<TimelineIconKey, typeof Code2>;
 
 interface JourneySectionProps {
   items: readonly TimelineItem[];
@@ -18,7 +26,7 @@ export function JourneySection({ items }: JourneySectionProps) {
       </Reveal>
       <div className="timeline">
         {items.map((item, index) => {
-          const Icon = item.icon;
+          const Icon = TIMELINE_ICONS[item.icon];
           return (
             <Reveal className="timeline-item" delay={index * 0.05} distance={16} key={item.year}>
               <span className="timeline-marker"><Icon size={18} /></span>
