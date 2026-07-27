@@ -42,13 +42,14 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
         whileInView={shouldAnimate ? { opacity: 1, scale: 1 } : undefined}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ delay: 0.18, duration: 0.9 }}
+        role="group"
         aria-label="Fluxo do ecossistema Nocturne"
         onPointerMove={updatePointerGlow}
       >
         <div className="pointer-glow" aria-hidden="true" />
-        <div className="visual-grid" />
-        <div className="visual-orbit orbit-one" />
-        <div className="visual-orbit orbit-two" />
+        <div className="visual-grid" aria-hidden="true" />
+        <div className="visual-orbit orbit-one" aria-hidden="true" />
+        <div className="visual-orbit orbit-two" aria-hidden="true" />
         <div className="core-mark"><BrandMark /></div>
         <span className="core-caption">NOCTURNE / CORE</span>
         <svg
