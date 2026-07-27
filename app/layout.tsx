@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import type { ReactNode } from "react";
 import "@fontsource-variable/jetbrains-mono/wght.css";
 import "./globals.css";
@@ -46,13 +45,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
-  // Nonce-based CSP requires request-time rendering so Next.js can apply the
-  // nonce from the incoming Content-Security-Policy header to framework scripts.
-  await headers();
-
   return (
     <html lang="pt-BR">
       <body>

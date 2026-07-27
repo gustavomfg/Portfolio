@@ -60,7 +60,7 @@ O projeto não requer credenciais, banco de dados ou serviços de backend.
 Decisões importantes:
 
 - O conteúdo estático permanece no servidor; somente interações necessárias são hidratadas.
-- A Content Security Policy usa nonce por resposta, portanto as páginas são renderizadas dinamicamente.
+- A página principal é pré-renderizada e pode ser servida por cache, com uma Content Security Policy compatível com os scripts de inicialização do Next.js.
 - Ícones armazenados nos dados usam chaves serializáveis e são resolvidos na camada de apresentação.
 - O CSS é próprio e modular, sem Tailwind.
 - A fonte JetBrains Mono é servida localmente.
@@ -86,7 +86,7 @@ pnpm audit --audit-level high
 4. Inicie com `pnpm start` ou use uma plataforma compatível com Next.js 16.
 5. Confirme `/robots.txt`, `/sitemap.xml`, a URL canônica e as imagens `/opengraph-image` e `/twitter-image`.
 
-O uso de nonce na CSP exige execução server-side por requisição; uma exportação puramente estática não é compatível com a configuração atual.
+Os headers de segurança são aplicados pelo servidor ou pela plataforma compatível com a configuração do Next.js.
 
 ## Atualização de conteúdo
 
