@@ -13,6 +13,7 @@ interface ProjectsSectionProps {
 
 export function ProjectsSection({ projects, onOpenProject }: ProjectsSectionProps) {
   const updatePointerGlow = usePointerGlow();
+  const projectTotal = String(projects.length).padStart(2, "0");
 
   return (
     <section className="ecosystem section-shell" id="ecossistema">
@@ -41,7 +42,7 @@ export function ProjectsSection({ projects, onOpenProject }: ProjectsSectionProp
                   aria-haspopup="dialog"
                   onClick={(e) => onOpenProject(index, e.currentTarget)}
                 />
-                <div className="project-index">{project.id}<span>/04</span></div>
+                <div className="project-index">{project.id}<span>/{projectTotal}</span></div>
                 <div className="project-icon"><Icon size={28} strokeWidth={1.6} /></div>
                 <div className="project-content">
                   <p>{project.role}</p>

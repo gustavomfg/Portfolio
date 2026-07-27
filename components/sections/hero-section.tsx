@@ -2,6 +2,7 @@
 
 import { ArrowDown, ArrowRight, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import type { CSSProperties } from "react";
 import { BrandMark } from "@/components/ui/brand-mark";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { usePointerGlow } from "@/hooks/use-pointer-glow";
@@ -13,12 +14,22 @@ interface HeroSectionProps {
   onSelectProject: (index: number) => void;
 }
 
+function getNodePosition(index: number, total: number) {
+  const angle = -3 * Math.PI / 4 + (2 * Math.PI * index) / total;
+
+  return {
+    x: 50 + Math.cos(angle) * 30,
+    y: 50 + Math.sin(angle) * 32,
+  };
+}
+
 export function HeroSection({ projects, activeProject, onSelectProject }: HeroSectionProps) {
   const hydrated = useHydrated();
   const reduceMotion = useReducedMotion();
   const shouldAnimate = hydrated && !reduceMotion;
   const updatePointerGlow = usePointerGlow();
   const selectedProject = projects[activeProject];
+  const nodePositions = projects.map((_, index) => getNodePosition(index, projects.length));
 
   if (!selectedProject) return null;
 
@@ -78,22 +89,38 @@ export function HeroSection({ projects, activeProject, onSelectProject }: HeroSe
             preserveAspectRatio="none"
             aria-hidden="true"
           >
-            <path className="connection-base" d="M50 50 L20 31" />
-            <path className="connection-base" d="M50 50 L82 35" />
-            <path className="connection-base" d="M50 50 L20 78" />
-            <path className="connection-base" d="M50 50 L82 78" />
-            <path className="connection-flow flow-one" pathLength="1" d="M50 50 L20 31" />
-            <path className="connection-flow flow-two" pathLength="1" d="M50 50 L82 35" />
-            <path className="connection-flow flow-three" pathLength="1" d="M50 50 L20 78" />
-            <path className="connection-flow flow-four" pathLength="1" d="M50 50 L82 78" />
+            {nodePositions.map(({ x, y }, index) => (
+              <path
+                className="connection-base"
+                d={`M50 50 L${x} ${y}`}
+                key={`base-${projects[index]?.key ?? index}`}
+              />
+            ))}
+            {nodePositions.map(({ x, y }, index) => (
+              <path
+                className="connection-flow"
+                pathLength="1"
+                d={`M50 50 L${x} ${y}`}
+                key={`flow-${projects[index]?.key ?? index}`}
+                style={{ animationDelay: `${index * -1.2}s` }}
+              />
+            ))}
           </svg>
           {projects.map((project, index) => {
             const Icon = project.icon;
+            const position = nodePositions[index];
+
+            if (!position) return null;
+
             return (
               <button
-                className={`system-node node-${index + 1} ${activeProject === index ? "is-active" : ""}`}
+                className={`system-node ${activeProject === index ? "is-active" : ""}`}
                 key={project.key}
                 type="button"
+                style={{
+                  "--node-x": `${position.x}%`,
+                  "--node-y": `${position.y}%`,
+                } as CSSProperties}
                 onClick={() => onSelectProject(index)}
                 aria-label={`Destacar ${project.name}`}
                 aria-pressed={activeProject === index}
