@@ -12,7 +12,7 @@ export const PROJECTS = [
     id: "01",
     key: "studio",
     name: "Nocturne Studio",
-    role: "AI Engineering Workspace",
+    role: "Workspace de engenharia com IA",
     description:
       "Um workspace de engenharia de software com inteligência artificial, organizado ao redor de projetos em vez de prompts isolados.",
     tags: ["Electron", "React", "AI"],
@@ -31,7 +31,7 @@ export const PROJECTS = [
     id: "02",
     key: "portfolio",
     name: "Nocturne Portfolio",
-    role: "Professional Identity",
+    role: "Identidade profissional",
     description:
       "Este portfólio: um espaço para reunir projetos, documentação e minha identidade profissional em evolução.",
     tags: ["Next.js", "React", "TypeScript"],
@@ -43,6 +43,13 @@ export const PROJECTS = [
       "Conteúdo centralizado e fácil de atualizar",
       "Identidade visual compartilhada com o Nocturne",
     ],
+    links: [
+      {
+        label: "Ver código-fonte",
+        href: "https://github.com/gustavomfg/Portfolio",
+        type: "source",
+      },
+    ],
     icon: "panels-top-left",
     accent: "blue",
   },
@@ -50,7 +57,7 @@ export const PROJECTS = [
     id: "03",
     key: "inspector",
     name: "Nocturne Inspector",
-    role: "Monitoring & Diagnostics",
+    role: "Monitoramento e diagnóstico",
     description:
       "Aplicação desktop criada para explorar monitoramento, diagnóstico e conceitos de engenharia de software.",
     tags: ["Desktop", "Diagnostics", "Engineering"],
@@ -69,7 +76,7 @@ export const PROJECTS = [
     id: "04",
     key: "control",
     name: "Nocturne Control",
-    role: "Ecosystem Hub",
+    role: "Central do ecossistema",
     description:
       "Aplicação web que centraliza os serviços e as ferramentas que fazem parte do ecossistema Nocturne.",
     tags: ["Web", "React", "Services"],

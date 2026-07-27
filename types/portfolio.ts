@@ -17,8 +17,15 @@ export interface Project {
   status: string;
   problem: string;
   highlights: readonly string[];
+  links?: readonly ProjectLink[];
   icon: ProjectIconKey;
   accent: ProjectAccent;
+}
+
+export interface ProjectLink {
+  label: string;
+  href: `https://${string}`;
+  type: "source" | "demo";
 }
 
 export interface Capability {

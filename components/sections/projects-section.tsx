@@ -32,7 +32,10 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             <Reveal key={project.key}>
               <ProjectCard accent={project.accent} projectKey={project.key}>
                 <ProjectTrigger index={index} name={project.name} />
-                <div className="project-index">{project.id}<span>/{projectTotal}</span></div>
+                <div className="project-card-head">
+                  <div className="project-index">{project.id}<span>/{projectTotal}</span></div>
+                  <div className="project-status"><span />{project.status}</div>
+                </div>
                 <div className="project-icon">
                   <ProjectIcon icon={project.icon} size={28} strokeWidth={1.6} />
                 </div>
@@ -47,9 +50,6 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                 <span className="project-link" aria-hidden="true">
                   <span>Abrir projeto</span><ArrowUpRight size={21} />
                 </span>
-                {index < projects.length - 1 && (
-                  <div className="flow-label"><span />{index === 0 ? "INFORMS" : "EXPRESSES"}<span /></div>
-                )}
               </ProjectCard>
             </Reveal>
           ))}

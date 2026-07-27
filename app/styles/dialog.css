@@ -24,6 +24,9 @@
 .dialog-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .dialog-tags span { padding: 6px 8px; border: 1px solid var(--line); border-radius: 5px; color: var(--text-label); font-size: var(--font-label); text-transform: uppercase; }
 .dialog-note { color: var(--text-label); font-size: var(--font-label); text-align: right; }
+.dialog-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.dialog-links a { min-height: 38px; padding: 0 12px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid color-mix(in srgb, var(--project-accent) 34%, var(--line)); border-radius: var(--radius-button); color: var(--text-bright); background: color-mix(in srgb, var(--project-accent) 7%, transparent); font-size: var(--font-label); transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease, transform var(--duration-fast) ease; }
+.dialog-links a:hover { border-color: color-mix(in srgb, var(--project-accent) 68%, var(--line)); background: color-mix(in srgb, var(--project-accent) 13%, transparent); transform: translateY(-1px); }
 
 @media (max-width: 700px) {
   .project-dialog-backdrop { align-items: end; padding: 10px; }
@@ -36,4 +39,6 @@
   .dialog-content > div + div { border-top: 1px solid var(--line); border-left: 0; }
   .dialog-footer { padding: 18px 20px; align-items: flex-start; flex-direction: column; }
   .dialog-note { text-align: left; }
+  .dialog-links { width: 100%; justify-content: flex-start; }
+  .dialog-links a { width: 100%; justify-content: center; }
 }

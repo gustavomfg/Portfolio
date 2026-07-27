@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, X } from "lucide-react";
+import { Check, Code2, ExternalLink, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { createPortal } from "react-dom";
 import { ProjectIcon } from "@/components/ui/project-icon";
@@ -26,7 +26,7 @@ export function ProjectDialog({ project, onClose, dialogRef }: ProjectDialogProp
           initial={reduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onMouseDown={(event) => {
+          onPointerDown={(event) => {
             if (event.target === event.currentTarget) onClose();
           }}
         >
@@ -36,6 +36,7 @@ export function ProjectDialog({ project, onClose, dialogRef }: ProjectDialogProp
             role="dialog"
             aria-modal="true"
             aria-labelledby="project-dialog-title"
+            aria-describedby="project-dialog-description"
             initial={reduceMotion ? false : { opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.99 }}
@@ -70,7 +71,7 @@ function DialogContent({ project, onClose }: { project: Project; onClose: () => 
       <div className="dialog-content">
         <div>
           <small>O QUE O PROJETO RESOLVE</small>
-          <p>{project.problem}</p>
+          <p id="project-dialog-description">{project.problem}</p>
         </div>
         <div>
           <small>DESTAQUES TÉCNICOS</small>
@@ -85,7 +86,20 @@ function DialogContent({ project, onClose }: { project: Project; onClose: () => 
         <div className="dialog-tags">
           {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
         </div>
-        <span className="dialog-note">Mais informações e links em breve.</span>
+        {project.links?.length ? (
+          <div className="dialog-links">
+            {project.links.map((link) => (
+              <a href={link.href} key={link.href} rel="noreferrer" target="_blank">
+                {link.type === "source"
+                  ? <Code2 size={16} aria-hidden="true" />
+                  : <ExternalLink size={16} aria-hidden="true" />}
+                {link.label}
+              </a>
+            ))}
+          </div>
+        ) : (
+          <span className="dialog-note">Código e demonstração serão publicados quando estiverem prontos.</span>
+        )}
       </div>
     </>
   );
