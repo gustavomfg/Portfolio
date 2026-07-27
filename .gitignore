@@ -5,6 +5,20 @@
 /.next
 /dist
 *.tsbuildinfo
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+
+# Local tooling and editor state
+/.agents
+/.codex
+/.idea
+/.nocturne
+/.playwright-mcp
+.DS_Store
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
