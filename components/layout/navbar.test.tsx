@@ -42,6 +42,7 @@ function installIntersectionObserver() {
     readonly thresholds = [0, 0.2, 0.5];
     readonly observed: Element[] = [];
     readonly disconnect = vi.fn();
+    readonly scrollMargin = "0px";
 
     constructor(readonly callback: IntersectionObserverCallback) {
       records.push(this);
