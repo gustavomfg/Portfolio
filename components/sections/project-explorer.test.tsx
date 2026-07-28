@@ -32,6 +32,7 @@ function DialogFixture() {
     <main id="conteudo">
       <ProjectExplorer projects={PROJECTS}>
         <ProjectTrigger index={0} name={PROJECTS[0].name} />
+        <ProjectTrigger index={1} name={PROJECTS[1].name} />
       </ProjectExplorer>
     </main>
   );
@@ -52,6 +53,7 @@ describe("ProjectExplorer", () => {
     const content = document.getElementById("conteudo");
 
     expect(dialog.getAttribute("aria-modal")).toBe("true");
+    expect(dialog.getAttribute("aria-describedby")).toBe("project-dialog-description");
     expect(content?.hasAttribute("inert")).toBe(true);
     expect(content?.contains(dialog)).toBe(false);
     expect(document.body.classList.contains("dialog-open")).toBe(true);
@@ -68,6 +70,18 @@ describe("ProjectExplorer", () => {
     expect(content?.hasAttribute("inert")).toBe(false);
     expect(document.body.classList.contains("dialog-open")).toBe(false);
     expect(document.activeElement).toBe(trigger);
+  });
+
+  it("exibe links públicos verificados no projeto correspondente", async () => {
+    const user = userEvent.setup();
+    render(<DialogFixture />);
+
+    await user.click(screen.getByRole("button", {
+      name: `Abrir detalhes de ${PROJECTS[1].name}`,
+    }));
+
+    expect(screen.getByRole("link", { name: "Ver código-fonte" }).getAttribute("href"))
+      .toBe("https://github.com/gustavomfg/Portfolio");
   });
 
   it("fecha ao clicar no backdrop", async () => {

@@ -11,7 +11,24 @@ describe("portfolio data", () => {
       expect(project.description.trim()).not.toBe("");
       expect(project.tags.length).toBeGreaterThan(0);
       expect(project.highlights.length).toBeGreaterThan(0);
+
+      if ("links" in project) {
+        for (const link of project.links) {
+          expect(link.href).toMatch(/^https:\/\//);
+          expect(link.label.trim()).not.toBe("");
+        }
+      }
     }
+  });
+
+  it("publishes the verified source link for this portfolio", () => {
+    const portfolio = PROJECTS.find((project) => project.key === "portfolio");
+
+    expect(portfolio?.links).toContainEqual({
+      label: "Ver código-fonte",
+      href: "https://github.com/gustavomfg/Portfolio",
+      type: "source",
+    });
   });
 
   it("keeps navigation targets unique", () => {

@@ -127,7 +127,24 @@ describe("Navbar", () => {
 
     expect(
       screen.getByRole("navigation", { name: "Navegação móvel" })
-        .getAttribute("data-motion-initial"),
+      .getAttribute("data-motion-initial"),
     ).toBe("false");
+  });
+
+  it("move o foco para a seção escolhida no menu móvel", async () => {
+    const user = userEvent.setup();
+    renderNavbar();
+
+    await user.click(screen.getByRole("button", { name: "Abrir menu" }));
+    const mobileNav = screen.getByRole("navigation", { name: "Navegação móvel" });
+    await user.click(within(mobileNav).getByRole("link", { name: "Sobre" }));
+
+    await act(async () => {
+      await new Promise((resolve) => window.requestAnimationFrame(resolve));
+    });
+
+    const target = document.getElementById("sobre");
+    expect(document.activeElement).toBe(target);
+    expect(target?.getAttribute("tabindex")).toBe("-1");
   });
 });
