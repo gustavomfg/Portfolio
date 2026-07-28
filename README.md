@@ -1,13 +1,71 @@
-# Nocturne Portfolio
+> **Documentation for Nocturne Portfolio**
 
-Portfólio pessoal de Gustavo Maquias e apresentação do ecossistema Nocturne. O projeto é uma aplicação Next.js de página única, responsiva e acessível, com uma introdução cinematográfica e conteúdo profissional centralizado.
+# 🌙 Nocturne Portfolio
 
-## Requisitos
+> **A modern developer portfolio designed to present projects, experience and the Nocturne ecosystem.**
 
-- Node.js 24 ou superior
-- pnpm 11.15.1 ou superior, preferencialmente habilitado pelo Corepack
+Nocturne Portfolio is my personal portfolio website built with **Next.js**, focused on performance, accessibility and user experience.
 
-## Desenvolvimento local
+Beyond presenting my work, it serves as the public entry point to the **Nocturne ecosystem**, showcasing projects, technical skills and my approach to software engineering.
+
+---
+
+# Preview
+
+<p align="center">
+  <img src="./images/portfolio-home.png" alt="Nocturne Portfolio Home" width="90%">
+</p>
+
+---
+
+# Features
+
+- 🎬 Cinematic introduction
+- 📱 Fully responsive layout
+- ♿ Accessibility-first experience
+- ⚡ Optimized performance
+- 🎨 Custom design system
+- 🌙 Nocturne visual identity
+- 🧩 Modular component architecture
+- 🔍 SEO optimized
+- 🗺️ Automatic sitemap
+- 🤖 Open Graph & Twitter Cards
+- 🧪 Automated testing
+- 🚀 Production-ready deployment
+
+---
+
+# Technology Stack
+
+## Frontend
+
+- Next.js 16
+- React
+- TypeScript
+
+## Styling
+
+- Modular CSS
+- Design Tokens
+- JetBrains Mono
+
+## Tooling
+
+- pnpm
+- ESLint
+- Playwright
+- GitHub Actions
+
+---
+
+# Getting Started
+
+## Requirements
+
+- Node.js 24+
+- pnpm 11+
+
+## Installation
 
 ```bash
 corepack enable
@@ -15,59 +73,65 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-A aplicação estará disponível em `http://localhost:3000`.
+The application will be available at:
 
-## Comandos
-
-| Comando | Finalidade |
-| --- | --- |
-| `pnpm dev` | Inicia o servidor de desenvolvimento |
-| `pnpm build` | Gera o build de produção |
-| `pnpm start` | Executa o build de produção |
-| `pnpm lint` | Verifica o código com ESLint |
-| `pnpm typecheck` | Verifica os tipos TypeScript |
-| `pnpm test` | Executa testes unitários e de componentes |
-| `pnpm test:e2e` | Executa os cenários E2E no Chromium |
-
-Para preparar o navegador dos testes E2E:
-
-```bash
-pnpm exec playwright install chromium
+```text
+http://localhost:3000
 ```
 
-## Configuração
+---
 
-Defina a URL pública completa na implantação:
+# Available Commands
 
-```bash
-NEXT_PUBLIC_SITE_URL=https://seu-dominio.example
+| Command | Description |
+|----------|-------------|
+| `pnpm dev` | Development server |
+| `pnpm build` | Production build |
+| `pnpm start` | Start production server |
+| `pnpm lint` | ESLint |
+| `pnpm typecheck` | TypeScript validation |
+| `pnpm test` | Unit & component tests |
+| `pnpm test:e2e` | End-to-end tests |
+
+---
+
+# Architecture
+
+```
+app/
+components/
+hooks/
+data/
+lib/
+styles/
+tests/
 ```
 
-Essa variável alimenta a URL canônica, Open Graph, Twitter Cards, `robots.txt` e `sitemap.xml`. Implantações na Vercel também reconhecem `VERCEL_PROJECT_PRODUCTION_URL`; previews continuam bloqueados para indexação. Sem uma URL pública, o desenvolvimento usa `http://localhost:3000` e bloqueia indexação em `robots.txt`. Um deploy na Vercel falha de forma explícita quando nenhuma URL pública está disponível.
+Design principles:
 
-O projeto não requer credenciais, banco de dados ou serviços de backend.
+- Server-first rendering
+- Client hydration only where necessary
+- Typed content source
+- Modular architecture
+- Accessibility by design
+- Performance-oriented implementation
 
-## Arquitetura
+---
 
-- `app/`: App Router, layout, metadados e arquivos de descoberta.
-- `components/`: Server Components para conteúdo estático e ilhas cliente para navegação, animações e diálogo.
-- `data/portfolio.ts`: fonte tipada do conteúdo exibido.
-- `hooks/`: comportamento interativo e acessível.
-- `lib/`: matemática e direção da jornada cinematográfica.
-- `app/styles/`: tokens, base, layout, seções, diálogo, jornada e atmosfera.
-- `e2e/` e arquivos `*.test.ts(x)`: testes de interface, acessibilidade, dados e lógica.
+# Quality
 
-Decisões importantes:
+Every change is validated through:
 
-- O conteúdo estático permanece no servidor; somente interações necessárias são hidratadas.
-- A página principal é pré-renderizada e pode ser servida por cache, com uma Content Security Policy compatível com os scripts de inicialização do Next.js.
-- Ícones armazenados nos dados usam chaves serializáveis e são resolvidos na camada de apresentação.
-- O CSS é próprio e modular, sem Tailwind.
-- A fonte JetBrains Mono é servida localmente.
+- ESLint
+- TypeScript
+- Unit Tests
+- Component Tests
+- End-to-End Tests
+- Accessibility Tests (axe)
+- Production Build
+- Dependency Audit
 
-## Qualidade e segurança
-
-O workflow de CI executa instalação congelada, lint, typecheck, testes, build, E2E com verificações axe e auditoria de dependências. Antes de enviar uma mudança, execute:
+Recommended before every commit:
 
 ```bash
 pnpm lint
@@ -78,21 +142,44 @@ pnpm test:e2e
 pnpm audit --audit-level high
 ```
 
-## Implantação
+---
 
-1. Configure Node.js 24 e pnpm via Corepack.
-2. Defina `NEXT_PUBLIC_SITE_URL` com o domínio final.
-3. Execute `pnpm install --frozen-lockfile` e `pnpm build`.
-4. Inicie com `pnpm start` ou use uma plataforma compatível com Next.js 16.
-5. Confirme `/robots.txt`, `/sitemap.xml`, a URL canônica e as imagens `/opengraph-image` e `/twitter-image`.
+# Deployment
 
-Os headers de segurança são aplicados pelo servidor ou pela plataforma compatível com a configuração do Next.js.
+Configure:
 
-## Atualização de conteúdo
+```bash
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
 
-[IDENTITY.md](IDENTITY.md) é a fonte canônica da identidade profissional. Ao atualizar o portfólio:
+Then build normally:
 
-1. Preserve a precisão factual e não exagere experiência ou habilidades.
-2. Atualize `IDENTITY.md` quando a identidade profissional mudar.
-3. Reflita o conteúdo público em `data/portfolio.ts`.
-4. Execute todas as verificações de qualidade antes da implantação.
+```bash
+pnpm install --frozen-lockfile
+pnpm build
+pnpm start
+```
+
+The portfolio automatically generates:
+
+- robots.txt
+- sitemap.xml
+- Open Graph images
+- Twitter Cards
+- Canonical URLs
+
+---
+
+# Professional Identity
+
+The project uses **IDENTITY.md** as the canonical source describing my professional profile.
+
+Portfolio content should always remain consistent with this document.
+
+---
+
+# License
+
+This project is open source.
+
+See the repository license for more information.
