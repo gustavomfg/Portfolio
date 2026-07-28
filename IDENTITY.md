@@ -158,7 +158,7 @@ Any AI or contributor updating portfolio content should:
 ## Contact
 
 - LinkedIn: https://www.linkedin.com/in/gustavomfg
-- Email: guuuhh666@gmail.com
+- Email: gustavomfgdev@gmail.com
 - GitHub: https://github.com/gustavomfg
 
 ## Public Project Links

@@ -10,7 +10,7 @@ export function ContactSection() {
         <h2>Vamos construir<br /><em>algo interessante?</em></h2>
         <p className="contact-copy">Estou aberto a oportunidades, colaborações e boas conversas sobre software, arquitetura e tecnologia.</p>
         <div className="contact-actions">
-          <a className="button button-light" href="mailto:guuuhh666@gmail.com">
+          <a className="button button-light" href="mailto:gustavomfgdev@gmail.com">
             Enviar uma mensagem <Mail size={17} />
           </a>
           <div className="social-links">
@@ -22,8 +22,8 @@ export function ContactSection() {
             </a>
           </div>
         </div>
-        <a className="contact-email" href="mailto:guuuhh666@gmail.com">
-          guuuhh666@gmail.com
+        <a className="contact-email" href="mailto:gustavomfgdev@gmail.com">
+          gustavomfgdev@gmail.com
         </a>
       </Reveal>
     </section>
