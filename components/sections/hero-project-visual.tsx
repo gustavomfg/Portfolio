@@ -17,8 +17,8 @@ function getNodePosition(index: number, total: number) {
   const angle = -3 * Math.PI / 4 + (2 * Math.PI * index) / total;
 
   return {
-    x: 50 + Math.cos(angle) * 30,
-    y: 50 + Math.sin(angle) * 32,
+    x: 50 + Math.cos(angle) * 32,
+    y: 48 + Math.sin(angle) * 29,
   };
 }
 
@@ -34,7 +34,7 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
   if (!selectedProject) return null;
 
   return (
-    <>
+    <div className="hero-visual-stack">
       <motion.div
         key={shouldAnimate ? "animated-visual" : "static-visual"}
         className="system-visual"
@@ -48,10 +48,13 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
       >
         <div className="pointer-glow" aria-hidden="true" />
         <div className="visual-grid" aria-hidden="true" />
+        <div className="radar-sweep" aria-hidden="true" />
+        <div className="radar-axis radar-axis-x" aria-hidden="true" />
+        <div className="radar-axis radar-axis-y" aria-hidden="true" />
         <div className="visual-orbit orbit-one" aria-hidden="true" />
         <div className="visual-orbit orbit-two" aria-hidden="true" />
         <div className="core-mark"><BrandMark /></div>
-        <span className="core-caption">NOCTURNE / CORE</span>
+        <span className="core-caption">NOCTURNE / NÚCLEO</span>
         <svg
           className="map-connections"
           viewBox="0 0 100 100"
@@ -61,15 +64,15 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
           {nodePositions.map(({ x, y }, index) => (
             <path
               className="connection-base"
-              d={`M50 50 L${x} ${y}`}
+              d={`M50 48 L${x} ${y}`}
               key={`base-${projects[index]?.key ?? index}`}
             />
           ))}
           {nodePositions.map(({ x, y }, index) => (
             <path
-              className="connection-flow"
+              className={`connection-flow ${activeProject === index ? "is-active" : ""}`}
               pathLength="1"
-              d={`M50 50 L${x} ${y}`}
+              d={`M50 48 L${x} ${y}`}
               key={`flow-${projects[index]?.key ?? index}`}
               style={{ animationDelay: `${index * -1.2}s` }}
             />
@@ -82,7 +85,7 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
 
           return (
             <button
-              className={`system-node ${activeProject === index ? "is-active" : ""}`}
+              className={`system-node node-${project.accent} ${activeProject === index ? "is-active" : ""}`}
               key={project.key}
               type="button"
               style={{
@@ -98,7 +101,11 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
             </button>
           );
         })}
-        <div className="system-status"><span /> SYSTEMS CONNECTED</div>
+        <div className="system-status">
+          <span />
+          ECOSSISTEMA ONLINE
+          <small>{String(projects.length).padStart(2, "0")} NÓS</small>
+        </div>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             className="active-readout"
@@ -108,9 +115,11 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
             exit={{ opacity: 0, x: -8 }}
             transition={{ duration: 0.24 }}
           >
-            <small>ACTIVE / {selectedProject.id}</small>
-            <strong>{selectedProject.name}</strong>
-            <span>{selectedProject.role}</span>
+            <span className="readout-index">ATIVO / {selectedProject.id}</span>
+            <span className="readout-copy">
+              <strong>{selectedProject.name}</strong>
+              <small>{selectedProject.role}</small>
+            </span>
           </motion.div>
         </AnimatePresence>
       </motion.div>
@@ -131,6 +140,6 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
           </button>
         ))}
       </div>
-    </>
+    </div>
   );
 }
