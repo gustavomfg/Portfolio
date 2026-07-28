@@ -60,9 +60,11 @@ describe("ProjectExplorer", () => {
     expect(document.activeElement).toBe(closeButton);
 
     await user.tab();
+    expect(document.activeElement).toBe(screen.getByRole("link", { name: "Ver código-fonte" }));
+    await user.tab();
     expect(document.activeElement).toBe(closeButton);
     await user.tab({ shift: true });
-    expect(document.activeElement).toBe(closeButton);
+    expect(document.activeElement).toBe(screen.getByRole("link", { name: "Ver código-fonte" }));
 
     await user.keyboard("{Escape}");
 

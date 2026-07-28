@@ -31,6 +31,24 @@ describe("portfolio data", () => {
     });
   });
 
+  it("publishes the source links documented for the Nocturne projects", () => {
+    const expectedRepositories = {
+      studio: "https://github.com/gustavomfg/nocturne-studio",
+      inspector: "https://github.com/gustavomfg/nocturne-inspector",
+      control: "https://github.com/gustavomfg/nocturne-control",
+    } as const;
+
+    for (const [projectKey, repository] of Object.entries(expectedRepositories)) {
+      const project = PROJECTS.find((item) => item.key === projectKey);
+
+      expect(project?.links).toContainEqual({
+        label: "Ver código-fonte",
+        href: repository,
+        type: "source",
+      });
+    }
+  });
+
   it("keeps navigation targets unique", () => {
     expect(new Set(NAV_ITEMS.map((item) => item.href)).size).toBe(NAV_ITEMS.length);
   });

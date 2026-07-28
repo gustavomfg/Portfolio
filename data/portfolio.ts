@@ -24,6 +24,13 @@ export const PROJECTS = [
       "Review Mode e suporte a múltiplos provedores",
       "Arquitetura Electron segura e documentação contínua",
     ],
+    links: [
+      {
+        label: "Ver código-fonte",
+        href: "https://github.com/gustavomfg/nocturne-studio",
+        type: "source",
+      },
+    ],
     icon: "brain-circuit",
     accent: "violet",
   },
@@ -69,6 +76,13 @@ export const PROJECTS = [
       "Diagnósticos apresentados com clareza",
       "Aprendizado orientado por uma aplicação real",
     ],
+    links: [
+      {
+        label: "Ver código-fonte",
+        href: "https://github.com/gustavomfg/nocturne-inspector",
+        type: "source",
+      },
+    ],
     icon: "scan-search",
     accent: "violet",
   },
@@ -87,6 +101,13 @@ export const PROJECTS = [
       "Centralização dos serviços Nocturne",
       "Experiência web consistente",
       "Interface alinhada ao restante do ecossistema",
+    ],
+    links: [
+      {
+        label: "Ver código-fonte",
+        href: "https://github.com/gustavomfg/nocturne-control",
+        type: "source",
+      },
     ],
     icon: "radar",
     accent: "cyan",

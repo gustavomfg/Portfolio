@@ -155,6 +155,15 @@ Any AI or contributor updating portfolio content should:
 - Keep the writing clear, professional and consistent.
 - Represent the evolution of the Nocturne ecosystem faithfully.
 
-Linkedin: www.linkedin.com/in/gustavomfg
-Email: guuuhh666@gmail.com
-GitHub: https://github.com/gustavomfg
+## Contact
+
+- LinkedIn: https://www.linkedin.com/in/gustavomfg
+- Email: guuuhh666@gmail.com
+- GitHub: https://github.com/gustavomfg
+
+## Public Project Links
+
+- Nocturne Studio: https://github.com/gustavomfg/nocturne-studio
+- Nocturne Portfolio: https://github.com/gustavomfg/Portfolio
+- Nocturne Control: https://github.com/gustavomfg/nocturne-control
+- Nocturne Inspector: https://github.com/gustavomfg/nocturne-inspector
