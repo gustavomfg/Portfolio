@@ -10,14 +10,6 @@ Beyond presenting my work, it serves as the public entry point to the **Nocturne
 
 ---
 
-# Preview
-
-<p align="center">
-  <img src="./images/portfolio-home.png" alt="Nocturne Portfolio Home" width="90%">
-</p>
-
----
-
 # Features
 
 - 🎬 Cinematic introduction
