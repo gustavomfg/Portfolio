@@ -1,0 +1,20 @@
+allowBuilds:
+  sharp: true
+  unrs-resolver: true
+
+# Keep these pins until Next.js declares patched compatible versions:
+# - postcss >=8.5.18 fixes GHSA-6g55-p6wh-862q, GHSA-r28c-9q8g-f849, and
+#   GHSA-qx2v-qp2m-jg93.
+# - sharp >=0.35.0 fixes inherited libvips vulnerabilities tracked by
+#   GHSA-f88m-g3jw-g9cj.
+overrides:
+  postcss: 8.5.20
+  sharp: 0.35.0
+
+auditConfig:
+  # minimatch 3 remains in the latest eslint-config-next plugin tree. Forcing
+  # brace-expansion 5 breaks its CommonJS API; the affected path is lint-only
+  # and receives repository-controlled patterns. Remove this exception when
+  # eslint-plugin-import/react/jsx-a11y stop depending on minimatch 3.
+  ignoreGhsas:
+    - GHSA-mh99-v99m-4gvg
