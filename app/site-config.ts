@@ -1,15 +1,27 @@
 const localUrl = "http://localhost:3000";
+const isDevelopment = process.env.NODE_ENV === "development";
 
 function normalizeUrl(value: string | undefined) {
   if (!value) {
     return undefined;
   }
 
-  const url = value.startsWith("http://") || value.startsWith("https://")
+  const normalizedValue = value.startsWith("http://") || value.startsWith("https://")
     ? value
     : `https://${value}`;
+  const url = new URL(normalizedValue);
+  const isLocalDevelopment =
+    isDevelopment
+    && url.protocol === "http:"
+    && ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
 
-  return new URL(url);
+  if (url.protocol !== "https:" && !isLocalDevelopment) {
+    throw new Error(
+      "A URL pública do portfólio deve usar HTTPS.",
+    );
+  }
+
+  return url;
 }
 
 const configuredUrl = normalizeUrl(
