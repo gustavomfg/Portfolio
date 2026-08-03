@@ -20,8 +20,8 @@ export function JourneySection({ items }: JourneySectionProps) {
       <Reveal>
         <SectionHeading
           eyebrow="Como eu aprendo"
-          title="Evoluir através da prática."
-          copy="Em vez de estudar tecnologias de forma isolada, prefiro criar aplicações que me desafiem a compreender arquitetura, fluxos de trabalho e decisões de engenharia."
+          title="Uma trajetória de aprendizado contínuo."
+          copy="Minha formação combina fundamentos acadêmicos com projetos que me desafiam a compreender arquitetura, fluxos de trabalho e decisões reais de engenharia."
         />
       </Reveal>
       <div className="timeline">

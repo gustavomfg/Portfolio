@@ -26,9 +26,9 @@ export function NocturneJourney() {
         </div>
 
         <div className="journey-welcome">
-          <p className="journey-welcome__eyebrow">Nocturne</p>
+          <p className="journey-welcome__eyebrow">Portfólio profissional</p>
           <p className="journey-welcome__title">Bem-vindo.</p>
-          <p className="journey-welcome__instruction">Role para entrar</p>
+          <p className="journey-welcome__instruction">Role para conhecer</p>
         </div>
 
         <NocturneIdentity />

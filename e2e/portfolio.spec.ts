@@ -59,7 +59,7 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
 
   const mainNavigation = page.getByRole("navigation", { name: "Navegação principal" });
   await expect(mainNavigation.getByRole("link")).toHaveCount(4);
-  await expect(mainNavigation.getByRole("link", { name: "Ecossistema" }))
+  await expect(mainNavigation.getByRole("link", { name: "Projetos" }))
     .toHaveAttribute("href", "#ecossistema");
 
   const projectTrigger = page.getByRole("button", {

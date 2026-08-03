@@ -43,7 +43,7 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
         viewport={{ once: true, amount: 0.15 }}
         transition={{ delay: 0.18, duration: 0.9 }}
         role="group"
-        aria-label="Fluxo do ecossistema Nocturne"
+        aria-label="Mapa dos projetos de Gustavo Maquias"
         onPointerMove={updatePointerGlow}
       >
         <div className="pointer-glow" aria-hidden="true" />
@@ -54,7 +54,7 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
         <div className="visual-orbit orbit-one" aria-hidden="true" />
         <div className="visual-orbit orbit-two" aria-hidden="true" />
         <div className="core-mark"><BrandMark /></div>
-        <span className="core-caption">NOCTURNE / NÚCLEO</span>
+        <span className="core-caption">GUSTAVO / PROJETOS</span>
         <svg
           className="map-connections"
           viewBox="0 0 100 100"
@@ -103,8 +103,8 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
         })}
         <div className="system-status">
           <span />
-          ECOSSISTEMA ONLINE
-          <small>{String(projects.length).padStart(2, "0")} NÓS</small>
+          PROJETOS EM EVOLUÇÃO
+          <small>{String(projects.length).padStart(2, "0")} PROJETOS</small>
         </div>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -115,7 +115,7 @@ export function HeroProjectVisual({ projects }: HeroProjectVisualProps) {
             exit={{ opacity: 0, x: -8 }}
             transition={{ duration: 0.24 }}
           >
-            <span className="readout-index">ATIVO / {selectedProject.id}</span>
+            <span className="readout-index">PROJETO / {selectedProject.id}</span>
             <span className="readout-copy">
               <strong>{selectedProject.name}</strong>
               <small>{selectedProject.role}</small>
