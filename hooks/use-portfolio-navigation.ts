@@ -5,7 +5,7 @@ import type { NavItem } from "@/types/portfolio";
 
 export function usePortfolioNavigation(navItems: readonly NavItem[]) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState(navItems[0]?.href ?? "#inicio");
+  const [activeSection, setActiveSection] = useState<NavItem["href"] | null>(null);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((current) => !current), []);
 

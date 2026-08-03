@@ -92,6 +92,16 @@ describe("Navbar", () => {
     expect(document.activeElement).toBe(menuButton);
   });
 
+  it("não marca uma seção como ativa antes de ela ficar visível", () => {
+    renderNavbar();
+
+    const desktopNav = screen.getByRole("navigation", { name: "Navegação principal" });
+
+    for (const link of within(desktopNav).getAllByRole("link")) {
+      expect(link.getAttribute("aria-current")).toBeNull();
+    }
+  });
+
   it("atualiza aria-current pela seção mais visível e encerra o observer", () => {
     const observers = installIntersectionObserver();
     const { unmount } = renderNavbar();
