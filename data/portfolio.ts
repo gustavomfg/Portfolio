@@ -1,7 +1,7 @@
 import type { Capability, NavItem, Project, TimelineItem } from "@/types/portfolio";
 
 export const NAV_ITEMS = [
-  { label: "Ecossistema", href: "#ecossistema" },
+  { label: "Projetos", href: "#ecossistema" },
   { label: "Sobre", href: "#sobre" },
   { label: "Jornada", href: "#jornada" },
   { label: "Contato", href: "#contato" },
@@ -12,13 +12,13 @@ export const PROJECTS = [
     id: "01",
     key: "studio",
     name: "Nocturne Studio",
-    role: "Workspace de engenharia com IA",
+    role: "Engenharia de software com IA",
     description:
-      "Um workspace de engenharia de software com inteligência artificial, organizado ao redor de projetos em vez de prompts isolados.",
+      "Projeto desktop em que exploro inteligência artificial aplicada a fluxos de engenharia orientados pelo contexto de cada workspace.",
     tags: ["Electron", "React", "AI"],
     status: "Em desenvolvimento",
     problem:
-      "Manter memória, contexto e decisões de engenharia conectados ao projeto durante todo o processo de desenvolvimento.",
+      "Investigar como memória, contexto e decisões técnicas podem permanecer conectados durante o desenvolvimento de um projeto.",
     highlights: [
       "Memória de workspace e Second Brain",
       "Review Mode e suporte a múltiplos provedores",
@@ -37,18 +37,18 @@ export const PROJECTS = [
   {
     id: "02",
     key: "portfolio",
-    name: "Nocturne Portfolio",
-    role: "Identidade profissional",
+    name: "Portfolio",
+    role: "Portfólio profissional",
     description:
-      "Este portfólio: um espaço para reunir projetos, documentação e minha identidade profissional em evolução.",
+      "Meu portfólio pessoal, criado para apresentar minha trajetória, minhas competências e a evolução dos projetos que desenvolvo.",
     tags: ["Next.js", "React", "TypeScript"],
     status: "Em evolução contínua",
     problem:
-      "Apresentar o que estou construindo e aprendendo de forma clara, honesta e consistente com a identidade do ecossistema.",
+      "Comunicar quem sou como desenvolvedor e demonstrar, com clareza, o conhecimento técnico que venho construindo na prática.",
     highlights: [
       "Interface responsiva e acessível",
       "Conteúdo centralizado e fácil de atualizar",
-      "Identidade visual compartilhada com o Nocturne",
+      "Conteúdo orientado à minha identidade profissional",
     ],
     links: [
       {
@@ -64,17 +64,17 @@ export const PROJECTS = [
     id: "03",
     key: "inspector",
     name: "Nocturne Inspector",
-    role: "Monitoramento e diagnóstico",
+    role: "Inspeção e validação de projetos",
     description:
-      "Aplicação desktop criada para explorar monitoramento, diagnóstico e conceitos de engenharia de software.",
+      "Projeto de engenharia voltado à inspeção de projetos, validação de arquitetura e criação de ferramentas para desenvolvedores.",
     tags: ["Desktop", "Diagnostics", "Engineering"],
     status: "Em desenvolvimento",
     problem:
-      "Transformar conceitos de monitoramento e diagnóstico em uma ferramenta prática para aprofundar conhecimentos de engenharia.",
+      "Transformar análises de estrutura e arquitetura em informações úteis para compreender e aprimorar projetos de software.",
     highlights: [
-      "Exploração de monitoramento de software",
-      "Diagnósticos apresentados com clareza",
-      "Aprendizado orientado por uma aplicação real",
+      "Pipeline modular de inspeção",
+      "Análises técnicas apresentadas com clareza",
+      "Arquitetura preparada para evolução contínua",
     ],
     links: [
       {
@@ -90,17 +90,17 @@ export const PROJECTS = [
     id: "04",
     key: "control",
     name: "Nocturne Control",
-    role: "Central do ecossistema",
+    role: "Aplicação web e integração",
     description:
-      "Aplicação web que centraliza os serviços e as ferramentas que fazem parte do ecossistema Nocturne.",
+      "Aplicação web em que exploro a centralização de utilitários e serviços por meio de uma interface moderna e responsiva.",
     tags: ["Web", "React", "Services"],
     status: "Em evolução",
     problem:
-      "Oferecer um ponto central para acessar e acompanhar ferramentas do ecossistema sem perder clareza ou consistência.",
+      "Organizar diferentes utilitários e serviços em uma experiência centralizada, clara e consistente em diferentes dispositivos.",
     highlights: [
-      "Centralização dos serviços Nocturne",
-      "Experiência web consistente",
-      "Interface alinhada ao restante do ecossistema",
+      "Arquitetura frontend responsiva",
+      "Integração de serviços em uma única interface",
+      "Atenção à usabilidade e à consistência visual",
     ],
     links: [
       {
@@ -130,18 +130,18 @@ export const STACK = [
 export const CAPABILITIES = [
   {
     number: "01",
-    title: "Desenvolvimento Full Stack",
-    description: "Aplicações modernas com React, TypeScript, JavaScript e Node.js, conectando interface e lógica.",
+    title: "Interfaces web",
+    description: "Desenvolvimento de interfaces responsivas e componentizadas com React, TypeScript, JavaScript, HTML e CSS.",
   },
   {
     number: "02",
-    title: "Arquitetura e desktop",
-    description: "Exploração de arquitetura de software e aplicações Electron com atenção à segurança e à manutenção.",
+    title: "Backend e arquitetura",
+    description: "Construção de APIs e lógica de aplicação com Node.js, priorizando organização, manutenção e decisões arquiteturais claras.",
   },
   {
     number: "03",
-    title: "Experiência de desenvolvimento",
-    description: "Documentação, UI/UX, desempenho e ferramentas pensadas para tornar o software agradável de usar e evoluir.",
+    title: "Aplicações desktop",
+    description: "Criação de aplicações multiplataforma com Electron, considerando segurança, persistência e experiência de uso desde o início.",
   },
 ] as const satisfies readonly Capability[];
 
@@ -149,25 +149,25 @@ export const TIMELINE = [
   {
     year: "BASE",
     title: "Fundamentos",
-    text: "Java como linguagem principal e uma base construída com lógica, web e engenharia de software.",
+    text: "Formação em Análise e Desenvolvimento de Sistemas, com Java como principal linguagem acadêmica e uma base em lógica, web e engenharia de software.",
     icon: "code",
   },
   {
     year: "PRÁTICA",
-    title: "Projetos reais",
-    text: "React, TypeScript, Node.js e Electron aplicados em experiências web e desktop.",
+    title: "Aprendizado aplicado",
+    text: "React, TypeScript, Node.js e Electron aplicados na criação de projetos completos para web e desktop.",
     icon: "layers",
   },
   {
     year: "AGORA",
-    title: "Ecossistema Nocturne",
-    text: "Projetos conectados por arquitetura, documentação, inteligência artificial e uma identidade comum.",
+    title: "Evolução técnica",
+    text: "Aprofundamento em arquitetura, backend, inteligência artificial, documentação e práticas que tornam o software mais seguro e sustentável.",
     icon: "terminal",
   },
   {
     year: "CONTÍNUO",
-    title: "Evolução",
-    text: "Aprofundar Full Stack, Rust e Python enquanto contribuo para software aberto, seguro e bem construído.",
+    title: "Próximos passos",
+    text: "Iniciar minha carreira como desenvolvedor Full Stack, continuar estudando Python e Rust e contribuir para software útil e bem construído.",
     icon: "file-text",
   },
 ] as const satisfies readonly TimelineItem[];

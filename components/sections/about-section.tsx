@@ -18,20 +18,20 @@ export function AboutSection({ capabilities }: AboutSectionProps) {
   return (
     <section className="about section-shell" id="sobre">
       <Reveal className="about-intro">
-        <SectionHeading eyebrow="Sobre mim" title="Aprendo construindo projetos reais." />
+        <SectionHeading eyebrow="Sobre mim" title="Formação técnica guiada pela prática." />
       </Reveal>
       <div className="about-grid">
         <Reveal className="about-statement" distance={18}>
           <p>
-            Gosto de entender <em>como o software é pensado</em> antes de partir para a implementação.
+            Acredito que desenvolver software vai além de escrever código. Por isso, procuro entender <em>como cada solução é pensada</em> antes de implementá-la.
           </p>
           <p>
-            Em cada projeto, exploro arquitetura, aplicações desktop, ferramentas para desenvolvedores e tecnologias web enquanto fortaleço meus fundamentos de engenharia.
+            Uso projetos pessoais para fortalecer meus fundamentos, experimentar tecnologias e evoluir na forma como planejo, organizo, documento e mantenho software ao longo do tempo.
           </p>
           <a href="#jornada">Conhecer minha trajetória <ArrowRight size={17} /></a>
         </Reveal>
         <Reveal className="principles-panel" delay={0.06} distance={18}>
-          <div className="panel-top"><span>NOCTURNE / PRINCIPLES</span><Braces size={17} /></div>
+          <div className="panel-top"><span>ENGENHARIA / PRINCÍPIOS</span><Braces size={17} /></div>
           {principles.map(([number, principle]) => (
             <div className="principle" key={number}>
               <span>{number}</span><p>{principle}</p><Check size={16} />

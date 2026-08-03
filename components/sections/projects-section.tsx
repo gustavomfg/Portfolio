@@ -21,9 +21,9 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
       <section className="ecosystem section-shell" id="ecossistema">
         <Reveal>
           <SectionHeading
-            eyebrow="Ecossistema Nocturne"
-            title="O núcleo do Nocturne."
-            copy="Quatro projetos que compartilham princípios de engenharia, documentação e uma mesma identidade."
+            eyebrow="Projetos em destaque"
+            title="Conhecimento aplicado em software real."
+            copy="Projetos pessoais que registram minha evolução técnica e transformam estudos de arquitetura, web, desktop e inteligência artificial em experiência prática."
           />
         </Reveal>
 

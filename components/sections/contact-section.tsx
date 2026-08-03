@@ -7,8 +7,8 @@ export function ContactSection() {
       <Reveal className="contact-card">
         <div className="contact-glow" />
         <p className="eyebrow"><span>+</span>Vamos conversar</p>
-        <h2>Vamos construir<br /><em>algo interessante?</em></h2>
-        <p className="contact-copy">Estou aberto a oportunidades, colaborações e boas conversas sobre software, arquitetura e tecnologia.</p>
+        <h2>Vamos transformar ideias<br /><em>em software?</em></h2>
+        <p className="contact-copy">Busco oportunidades para iniciar minha carreira como desenvolvedor Full Stack, colaborar com outros profissionais e continuar evoluindo por meio de desafios reais.</p>
         <div className="contact-actions">
           <a className="button button-light" href="mailto:gustavomfgdev@gmail.com">
             Enviar uma mensagem <Mail size={17} />
