@@ -10,11 +10,9 @@ allowBuilds:
 overrides:
   postcss: 8.5.20
   sharp: 0.35.0
+  'minimatch@3>brace-expansion': 1.1.18
+  'minimatch@10>brace-expansion': 5.0.9
 
-auditConfig:
-  # minimatch 3 remains in the latest eslint-config-next plugin tree. Forcing
-  # brace-expansion 5 breaks its CommonJS API; the affected path is lint-only
-  # and receives repository-controlled patterns. Remove this exception when
-  # eslint-plugin-import/react/jsx-a11y stop depending on minimatch 3.
-  ignoreGhsas:
-    - GHSA-mh99-v99m-4gvg
+minimumReleaseAgeExclude:
+  - '@next/eslint-plugin-next@16.3.0'
+  - eslint-config-next@16.3.0
