@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Gustavo Maquias — Nocturne Portfolio";
+export const alt = "Portfólio profissional de Gustavo Maquias";
 export const size = {
   width: 1200,
   height: 630,
@@ -35,14 +35,14 @@ export default function OpenGraphImage() {
           }}
         >
           <div style={{ color: "#ae87ff", display: "flex", fontSize: 24, letterSpacing: "0.28em" }}>
-            NOCTURNE PORTFOLIO
+            PORTFÓLIO PROFISSIONAL
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
             <div style={{ display: "flex", fontSize: 72, fontWeight: 700, letterSpacing: "-0.05em" }}>
               Gustavo Maquias
             </div>
             <div style={{ color: "#b9b2c7", display: "flex", fontSize: 30 }}>
-              Software, arquitetura e ecossistema Nocturne.
+              Desenvolvimento Full Stack, arquitetura e projetos reais.
             </div>
           </div>
           <div style={{ color: "#777083", display: "flex", fontSize: 20 }}>

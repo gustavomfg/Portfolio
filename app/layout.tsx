@@ -7,7 +7,7 @@ import { siteUrl } from "@/app/site-config";
 
 const title = "Gustavo Maquias — Análise e Desenvolvimento de Sistemas";
 const description =
-  "Portfólio de Gustavo Maquias, estudante de Análise e Desenvolvimento de Sistemas, e apresentação do ecossistema Nocturne.";
+  "Portfólio de Gustavo Maquias, estudante de Análise e Desenvolvimento de Sistemas com foco em desenvolvimento Full Stack, arquitetura e aplicações web e desktop.";
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     url: "/",
-    siteName: "Nocturne Portfolio",
+    siteName: "Gustavo Maquias — Portfolio",
     title,
     description,
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Gustavo Maquias — Nocturne Portfolio",
+        alt: "Portfólio profissional de Gustavo Maquias",
       },
     ],
   },

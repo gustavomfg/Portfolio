@@ -8,7 +8,7 @@ export default function GlobalError({ reset }: { reset: () => void }) {
       <body>
         <main className="status-page">
           <div className="status-card">
-            <span className="status-code">NOCTURNE / FALHA CRÍTICA</span>
+            <span className="status-code">PORTFÓLIO / FALHA CRÍTICA</span>
             <AlertTriangle size={34} aria-hidden="true" />
             <h1>Não foi possível carregar o portfólio.</h1>
             <p>Tente novamente. Se o problema continuar, recarregue a página em alguns instantes.</p>

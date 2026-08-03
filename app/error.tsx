@@ -7,7 +7,7 @@ export default function ErrorPage({ reset }: { reset: () => void }) {
   return (
     <main className="status-page">
       <div className="status-card">
-        <div className="status-brand"><BrandMark /><span>NOCTURNE</span></div>
+        <div className="status-brand"><BrandMark /><span>GUSTAVO MAQUIAS</span></div>
         <span className="status-code">FALHA / INTERFACE</span>
         <AlertTriangle size={34} aria-hidden="true" />
         <h1>Algo interrompeu a experiência.</h1>

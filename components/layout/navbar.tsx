@@ -72,10 +72,10 @@ export function Navbar({ items }: NavbarProps) {
       <span className="scroll-progress" aria-hidden="true">
         <span ref={progressRef} />
       </span>
-      <a className="brand" href="#inicio" aria-label="Nocturne, voltar ao início">
+      <a className="brand" href="#inicio" aria-label="Gustavo Maquias, voltar ao início">
         <BrandMark />
         <span className="brand-copy">
-          <strong>NOCTURNE</strong>
+          <strong>GUSTAVO MAQUIAS</strong>
           <small>ADS • FULL STACK</small>
         </span>
       </a>
