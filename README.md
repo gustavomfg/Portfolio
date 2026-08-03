@@ -91,12 +91,15 @@ http://localhost:3000
 
 ```
 app/
+  styles/
 components/
 hooks/
 data/
 lib/
-styles/
-tests/
+e2e/
+public/
+test/
+types/
 ```
 
 Design principles:
@@ -169,9 +172,3 @@ The project uses **IDENTITY.md** as the canonical source describing my professio
 Portfolio content should always remain consistent with this document.
 
 ---
-
-# License
-
-This project is open source.
-
-See the repository license for more information.
