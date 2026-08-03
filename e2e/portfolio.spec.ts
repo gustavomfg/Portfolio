@@ -6,6 +6,7 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
   const firstResponse = await page.goto("/");
   const contentSecurityPolicy = firstResponse?.headers()["content-security-policy"];
 
+  await expect(page.getByRole("main")).toHaveCount(1);
   await expect(page).toHaveTitle(
     "Gustavo Maquias — Análise e Desenvolvimento de Sistemas",
   );

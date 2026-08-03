@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { NocturneJourney } from "@/components/nocturne-journey/NocturneJourney";
 import { AboutSection } from "@/components/sections/about-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { HeroSection } from "@/components/sections/hero-section";
@@ -13,6 +14,7 @@ export function NocturnePortfolio() {
     <main id="conteudo">
       <a className="skip-link" href="#ecossistema">Pular para o conteúdo</a>
 
+      <NocturneJourney />
       <Navbar items={NAV_ITEMS} />
       <HeroSection projects={PROJECTS} />
       <ProjectsSection projects={PROJECTS} />
