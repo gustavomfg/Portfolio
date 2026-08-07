@@ -29,9 +29,9 @@ export function HeroSection() {
             <a href="https://www.linkedin.com/in/gustavomfg" target="_blank" rel="noreferrer">
               LinkedIn <ArrowUpRight size={14} aria-hidden="true" />
             </a>
-            <span className="hero-link-pending" title="O arquivo do currículo ainda não está disponível neste projeto">
-              Currículo <small>arquivo pendente</small>
-            </span>
+            <a href="/curriculo-gustavo-maquias.pdf" target="_blank" rel="noreferrer" download="curriculo-gustavo-maquias.pdf">
+              Currículo <small>PDF</small> <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
           </nav>
           <dl className="hero-facts" aria-label="Resumo profissional">
             <div><dt>Formação</dt><dd>ADS</dd></div>

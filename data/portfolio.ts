@@ -19,16 +19,18 @@ export const PROJECTS = [
     id: "01",
     key: "studio",
     name: "Nocturne Studio",
-    role: "Engenharia de software com IA",
+    role: "Workspace local-first de engenharia assistida por IA",
     description:
-      "Projeto desktop em que exploro inteligência artificial aplicada a fluxos de engenharia orientados pelo contexto de cada workspace.",
-    tags: ["Electron", "React", "AI"],
+      "Workspace local-first de engenharia de software assistida por IA. O workspace é o produto; a IA é uma capacidade para manter projeto, documentação, conhecimento, arquitetura e conversas conectados.",
+    tags: ["Electron", "React", "TypeScript", "SQLite"],
     problem:
-      "Investigar como memória, contexto e decisões técnicas podem permanecer conectados durante o desenvolvimento de um projeto.",
+      "Permitir que ferramentas de IA trabalhem com o contexto do projeto em vez de prompts isolados, mantendo conhecimento, decisões e conversas conectados no workspace.",
     highlights: [
-      "Memória de workspace e Second Brain",
-      "Review Mode e suporte a múltiplos provedores",
-      "Arquitetura Electron segura e documentação contínua",
+      "Local Second Brain e Awareness System contextual",
+      "Review Mode com revisão humana antes da aplicação de alterações",
+      "Secure Provider System, Credential Vault e Typed IPC",
+      "Arquitetura Electron com isolamento e Provider Abstraction Layer",
+      "Packaging Pipeline e validação automatizada por CI",
     ],
     links: [
       {
@@ -116,6 +118,71 @@ export const PROJECTS = [
     accent: "cyan",
   },
 ] as const satisfies readonly Project[];
+
+export const NOCTURNE_STUDIO_EVIDENCE = {
+  version: "v0.9.5-beta",
+  principle: "O workspace é o produto; IA é uma capacidade do workspace, não o produto em si.",
+  implemented: [
+    "Review Mode",
+    "Workspace Memory",
+    "Second Brain",
+    "Awareness explicável por execução",
+    "Secure Provider System",
+    "Credential Vault",
+    "Typed IPC",
+    "Secure Electron Architecture",
+    "Provider Abstraction Layer",
+    "Packaging Pipeline",
+    "Automated CI Validation",
+  ],
+  reviewMode: {
+    dimensions: ["arquitetura", "segurança", "testes", "performance", "documentação", "manutenibilidade"],
+    recommendationFields: ["evidência", "confiança", "origem", "responsável", "severidade", "justificativa", "histórico de decisão"],
+    note: "As sugestões permanecem sob revisão do desenvolvedor antes de alterações serem aplicadas.",
+  },
+  architecture: [
+    "Electron, React, TypeScript e SQLite",
+    "IPC tipado entre renderer e processo principal",
+    "contextIsolation habilitado e nodeIntegration desabilitado",
+    "preload/contextBridge como fronteira explícita",
+    "Comunicação controlada entre renderer e processo principal",
+    "Abstração entre workspace e provedores de IA",
+  ],
+  providers: [
+    "ChatGPT através do Codex CLI",
+    "OpenAI API",
+    "OpenRouter API",
+    "DeepSeek API",
+    "Ollama",
+    "LM Studio",
+    "Endpoints customizados compatíveis com OpenAI",
+  ],
+  inDevelopment: [
+    "Recursos avançados de Build Mode",
+    "Recursos avançados de Docs Mode",
+    "Workspace Automation",
+    "Expansão das capacidades dos providers",
+  ],
+  limitations: [
+    "O projeto ainda está em beta.",
+    "A versão atual é v0.9.5-beta.",
+    "Build Mode e Docs Mode ainda possuem recursos avançados em desenvolvimento.",
+    "Workspace Automation ainda está em desenvolvimento.",
+    "O ecossistema de providers ainda está sendo expandido.",
+  ],
+} as const;
+
+export const SYSMON_EVIDENCE = {
+  definition: "Monitor de sistema desenvolvido em Rust.",
+  stack: ["Rust", "Ratatui", "Crossterm", "Linux"],
+  telemetry: ["CPU", "memória", "GPU", "rede", "armazenamento", "temperaturas", "processos"],
+  architecture: [
+    "Históricos limitados",
+    "Inventário dinâmico de hardware",
+    "Separação entre coleta, interpretação e visualização dos dados",
+  ],
+  healthEngine: "O Health Engine diferencia atividade de pressão do sistema e alimenta o System Pulse, uma representação procedural que reage ao estado agregado da máquina.",
+} as const;
 
 export const STACK = [
   "Java",

@@ -20,8 +20,10 @@ export function ContactSection() {
             <a href="https://www.linkedin.com/in/gustavomfg" target="_blank" rel="noreferrer">
               LinkedIn <ArrowUpRight size={15} aria-hidden="true" />
             </a>
+            <a href="/curriculo-gustavo-maquias.pdf" target="_blank" rel="noreferrer" download="curriculo-gustavo-maquias.pdf">
+              Currículo <ArrowUpRight size={15} aria-hidden="true" />
+            </a>
           </div>
-          <p className="contact-resume-pending">Currículo: arquivo ainda não publicado neste projeto.</p>
           <a className="contact-email" href="mailto:gustavomfgdev@gmail.com">
             gustavomfgdev@gmail.com
           </a>

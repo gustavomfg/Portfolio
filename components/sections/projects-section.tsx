@@ -1,6 +1,7 @@
 import { ArrowUpRight, Check, Code2 } from "lucide-react";
 import { Reveal } from "@/components/animations/reveal";
 import { ProjectExplorer, ProjectTrigger } from "@/components/sections/project-explorer";
+import { NOCTURNE_STUDIO_EVIDENCE, SYSMON_EVIDENCE } from "@/data/portfolio";
 import type { Project } from "@/types/portfolio";
 
 interface ProjectsSectionProps {
@@ -41,15 +42,81 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
 
             <dl className="studio-record">
               <div>
-                <dt>Problema investigado</dt>
+                <dt>Versão / estado</dt>
+                <dd>{NOCTURNE_STUDIO_EVIDENCE.version} · beta</dd>
+              </div>
+              <div>
+                <dt>Princípio central</dt>
+                <dd>{NOCTURNE_STUDIO_EVIDENCE.principle}</dd>
+              </div>
+              <div>
+                <dt>Problema técnico</dt>
                 <dd>{studio.problem}</dd>
               </div>
               <div>
-                <dt>Já documentado no projeto</dt>
+                <dt>Implementado</dt>
                 <dd>
                   <ul>
-                    {studio.highlights.map((highlight) => (
-                      <li key={highlight}><Check size={14} aria-hidden="true" />{highlight}</li>
+                    {NOCTURNE_STUDIO_EVIDENCE.implemented.map((item) => (
+                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+              <div>
+                <dt>Review Mode</dt>
+                <dd>
+                  <p>{NOCTURNE_STUDIO_EVIDENCE.reviewMode.note}</p>
+                  <strong>Dimensões:</strong>
+                  <ul>
+                    {NOCTURNE_STUDIO_EVIDENCE.reviewMode.dimensions.map((item) => (
+                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
+                    ))}
+                  </ul>
+                  <strong>Campos das recomendações:</strong>
+                  <ul>
+                    {NOCTURNE_STUDIO_EVIDENCE.reviewMode.recommendationFields.map((item) => (
+                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+              <div>
+                <dt>Arquitetura / segurança</dt>
+                <dd>
+                  <ul>
+                    {NOCTURNE_STUDIO_EVIDENCE.architecture.map((item) => (
+                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+              <div>
+                <dt>Providers documentados</dt>
+                <dd>
+                  <ul>
+                    {NOCTURNE_STUDIO_EVIDENCE.providers.map((item) => (
+                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+              <div>
+                <dt>Em desenvolvimento</dt>
+                <dd>
+                  <ul>
+                    {NOCTURNE_STUDIO_EVIDENCE.inDevelopment.map((item) => (
+                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+              <div>
+                <dt>Limitações honestas</dt>
+                <dd>
+                  <ul>
+                    {NOCTURNE_STUDIO_EVIDENCE.limitations.map((item) => (
+                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
                     ))}
                   </ul>
                 </dd>
@@ -69,7 +136,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             </dl>
           </div>
           <p className="evidence-gap">
-            Arquitetura detalhada, decisões de segurança, testes, screenshots e limitações ainda não estão disponíveis nesta base. Esses campos serão preenchidos somente quando houver fontes verificáveis.
+            Screenshots, diagramas, métricas, benchmarks, cobertura de testes e demais artefatos visuais ainda não estão disponíveis nesta base. Eles serão adicionados somente quando houver fontes verificáveis.
           </p>
         </Reveal>
 
@@ -80,10 +147,17 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           </div>
           <div className="sysmon-record">
             <div>
-              <p className="project-role">Projeto em preparação</p>
+              <p className="project-role">Monitor de sistema</p>
               <h4>SysMon</h4>
+              <p className="sysmon-stack">{SYSMON_EVIDENCE.stack.join(" · ")}</p>
             </div>
-            <p>O projeto está reservado como segunda evidência técnica. Detalhes serão publicados quando o repositório ou documentação verificável estiverem disponíveis.</p>
+            <div className="sysmon-record-copy">
+              <p>{SYSMON_EVIDENCE.definition}</p>
+              <p><strong>Telemetria confirmada:</strong> {SYSMON_EVIDENCE.telemetry.join(", ")}.</p>
+              <p><strong>Arquitetura de métricas:</strong> {SYSMON_EVIDENCE.architecture.join("; ")}.</p>
+              <p><strong>Health Engine / System Pulse:</strong> {SYSMON_EVIDENCE.healthEngine}</p>
+              <p className="evidence-gap">Repositório, screenshots, benchmarks, testes, cobertura, compatibilidade adicional e métricas de uso ainda não estão disponíveis nesta base.</p>
+            </div>
           </div>
         </section>
 
