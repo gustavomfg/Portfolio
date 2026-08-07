@@ -57,11 +57,12 @@ export function ProjectCard({ accent, children, projectKey }: ProjectCardProps) 
 }
 
 interface ProjectTriggerProps {
+  children?: ReactNode;
   index: number;
   name: string;
 }
 
-export function ProjectTrigger({ index, name }: ProjectTriggerProps) {
+export function ProjectTrigger({ children, index, name }: ProjectTriggerProps) {
   const openProject = useContext(ProjectExplorerContext);
 
   if (!openProject) {
@@ -74,11 +75,13 @@ export function ProjectTrigger({ index, name }: ProjectTriggerProps) {
 
   return (
     <button
-      className="project-card-trigger"
+      className="project-dialog-trigger"
       type="button"
       aria-label={`Abrir detalhes de ${name}`}
       aria-haspopup="dialog"
       onClick={handleClick}
-    />
+    >
+      {children ?? `Abrir detalhes de ${name}`}
+    </button>
   );
 }

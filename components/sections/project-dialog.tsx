@@ -55,7 +55,7 @@ function DialogContent({ project, onClose }: { project: Project; onClose: () => 
   return (
     <>
       <div className="dialog-topbar">
-        <span>PROJECT / {project.id}</span>
+        <span>PROJETO / {project.id}</span>
         <button type="button" onClick={onClose} aria-label="Fechar detalhes do projeto" autoFocus>
           <X size={18} />
         </button>
@@ -67,7 +67,6 @@ function DialogContent({ project, onClose }: { project: Project; onClose: () => 
           <h2 id="project-dialog-title">{project.name}</h2>
         </div>
       </div>
-      <div className="dialog-status"><span /><strong>{project.status}</strong></div>
       <div className="dialog-content">
         <div>
           <small>O QUE O PROJETO RESOLVE</small>

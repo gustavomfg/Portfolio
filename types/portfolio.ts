@@ -14,7 +14,6 @@ export interface Project {
   role: string;
   description: string;
   tags: readonly string[];
-  status: string;
   problem: string;
   highlights: readonly string[];
   links?: readonly ProjectLink[];
@@ -32,6 +31,11 @@ export interface Capability {
   number: string;
   title: string;
   description: string;
+}
+
+export interface TechnicalProfileItem {
+  label: string;
+  value: string;
 }
 
 export interface TimelineItem {

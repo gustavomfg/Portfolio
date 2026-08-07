@@ -4,16 +4,16 @@ import { Reveal } from "@/components/animations/reveal";
 export function ContactSection() {
   return (
     <section className="contact section-shell" id="contato">
-      <Reveal className="contact-card">
-        <div className="contact-glow" />
-        <p className="eyebrow"><span>+</span>Vamos conversar</p>
-        <h2>Vamos transformar ideias<br /><em>em software?</em></h2>
-        <p className="contact-copy">Busco oportunidades para iniciar minha carreira como desenvolvedor Full Stack, colaborar com outros profissionais e continuar evoluindo por meio de desafios reais.</p>
-        <div className="contact-actions">
-          <a className="button button-light" href="mailto:gustavomfgdev@gmail.com">
+      <Reveal className="contact-layout" distance={18}>
+        <div>
+          <h2>Vamos conversar sobre uma <em>oportunidade?</em></h2>
+          <p className="contact-copy">Busco oportunidades de estágio ou desenvolvimento júnior para colaborar com outros profissionais e continuar evoluindo por meio de desafios reais.</p>
+        </div>
+        <div className="contact-links">
+          <a className="button button-primary" href="mailto:gustavomfgdev@gmail.com">
             Enviar uma mensagem <Mail size={17} />
           </a>
-          <div className="social-links">
+          <div className="contact-link-list">
             <a href="https://github.com/gustavomfg" target="_blank" rel="noreferrer">
               GitHub <ArrowUpRight size={15} aria-hidden="true" />
             </a>
@@ -21,10 +21,11 @@ export function ContactSection() {
               LinkedIn <ArrowUpRight size={15} aria-hidden="true" />
             </a>
           </div>
+          <p className="contact-resume-pending">Currículo: arquivo ainda não publicado neste projeto.</p>
+          <a className="contact-email" href="mailto:gustavomfgdev@gmail.com">
+            gustavomfgdev@gmail.com
+          </a>
         </div>
-        <a className="contact-email" href="mailto:gustavomfgdev@gmail.com">
-          gustavomfgdev@gmail.com
-        </a>
       </Reveal>
     </section>
   );

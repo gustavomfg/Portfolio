@@ -94,8 +94,7 @@ export function Navbar({ items }: NavbarProps) {
       </nav>
 
       <a className="availability" href="#contato">
-        <span className="availability-dot" />
-        Disponível para conversar
+        Contato
         <ArrowUpRight size={15} />
       </a>
 

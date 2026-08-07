@@ -1,11 +1,18 @@
-import type { Capability, NavItem, Project, TimelineItem } from "@/types/portfolio";
+import type { Capability, NavItem, Project, TechnicalProfileItem, TimelineItem } from "@/types/portfolio";
 
 export const NAV_ITEMS = [
-  { label: "Projetos", href: "#ecossistema" },
-  { label: "Sobre", href: "#sobre" },
-  { label: "Jornada", href: "#jornada" },
+  { label: "Projetos", href: "#projetos" },
+  { label: "Perfil", href: "#perfil" },
   { label: "Contato", href: "#contato" },
 ] as const satisfies readonly NavItem[];
+
+export const TECHNICAL_PROFILE = [
+  { label: "Formação", value: "Análise e Desenvolvimento de Sistemas" },
+  { label: "Direção principal", value: "Java em aprofundamento contínuo" },
+  { label: "Uso diário", value: "TypeScript e JavaScript" },
+  { label: "Construção", value: "React, Node.js e Electron" },
+  { label: "Aprendendo", value: "Python e Rust" },
+] as const satisfies readonly TechnicalProfileItem[];
 
 export const PROJECTS = [
   {
@@ -16,7 +23,6 @@ export const PROJECTS = [
     description:
       "Projeto desktop em que exploro inteligência artificial aplicada a fluxos de engenharia orientados pelo contexto de cada workspace.",
     tags: ["Electron", "React", "AI"],
-    status: "Em desenvolvimento",
     problem:
       "Investigar como memória, contexto e decisões técnicas podem permanecer conectados durante o desenvolvimento de um projeto.",
     highlights: [
@@ -42,7 +48,6 @@ export const PROJECTS = [
     description:
       "Meu portfólio pessoal, criado para apresentar minha trajetória, minhas competências e a evolução dos projetos que desenvolvo.",
     tags: ["Next.js", "React", "TypeScript"],
-    status: "Em evolução contínua",
     problem:
       "Comunicar quem sou como desenvolvedor e demonstrar, com clareza, o conhecimento técnico que venho construindo na prática.",
     highlights: [
@@ -68,7 +73,6 @@ export const PROJECTS = [
     description:
       "Projeto de engenharia voltado à inspeção de projetos, validação de arquitetura e criação de ferramentas para desenvolvedores.",
     tags: ["Desktop", "Diagnostics", "Engineering"],
-    status: "Em desenvolvimento",
     problem:
       "Transformar análises de estrutura e arquitetura em informações úteis para compreender e aprimorar projetos de software.",
     highlights: [
@@ -94,7 +98,6 @@ export const PROJECTS = [
     description:
       "Aplicação web em que exploro a centralização de utilitários e serviços por meio de uma interface moderna e responsiva.",
     tags: ["Web", "React", "Services"],
-    status: "Em evolução",
     problem:
       "Organizar diferentes utilitários e serviços em uma experiência centralizada, clara e consistente em diferentes dispositivos.",
     highlights: [

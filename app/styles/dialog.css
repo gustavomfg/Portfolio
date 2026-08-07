@@ -9,9 +9,6 @@
 .dialog-project-icon { width: 60px; height: 60px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid color-mix(in srgb, var(--project-accent) 40%, transparent); border-radius: var(--radius-card); color: var(--project-accent); background: color-mix(in srgb, var(--project-accent) 8%, transparent); }
 .dialog-heading p { margin: 0 0 7px; color: var(--project-accent); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .08em; }
 .dialog-heading h2 { margin: 0; font-size: clamp(27px, 4vw, 42px); line-height: 1.08; letter-spacing: -.045em; font-weight: 500; }
-.dialog-status { position: relative; z-index: 1; width: fit-content; margin: 0 34px 30px; padding: 7px 10px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 6px; color: #bbb7c2; background: rgba(255,255,255,.025); font-size: var(--font-label); }
-.dialog-status span { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 9px rgba(120,224,178,.7); }
-.dialog-status strong { font-weight: 500; }
 .dialog-content { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; border-block: 1px solid var(--line); }
 .dialog-content > div { min-height: 210px; padding: 30px 34px; }
 .dialog-content > div + div { border-left: 1px solid var(--line); }
@@ -33,7 +30,6 @@
   .project-dialog { max-height: calc(100svh - 20px); border-radius: var(--radius-dialog); }
   .dialog-heading { padding: 26px 20px 18px; }
   .dialog-project-icon { width: 48px; height: 48px; }
-  .dialog-status { margin: 0 20px 24px; }
   .dialog-content { grid-template-columns: 1fr; }
   .dialog-content > div { min-height: auto; padding: 24px 20px; }
   .dialog-content > div + div { border-top: 1px solid var(--line); border-left: 0; }
