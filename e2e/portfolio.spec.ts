@@ -62,6 +62,10 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
   await expect(mainNavigation.getByRole("link")).toHaveCount(3);
   await expect(mainNavigation.getByRole("link", { name: "Projetos" }))
     .toHaveAttribute("href", "#projetos");
+  await expect(page.getByRole("link", { name: /Currículo/ }).first())
+    .toHaveAttribute("href", "/curriculo-gustavo-maquias.pdf");
+  await expect(page.getByText("v0.9.5-beta · beta", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "SysMon" })).toBeVisible();
 
   const projectTrigger = page.getByRole("button", {
     name: "Abrir detalhes de Nocturne Studio",

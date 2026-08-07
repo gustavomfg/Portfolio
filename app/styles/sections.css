@@ -284,8 +284,6 @@
 .hero-links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 22px; }
 .hero-links a, .hero-link-pending { color: var(--text-bright); font-size: var(--font-label); display: inline-flex; align-items: center; gap: 5px; border-bottom: 1px solid var(--line); padding-bottom: 5px; }
 .hero-links a:hover { color: #fff; border-color: var(--violet-soft); }
-.hero-link-pending { color: var(--text-label); cursor: default; }
-.hero-link-pending small { color: var(--text-dim); text-transform: uppercase; letter-spacing: .05em; }
 .hero-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 36px 0 0; padding-top: 18px; border-top: 1px solid var(--line); }
 .hero-facts div { display: grid; gap: 5px; }
 .hero-facts dt { color: var(--text-label); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .07em; }
@@ -313,6 +311,8 @@
 .studio-record > div { display: grid; grid-template-columns: minmax(130px, .45fr) 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .studio-record dt { color: var(--text-label); font-size: var(--font-label); text-transform: uppercase; letter-spacing: .06em; }
 .studio-record dd { margin: 0; color: var(--muted); font-size: var(--font-body-sm); line-height: 1.7; }
+.studio-record dd p { margin: 0 0 10px; }
+.studio-record dd strong { display: block; margin: 12px 0 5px; color: var(--text-bright); font-size: var(--font-label); font-weight: 500; }
 .studio-record ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
 .studio-record li { display: flex; gap: 8px; align-items: flex-start; }
 .studio-record li svg { flex: 0 0 auto; color: var(--violet-soft); margin-top: 2px; }
@@ -325,6 +325,10 @@
 .sysmon-record { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 30px; padding: 24px 0; border-bottom: 1px solid var(--line); }
 .sysmon-record h4 { margin: 8px 0 0; color: var(--text); font-size: clamp(24px, 3vw, 34px); font-weight: 500; letter-spacing: -.035em; }
 .sysmon-record > p { max-width: 60ch; margin: 0; color: var(--text-dim); font-size: var(--font-body-sm); line-height: 1.7; }
+.sysmon-stack { margin: 14px 0 0; color: var(--text-label); font-size: var(--font-label); line-height: 1.6; }
+.sysmon-record-copy { display: grid; gap: 14px; }
+.sysmon-record-copy p { max-width: 64ch; margin: 0; color: var(--text-dim); font-size: var(--font-body-sm); line-height: 1.7; }
+.sysmon-record-copy .evidence-gap { margin: 0; padding-top: 14px; border-top: 1px solid var(--line); }
 .project-index { margin-top: 72px; }
 .index-heading { border-bottom: 1px solid var(--line); }
 .index-heading p { margin: 0; color: var(--text-dim); font-size: var(--font-body-sm); }
@@ -359,7 +363,6 @@
 .contact-link-list { display: flex; flex-wrap: wrap; gap: 16px; }
 .contact-link-list a { display: inline-flex; align-items: center; gap: 5px; padding-bottom: 5px; border-bottom: 1px solid var(--line); color: var(--text-bright); font-size: var(--font-label); }
 .contact-link-list a:hover { color: #fff; border-color: var(--violet-soft); }
-.contact-resume-pending { margin: 0; color: var(--text-dim); font-size: var(--font-label); line-height: 1.6; }
 
 @media (max-width: 1000px) {
   .hero { padding-top: 112px; min-height: auto; }
@@ -382,7 +385,6 @@
   .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; }
   .hero-actions .button { width: 100%; }
   .hero-links { gap: 12px; }
-  .hero-link-pending small { display: block; }
   .hero-facts { gap: 10px; }
   .hero-facts dd { font-size: .75rem; }
   .projects-section { padding-top: 64px; padding-bottom: 58px; }
