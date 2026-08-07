@@ -106,23 +106,23 @@ describe("Navbar", () => {
     const observers = installIntersectionObserver();
     const { unmount } = renderNavbar();
     const observer = observers[0];
-    const journeySection = document.getElementById("jornada");
-    const aboutSection = document.getElementById("sobre");
+    const projectsSection = document.getElementById("projetos");
+    const profileSection = document.getElementById("perfil");
 
     expect(observer.observed).toHaveLength(NAV_ITEMS.length);
 
     act(() => {
       observer.callback(
         [
-          { target: aboutSection, isIntersecting: true, intersectionRatio: 0.25 },
-          { target: journeySection, isIntersecting: true, intersectionRatio: 0.8 },
+          { target: profileSection, isIntersecting: true, intersectionRatio: 0.25 },
+          { target: projectsSection, isIntersecting: true, intersectionRatio: 0.8 },
         ] as unknown as IntersectionObserverEntry[],
         observer as unknown as IntersectionObserver,
       );
     });
 
     const desktopNav = screen.getByRole("navigation", { name: "Navegação principal" });
-    expect(within(desktopNav).getByRole("link", { name: "Jornada" }).getAttribute("aria-current"))
+    expect(within(desktopNav).getByRole("link", { name: "Projetos" }).getAttribute("aria-current"))
       .toBe("location");
 
     unmount();
@@ -148,13 +148,13 @@ describe("Navbar", () => {
 
     await user.click(screen.getByRole("button", { name: "Abrir menu" }));
     const mobileNav = screen.getByRole("navigation", { name: "Navegação móvel" });
-    await user.click(within(mobileNav).getByRole("link", { name: "Sobre" }));
+    await user.click(within(mobileNav).getByRole("link", { name: "Perfil" }));
 
     await act(async () => {
       await new Promise((resolve) => window.requestAnimationFrame(resolve));
     });
 
-    const target = document.getElementById("sobre");
+    const target = document.getElementById("perfil");
     expect(document.activeElement).toBe(target);
     expect(target?.getAttribute("tabindex")).toBe("-1");
   });

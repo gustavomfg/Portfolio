@@ -59,9 +59,9 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
   expect(notFoundContentSecurityPolicy).toContain("script-src 'self' 'unsafe-inline'");
 
   const mainNavigation = page.getByRole("navigation", { name: "Navegação principal" });
-  await expect(mainNavigation.getByRole("link")).toHaveCount(4);
+  await expect(mainNavigation.getByRole("link")).toHaveCount(3);
   await expect(mainNavigation.getByRole("link", { name: "Projetos" }))
-    .toHaveAttribute("href", "#ecossistema");
+    .toHaveAttribute("href", "#projetos");
 
   const projectTrigger = page.getByRole("button", {
     name: "Abrir detalhes de Nocturne Studio",
@@ -93,7 +93,7 @@ test("menu móvel, links e reduced motion", async ({ page }, testInfo) => {
 
   const mobileNavigation = page.getByRole("navigation", { name: "Navegação móvel" });
   await expect(mobileNavigation).toBeVisible();
-  await expect(mobileNavigation.getByRole("link")).toHaveCount(4);
+  await expect(mobileNavigation.getByRole("link")).toHaveCount(3);
   await expect(mobileNavigation.getByRole("link", { name: /Contato/ }))
     .toHaveAttribute("href", "#contato");
 
@@ -101,15 +101,11 @@ test("menu móvel, links e reduced motion", async ({ page }, testInfo) => {
   await expect(mobileNavigation).toBeHidden();
   await expect(menuButton).toBeFocused();
 
-  const journeyHeight = await page.locator(".journey").evaluate(
-    (element) => element.getBoundingClientRect().height,
-  );
-  const viewportHeight = await page.evaluate(() => window.innerHeight);
-  expect(journeyHeight).toBeLessThan(viewportHeight * 2);
+  await expect(page.locator(".hero")).toBeVisible();
+  await expect(page.locator(".studio-feature")).toBeVisible();
   expect(await page.evaluate(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   )).toBe(true);
-  await expect(page.locator(".journey-identity")).toHaveCSS("display", "none");
 
   const accessibility = await new AxeBuilder({ page }).analyze();
   expect(accessibility.violations).toEqual([]);
