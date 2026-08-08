@@ -140,7 +140,7 @@ export function HeroLanyard() {
       </span>
       <div className="hero-lanyard-canvas" aria-hidden="true">
         <Canvas
-          camera={{ position: [0.12, 0.8, 11.1], fov: 30 }}
+          camera={{ position: [0.12, 2, 11.5], fov: 31 }}
           dpr={[1, isMobile ? 1 : 1.5]}
           gl={{ alpha: true, antialias: !isMobile }}
           onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), 0)}
@@ -317,7 +317,7 @@ function BadgeCard() {
 
 function StaticBadge() {
   return (
-    <group position={[0, -0.3, 0]}>
+    <group position={[0, 1.34, 0]}>
       <mesh position={[0, 2.18, 0]}>
         <cylinderGeometry args={[0.055, 0.055, 2.2, 10]} />
         <meshPhysicalMaterial color="#171322" roughness={0.78} metalness={0.16} />
@@ -406,9 +406,9 @@ function PhysicsLanyard({ isMobile }: PhysicsLanyardProps) {
     linearDamping: 4,
   };
 
-  useRopeJoint(fixed, jointOne, [[0, 0, 0], [0, 0, 0], 0.6]);
-  useRopeJoint(jointOne, jointTwo, [[0, 0, 0], [0, 0, 0], 0.6]);
-  useRopeJoint(jointTwo, jointThree, [[0, 0, 0], [0, 0, 0], 0.6]);
+  useRopeJoint(fixed, jointOne, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(jointOne, jointTwo, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(jointTwo, jointThree, [[0, 0, 0], [0, 0, 0], 1]);
   useSphericalJoint(jointThree, card, [[0, 0, 0], [0, BADGE_HEIGHT / 2, 0]]);
 
   useFrame((state, delta) => {
@@ -481,17 +481,17 @@ function PhysicsLanyard({ isMobile }: PhysicsLanyardProps) {
 
   return (
     <>
-      <RigidBody ref={fixed} {...segmentProps} type="fixed" position={[0, 3.8, 0]} />
-      <RigidBody ref={jointOne} {...segmentProps} position={[0.03, 3.23, 0]}>
+      <RigidBody ref={fixed} {...segmentProps} type="fixed" position={[0, 6, 0]} />
+      <RigidBody ref={jointOne} {...segmentProps} position={[0.03, 5.03, 0]}>
         <BallCollider args={[0.08]} />
       </RigidBody>
-      <RigidBody ref={jointTwo} {...segmentProps} position={[-0.05, 2.67, 0]}>
+      <RigidBody ref={jointTwo} {...segmentProps} position={[-0.05, 4.07, 0]}>
         <BallCollider args={[0.08]} />
       </RigidBody>
-      <RigidBody ref={jointThree} {...segmentProps} position={[0.04, 2.11, 0]}>
+      <RigidBody ref={jointThree} {...segmentProps} position={[0.04, 3.11, 0]}>
         <BallCollider args={[0.08]} />
       </RigidBody>
-      <RigidBody ref={card} {...segmentProps} type={dragged ? "kinematicPosition" : "dynamic"} position={[0, 0.34, 0]}>
+      <RigidBody ref={card} {...segmentProps} type={dragged ? "kinematicPosition" : "dynamic"} position={[0, 1.34, 0]}>
         <CuboidCollider args={[BADGE_WIDTH / 2, BADGE_HEIGHT / 2, BADGE_DEPTH / 2]} />
         <group
           onPointerDown={handlePointerDown}
