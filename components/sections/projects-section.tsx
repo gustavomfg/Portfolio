@@ -1,6 +1,9 @@
 import { ArrowUpRight, Check, Code2 } from "lucide-react";
 import { Reveal } from "@/components/animations/reveal";
+import { AccordionGallery } from "@/components/sections/accordion-gallery";
 import { ProjectExplorer, ProjectTrigger } from "@/components/sections/project-explorer";
+import { ScrollStack } from "@/components/sections/scroll-stack";
+import { SpotlightList } from "@/components/sections/spotlight-list";
 import { NOCTURNE_STUDIO_EVIDENCE, SYSMON_EVIDENCE } from "@/data/portfolio";
 import type { Project } from "@/types/portfolio";
 
@@ -21,23 +24,20 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
         <header className="evidence-heading">
           <h2>Projetos que sustentam minha candidatura.</h2>
           <p>
-            Construo aplicações para transformar estudo em experiência prática. Cada projeto abaixo deve ser lido como evidência do que estou aprendendo e da forma como penso software.
+            Projetos reais são a principal evidência do que sei construir hoje.
           </p>
         </header>
 
         <Reveal className="studio-feature" distance={18}>
           <div className="studio-feature-heading">
             <span>Projeto principal / evidência atual</span>
-            <span>01 / {String(projects.length).padStart(2, "0")}</span>
           </div>
           <div className="studio-feature-grid" id="projeto-studio">
             <div className="studio-feature-copy">
               <p className="project-role">{studio.role}</p>
               <h3>{studio.name}</h3>
               <p className="studio-description">{studio.description}</p>
-              <ProjectTrigger index={0} name={studio.name}>
-                Abrir evidências disponíveis <ArrowUpRight size={16} aria-hidden="true" />
-              </ProjectTrigger>
+              <AccordionGallery />
             </div>
 
             <dl className="studio-record">
@@ -46,18 +46,14 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                 <dd>{NOCTURNE_STUDIO_EVIDENCE.version} · beta</dd>
               </div>
               <div>
-                <dt>Princípio central</dt>
-                <dd>{NOCTURNE_STUDIO_EVIDENCE.principle}</dd>
-              </div>
-              <div>
                 <dt>Problema técnico</dt>
                 <dd>{studio.problem}</dd>
               </div>
               <div>
-                <dt>Implementado</dt>
+                <dt>Evidência de engenharia</dt>
                 <dd>
                   <ul>
-                    {NOCTURNE_STUDIO_EVIDENCE.implemented.map((item) => (
+                    {NOCTURNE_STUDIO_EVIDENCE.keyEvidence.map((item) => (
                       <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
                     ))}
                   </ul>
@@ -65,61 +61,19 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
               </div>
               <div>
                 <dt>Review Mode</dt>
-                <dd>
-                  <p>{NOCTURNE_STUDIO_EVIDENCE.reviewMode.note}</p>
-                  <strong>Dimensões:</strong>
-                  <ul>
-                    {NOCTURNE_STUDIO_EVIDENCE.reviewMode.dimensions.map((item) => (
-                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
-                    ))}
-                  </ul>
-                  <strong>Campos das recomendações:</strong>
-                  <ul>
-                    {NOCTURNE_STUDIO_EVIDENCE.reviewMode.recommendationFields.map((item) => (
-                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
-                    ))}
-                  </ul>
-                </dd>
+                <dd>{NOCTURNE_STUDIO_EVIDENCE.reviewModeSummary}</dd>
               </div>
               <div>
-                <dt>Arquitetura / segurança</dt>
-                <dd>
-                  <ul>
-                    {NOCTURNE_STUDIO_EVIDENCE.architecture.map((item) => (
-                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
-                    ))}
-                  </ul>
-                </dd>
+                <dt>Arquitetura</dt>
+                <dd>{NOCTURNE_STUDIO_EVIDENCE.architectureSummary}</dd>
               </div>
               <div>
                 <dt>Providers documentados</dt>
-                <dd>
-                  <ul>
-                    {NOCTURNE_STUDIO_EVIDENCE.providers.map((item) => (
-                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
-                    ))}
-                  </ul>
-                </dd>
+                <dd>{NOCTURNE_STUDIO_EVIDENCE.providers.join(", ")}.</dd>
               </div>
               <div>
-                <dt>Em desenvolvimento</dt>
-                <dd>
-                  <ul>
-                    {NOCTURNE_STUDIO_EVIDENCE.inDevelopment.map((item) => (
-                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
-                    ))}
-                  </ul>
-                </dd>
-              </div>
-              <div>
-                <dt>Limitações honestas</dt>
-                <dd>
-                  <ul>
-                    {NOCTURNE_STUDIO_EVIDENCE.limitations.map((item) => (
-                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
-                    ))}
-                  </ul>
-                </dd>
+                <dt>Estado e limitações</dt>
+                <dd>{NOCTURNE_STUDIO_EVIDENCE.stateSummary}</dd>
               </div>
               <div>
                 <dt>Evidência pública</dt>
@@ -136,14 +90,14 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             </dl>
           </div>
           <p className="evidence-gap">
-            Screenshots, diagramas, métricas, benchmarks, cobertura de testes e demais artefatos visuais ainda não estão disponíveis nesta base. Eles serão adicionados somente quando houver fontes verificáveis.
+            Screenshots, diagramas, benchmarks e cobertura de testes ainda não estão disponíveis nesta base. Serão adicionados somente quando houver fontes verificáveis.
           </p>
         </Reveal>
 
         <section className="priority-secondary" aria-labelledby="sysmon-title">
           <div className="priority-heading">
-            <h3 id="sysmon-title">Segundo destaque prioritário</h3>
-            <span>Evidência pendente</span>
+            <h3 id="sysmon-title">Segundo projeto em destaque</h3>
+            <span>Base factual</span>
           </div>
           <div className="sysmon-record">
             <div>
@@ -152,10 +106,30 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
               <p className="sysmon-stack">{SYSMON_EVIDENCE.stack.join(" · ")}</p>
             </div>
             <div className="sysmon-record-copy">
-              <p>{SYSMON_EVIDENCE.definition}</p>
-              <p><strong>Telemetria confirmada:</strong> {SYSMON_EVIDENCE.telemetry.join(", ")}.</p>
-              <p><strong>Arquitetura de métricas:</strong> {SYSMON_EVIDENCE.architecture.join("; ")}.</p>
-              <p><strong>Health Engine / System Pulse:</strong> {SYSMON_EVIDENCE.healthEngine}</p>
+              <ScrollStack
+                items={[
+                  {
+                    eyebrow: "Telemetria confirmada",
+                    title: "Leitura em tempo real",
+                    text: `${SYSMON_EVIDENCE.telemetry.join(", ")}.`,
+                  },
+                  {
+                    eyebrow: "Metrics architecture",
+                    title: "Métricas com contexto",
+                    text: SYSMON_EVIDENCE.architecture.join("; ") + ".",
+                  },
+                  {
+                    eyebrow: "Health Engine",
+                    title: "Atividade ou pressão",
+                    text: "Diferencia atividade de pressão do sistema.",
+                  },
+                  {
+                    eyebrow: "System Pulse",
+                    title: "Estado agregado",
+                    text: "Representação procedural que reage ao estado agregado da máquina.",
+                  },
+                ]}
+              />
               <p className="evidence-gap">Repositório, screenshots, benchmarks, testes, cobertura, compatibilidade adicional e métricas de uso ainda não estão disponíveis nesta base.</p>
             </div>
           </div>
@@ -164,11 +138,11 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
         <section className="project-index" aria-labelledby="other-projects-title">
           <div className="index-heading">
             <h3 id="other-projects-title">Outros projetos</h3>
-            <p>Registros compactos da minha evolução técnica.</p>
+            <p>Índice técnico.</p>
           </div>
-          <div className="project-index-list">
+          <SpotlightList>
             {secondaryProjects.map((project) => (
-              <article className="project-index-item" key={project.key}>
+              <article className="project-index-item" data-spotlight-item="true" key={project.key}>
                 <div className="project-index-number">{project.id}</div>
                 <div className="project-index-copy">
                   <p className="project-role">{project.role}</p>
@@ -183,7 +157,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                 </div>
               </article>
             ))}
-          </div>
+          </SpotlightList>
         </section>
       </section>
     </ProjectExplorer>

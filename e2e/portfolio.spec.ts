@@ -68,11 +68,11 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
   await expect(page.getByRole("heading", { name: "SysMon" })).toBeVisible();
 
   const projectTrigger = page.getByRole("button", {
-    name: "Abrir detalhes de Nocturne Studio",
+    name: "Abrir detalhes de Portfolio",
   });
   await projectTrigger.click();
 
-  const dialog = page.getByRole("dialog", { name: "Nocturne Studio" });
+  const dialog = page.getByRole("dialog", { name: "Portfolio" });
   await expect(dialog).toBeVisible();
   await expect(page.getByRole("button", { name: "Fechar detalhes do projeto" })).toBeFocused();
   await expect(page.locator("#conteudo")).toHaveAttribute("inert", "");

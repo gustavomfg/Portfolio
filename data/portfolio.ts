@@ -121,33 +121,15 @@ export const PROJECTS = [
 
 export const NOCTURNE_STUDIO_EVIDENCE = {
   version: "v0.9.5-beta",
-  principle: "O workspace é o produto; IA é uma capacidade do workspace, não o produto em si.",
-  implemented: [
-    "Review Mode",
-    "Workspace Memory",
-    "Second Brain",
-    "Awareness explicável por execução",
-    "Secure Provider System",
-    "Credential Vault",
-    "Typed IPC",
-    "Secure Electron Architecture",
-    "Provider Abstraction Layer",
-    "Packaging Pipeline",
-    "Automated CI Validation",
+  keyEvidence: [
+    "Workspace Memory, Local Second Brain e Awareness explicável por execução",
+    "Review Mode para arquitetura, segurança, testes, performance, documentação e manutenibilidade",
+    "Secure Provider System, Credential Vault e Typed IPC",
+    "Secure Electron Architecture com isolamento explícito entre renderer e processo principal",
+    "Provider Abstraction Layer, Packaging Pipeline e Automated CI Validation",
   ],
-  reviewMode: {
-    dimensions: ["arquitetura", "segurança", "testes", "performance", "documentação", "manutenibilidade"],
-    recommendationFields: ["evidência", "confiança", "origem", "responsável", "severidade", "justificativa", "histórico de decisão"],
-    note: "As sugestões permanecem sob revisão do desenvolvedor antes de alterações serem aplicadas.",
-  },
-  architecture: [
-    "Electron, React, TypeScript e SQLite",
-    "IPC tipado entre renderer e processo principal",
-    "contextIsolation habilitado e nodeIntegration desabilitado",
-    "preload/contextBridge como fronteira explícita",
-    "Comunicação controlada entre renderer e processo principal",
-    "Abstração entre workspace e provedores de IA",
-  ],
+  reviewModeSummary: "As recomendações registram evidência, confiança, origem, responsável, severidade, justificativa e histórico de decisão, sempre sob revisão do desenvolvedor antes de alterações.",
+  architectureSummary: "Electron, React, TypeScript e SQLite; IPC tipado; contextIsolation habilitado; nodeIntegration desabilitado; preload/contextBridge como fronteira; comunicação controlada entre renderer e processo principal.",
   providers: [
     "ChatGPT através do Codex CLI",
     "OpenAI API",
@@ -157,23 +139,10 @@ export const NOCTURNE_STUDIO_EVIDENCE = {
     "LM Studio",
     "Endpoints customizados compatíveis com OpenAI",
   ],
-  inDevelopment: [
-    "Recursos avançados de Build Mode",
-    "Recursos avançados de Docs Mode",
-    "Workspace Automation",
-    "Expansão das capacidades dos providers",
-  ],
-  limitations: [
-    "O projeto ainda está em beta.",
-    "A versão atual é v0.9.5-beta.",
-    "Build Mode e Docs Mode ainda possuem recursos avançados em desenvolvimento.",
-    "Workspace Automation ainda está em desenvolvimento.",
-    "O ecossistema de providers ainda está sendo expandido.",
-  ],
+  stateSummary: "O projeto está em beta. Recursos avançados de Build Mode e Docs Mode, Workspace Automation e a expansão do ecossistema de providers continuam em desenvolvimento.",
 } as const;
 
 export const SYSMON_EVIDENCE = {
-  definition: "Monitor de sistema desenvolvido em Rust.",
   stack: ["Rust", "Ratatui", "Crossterm", "Linux"],
   telemetry: ["CPU", "memória", "GPU", "rede", "armazenamento", "temperaturas", "processos"],
   architecture: [
