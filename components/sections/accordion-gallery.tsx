@@ -1,7 +1,7 @@
 "use client";
 
 import { gsap } from "gsap";
-import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 
 export interface NocturneGalleryItem {
   id: string;
@@ -52,15 +52,20 @@ export const NOCTURNE_GALLERY_ITEMS: readonly NocturneGalleryItem[] = [
 ] as const;
 
 const ACTIVE_GROW = 5.5;
+const MOTION_DURATION = 0.74;
+const MEDIA_DELAY = 0.1;
+const CAPTION_DELAY = 0.17;
 
 export function AccordionGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const mediaRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const labelRefs = useRef<Array<HTMLSpanElement | null>>([]);
-  const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  const layoutTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const previewTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const firstRunRef = useRef(true);
 
   useLayoutEffect(() => {
@@ -75,8 +80,10 @@ export function AccordionGallery() {
     const panels = panelRefs.current;
     if (!panels.length) return;
 
-    timelineRef.current?.kill();
-    const duration = animate && !prefersReducedMotion ? 0.52 : 0;
+    layoutTimelineRef.current?.kill();
+    previewTimelineRef.current?.kill();
+    gsap.set(panels, { scale: 1 });
+    const duration = animate && !prefersReducedMotion ? MOTION_DURATION : 0;
     const timeline = gsap.timeline();
 
     panels.forEach((panel, index) => {
@@ -91,42 +98,65 @@ export function AccordionGallery() {
         flexGrow: active ? ACTIVE_GROW : 1,
         rotateY: tilt,
         duration,
-        ease: "power3.out",
+        ease: "sine.inOut",
       }, 0);
 
       if (media) {
         timeline.to(media, {
-          x: active ? 0 : drift * 10,
+          x: active ? 0 : drift * 20,
           scale: active ? 1 : 0.97,
           opacity: active ? 1 : 0.62,
-          duration,
-          ease: "power3.out",
-        }, 0);
+          duration: duration * 0.82,
+          ease: "sine.inOut",
+        }, MEDIA_DELAY);
       }
 
       if (label) {
         timeline.to(label, {
           opacity: active ? 1 : 0.72,
-          x: active ? 0 : -3,
-          duration: duration * 0.75,
-          ease: "power2.out",
-        }, 0);
+          x: active ? 0 : -8,
+          duration: duration * 0.52,
+          ease: "sine.inOut",
+        }, CAPTION_DELAY);
       }
     });
 
-    timelineRef.current = timeline;
+    layoutTimelineRef.current = timeline;
   }, [activeIndex, prefersReducedMotion]);
+
+  const applyPreview = useCallback((index: number | null) => {
+    const panels = panelRefs.current;
+    if (!panels.length) return;
+
+    previewTimelineRef.current?.kill();
+    const duration = prefersReducedMotion ? 0 : 0.2;
+    const timeline = gsap.timeline();
+
+    panels.forEach((panel, panelIndex) => {
+      if (!panel) return;
+      timeline.to(panel, {
+        scale: index === panelIndex ? 1.012 : 1,
+        duration,
+        ease: "sine.out",
+        overwrite: "auto",
+      }, 0);
+    });
+
+    previewTimelineRef.current = timeline;
+  }, [prefersReducedMotion]);
 
   useLayoutEffect(() => {
     const firstRun = firstRunRef.current;
     applyLayout(!firstRun);
     firstRunRef.current = false;
-    const root = rootRef.current;
-    if (!root || typeof ResizeObserver === "undefined") return;
-    const observer = new ResizeObserver(() => applyLayout(false));
-    observer.observe(root);
-    return () => observer.disconnect();
   }, [applyLayout]);
+
+  useEffect(() => {
+    applyPreview(previewIndex);
+    return () => {
+      previewTimelineRef.current?.kill();
+    };
+  }, [applyPreview, previewIndex]);
 
   const moveTo = (index: number) => {
     setActiveIndex(index);
@@ -161,6 +191,9 @@ export function AccordionGallery() {
       role="tablist"
       aria-label="Evidências visuais do Nocturne Studio"
       aria-orientation="horizontal"
+      onPointerLeave={(event) => {
+        if (event.pointerType !== "touch") setPreviewIndex(null);
+      }}
     >
       {NOCTURNE_GALLERY_ITEMS.map((item, index) => {
         const active = index === activeIndex;
@@ -178,10 +211,16 @@ export function AccordionGallery() {
             aria-label={`${item.label}: ${item.detail}`}
             tabIndex={active ? 0 : -1}
             onPointerEnter={(event) => {
-              if (event.pointerType !== "touch") setActiveIndex(index);
+              if (event.pointerType !== "touch") setPreviewIndex(index);
             }}
-            onFocus={() => setActiveIndex(index)}
-            onClick={() => setActiveIndex(index)}
+            onFocus={() => {
+              setPreviewIndex(null);
+              setActiveIndex(index);
+            }}
+            onClick={() => {
+              setPreviewIndex(null);
+              setActiveIndex(index);
+            }}
             onKeyDown={(event) => handleKeyDown(index, event)}
           >
             <span ref={(element) => { mediaRefs.current[index] = element; }} className="accordion-gallery-panel-stage" id={`nocturne-gallery-panel-${item.id}`}>
