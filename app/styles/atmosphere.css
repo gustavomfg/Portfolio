@@ -1,18 +1,17 @@
-.light-field {
+/* The canvas is the single global atmosphere: precise, quiet and interactive. */
+.dot-grid {
   position: fixed;
-  inset: 0;
   z-index: -1;
+  inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 60% 45% at 50% 38%, rgb(145 103 255 / 0.025) 0%, transparent 100%);
+  opacity: 1;
+  background: transparent;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, rgb(0 0 0 / .72) 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 88%, rgb(0 0 0 / .72) 100%);
 }
 
-.light-dot { position: absolute; border-radius: 50%; background: var(--violet-soft); filter: blur(0.5px); }
-.light-dot--glow { box-shadow: 0 0 6px rgb(198 179 255 / 0.25); }
-
-@media (max-width: 700px) {
-  .light-dot:nth-child(n+7) { display: none; }
-}
+main#conteudo { isolation: isolate; }
 
 @media (prefers-reduced-motion: reduce) {
-  .light-dot { opacity: 0.03 !important; }
+  .dot-grid { opacity: .9; }
 }
