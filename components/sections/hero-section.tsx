@@ -1,18 +1,19 @@
 import { ArrowDown, ArrowUpRight, Mail } from "lucide-react";
+import { SplitText } from "@/components/animations/split-text";
 import { Reveal } from "@/components/animations/reveal";
-import { BrandMark } from "@/components/ui/brand-mark";
+import { HeroLanyard } from "@/components/sections/hero-lanyard";
 
 export function HeroSection() {
   return (
     <section className="hero section-shell" id="inicio">
       <div className="hero-grid">
-        <Reveal className="hero-copy" distance={18}>
+        <div className="hero-copy">
           <h1>
-            Gustavo Maquias
+            <SplitText text="Gustavo Maquias" />
             <span>Desenvolvedor Full Stack em início de carreira.</span>
           </h1>
           <p className="hero-intro">
-            Sou estudante de Análise e Desenvolvimento de Sistemas e aprendo construindo software real. Meu foco é evoluir em arquitetura, backend e aplicações web e desktop com responsabilidade e atenção aos detalhes.
+            Estudante de ADS que constrói aplicações web e desktop para aprofundar arquitetura, backend e engenharia de software.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#projeto-studio">
@@ -33,17 +34,10 @@ export function HeroSection() {
               Currículo <small>PDF</small> <ArrowUpRight size={14} aria-hidden="true" />
             </a>
           </nav>
-          <dl className="hero-facts" aria-label="Resumo profissional">
-            <div><dt>Formação</dt><dd>ADS</dd></div>
-            <div><dt>Direção</dt><dd>Java</dd></div>
-            <div><dt>Construção</dt><dd>Web &amp; desktop</dd></div>
-          </dl>
-        </Reveal>
+        </div>
 
-        <Reveal className="hero-signature" delay={0.08} distance={12}>
-          <div className="hero-signature-orbit" aria-hidden="true" />
-          <BrandMark />
-          <p>Projetos reais.<br />Aprendizado contínuo.</p>
+        <Reveal className="hero-lanyard-entry" delay={0.08} distance={12}>
+          <HeroLanyard />
         </Reveal>
       </div>
     </section>
