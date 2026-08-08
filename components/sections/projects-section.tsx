@@ -1,8 +1,8 @@
 import { ArrowUpRight, Code2 } from "lucide-react";
 import { Reveal } from "@/components/animations/reveal";
 import { AccordionGallery } from "@/components/sections/accordion-gallery";
+import { SysmonDepthShowcase } from "@/components/sections/depth-carousel";
 import { ProjectExplorer, ProjectTrigger } from "@/components/sections/project-explorer";
-import { ScrollStack } from "@/components/sections/scroll-stack";
 import { SpotlightList } from "@/components/sections/spotlight-list";
 import { NOCTURNE_STUDIO_EVIDENCE, SYSMON_EVIDENCE } from "@/data/portfolio";
 import type { Project } from "@/types/portfolio";
@@ -96,40 +96,18 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             <h3 id="sysmon-title">Segundo projeto em destaque</h3>
             <span>Base factual</span>
           </div>
-          <div className="sysmon-record">
+          <div className="sysmon-intro">
             <div>
               <p className="project-role">Monitor de sistema</p>
               <h4>SysMon</h4>
+              <p className="sysmon-description">
+                Monitor de sistema em Rust para telemetria de CPU, memória, GPU, rede, armazenamento, temperaturas e processos. A arquitetura separa coleta, interpretação e visualização para preservar contexto.
+              </p>
               <p className="sysmon-stack">{SYSMON_EVIDENCE.stack.join(" · ")}</p>
             </div>
-            <div className="sysmon-record-copy">
-              <ScrollStack
-                items={[
-                  {
-                    eyebrow: "Telemetria confirmada",
-                    title: "Leitura em tempo real",
-                    text: `${SYSMON_EVIDENCE.telemetry.join(", ")}.`,
-                  },
-                  {
-                    eyebrow: "Metrics architecture",
-                    title: "Métricas com contexto",
-                    text: SYSMON_EVIDENCE.architecture.join("; ") + ".",
-                  },
-                  {
-                    eyebrow: "Health Engine",
-                    title: "Atividade ou pressão",
-                    text: "Diferencia atividade de pressão do sistema.",
-                  },
-                  {
-                    eyebrow: "System Pulse",
-                    title: "Estado agregado",
-                    text: "Representação procedural que reage ao estado agregado da máquina.",
-                  },
-                ]}
-              />
-              <p className="evidence-gap">Repositório, screenshots, benchmarks, testes, cobertura, compatibilidade adicional e métricas de uso ainda não estão disponíveis nesta base.</p>
-            </div>
           </div>
+          <SysmonDepthShowcase />
+          <p className="evidence-gap sysmon-evidence-gap">Screenshots reais do SysMon ainda não estão disponíveis nesta base. Os slots acima permanecem explícitos para receber apenas capturas locais verificáveis.</p>
         </section>
 
         <section className="project-index" aria-labelledby="other-projects-title">
