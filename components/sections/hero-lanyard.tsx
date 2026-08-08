@@ -1,21 +1,11 @@
 "use client";
 
-import { Canvas, extend, useFrame, type ThreeElement, type ThreeEvent } from "@react-three/fiber";
+import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint, type RapierRigidBody, type RigidBodyProps } from "@react-three/rapier";
 import { useReducedMotion } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
 import { Environment, Lightformer, RoundedBox } from "@react-three/drei";
-
-extend({ MeshLineGeometry, MeshLineMaterial });
-
-declare module "@react-three/fiber" {
-  interface ThreeElements {
-    meshLineGeometry: ThreeElement<typeof MeshLineGeometry>;
-    meshLineMaterial: ThreeElement<typeof MeshLineMaterial>;
-  }
-}
 
 const BADGE_WIDTH = 2.65;
 const BADGE_HEIGHT = 3.5;
@@ -23,8 +13,8 @@ const BADGE_DEPTH = 0.32;
 const BAND_SAMPLES = 28;
 const BAND_EXTENSION_SAMPLES = 12;
 const BAND_EXTENSION_LENGTH = 2.1;
-const BAND_WIDTH = 0.18;
-const BAND_THICKNESS = 0.035;
+const BAND_WIDTH = 0.21;
+const BAND_THICKNESS = 0.045;
 
 function createBandGeometry(sampleCount: number) {
   const geometry = new THREE.BufferGeometry();
@@ -159,7 +149,7 @@ export function HeroLanyard() {
             <StaticBadge />
           ) : (
             <Physics gravity={[0, -18, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
-              <PhysicsLanyard isMobile={isMobile} />
+              <PhysicsLanyard />
             </Physics>
           )}
         </Canvas>
@@ -291,6 +281,52 @@ function BadgeFace({ back = false }: { back?: boolean }) {
   );
 }
 
+function AttachmentHardware() {
+  const top = BADGE_HEIGHT / 2;
+
+  return (
+    <group>
+      <RoundedBox args={[0.52, 0.16, 0.38]} radius={0.045} smoothness={6} position={[0, top + 0.04, 0]}>
+        <meshPhysicalMaterial
+          color="#171923"
+          roughness={0.34}
+          metalness={0.72}
+          clearcoat={0.46}
+          clearcoatRoughness={0.22}
+          reflectivity={0.72}
+        />
+      </RoundedBox>
+      <mesh position={[0, top + 0.04, BADGE_DEPTH / 2 + 0.014]}>
+        <boxGeometry args={[0.26, 0.055, 0.02]} />
+        <meshPhysicalMaterial color="#07080d" roughness={0.68} metalness={0.22} />
+      </mesh>
+      <mesh position={[0, top + 0.19, 0.025]}>
+        <torusGeometry args={[0.115, 0.027, 16, 32]} />
+        <meshPhysicalMaterial
+          color="#77728b"
+          roughness={0.24}
+          metalness={0.88}
+          clearcoat={0.62}
+          clearcoatRoughness={0.16}
+          reflectivity={0.88}
+        />
+      </mesh>
+      <mesh position={[0, top + 0.19, 0.025]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.034, 0.034, 0.28, 16]} />
+        <meshPhysicalMaterial color="#282735" roughness={0.3} metalness={0.82} clearcoat={0.42} />
+      </mesh>
+      <mesh position={[-0.16, top + 0.04, BADGE_DEPTH / 2 + 0.022]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.022, 0.022, 0.012, 16]} />
+        <meshPhysicalMaterial color="#8f83b8" roughness={0.28} metalness={0.84} clearcoat={0.48} />
+      </mesh>
+      <mesh position={[0.16, top + 0.04, BADGE_DEPTH / 2 + 0.022]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.022, 0.022, 0.012, 16]} />
+        <meshPhysicalMaterial color="#8f83b8" roughness={0.28} metalness={0.84} clearcoat={0.48} />
+      </mesh>
+    </group>
+  );
+}
+
 function BadgeCard() {
   return (
     <group>
@@ -299,18 +335,7 @@ function BadgeCard() {
       </RoundedBox>
       <BadgeFace />
       <BadgeFace back />
-      <mesh position={[0, BADGE_HEIGHT / 2 + 0.045, 0]}>
-        <boxGeometry args={[0.36, 0.12, BADGE_DEPTH * 0.82]} />
-        <meshPhysicalMaterial color="#151321" roughness={0.34} metalness={0.72} clearcoat={0.42} />
-      </mesh>
-      <mesh position={[0, BADGE_HEIGHT / 2 + 0.15, 0]}>
-        <cylinderGeometry args={[0.052, 0.052, 0.16, 18]} />
-        <meshPhysicalMaterial color="#b7a9e9" roughness={0.26} metalness={0.86} clearcoat={0.5} />
-      </mesh>
-      <mesh position={[0, BADGE_HEIGHT / 2 + 0.245, 0.015]}>
-        <torusGeometry args={[0.14, 0.032, 14, 32]} />
-        <meshPhysicalMaterial color="#d1c6ff" roughness={0.2} metalness={0.9} clearcoat={0.58} />
-      </mesh>
+      <AttachmentHardware />
     </group>
   );
 }
@@ -331,12 +356,7 @@ function StaticBadge() {
   );
 }
 
-interface PhysicsLanyardProps {
-  isMobile: boolean;
-}
-
-function PhysicsLanyard({ isMobile }: PhysicsLanyardProps) {
-  const bandAccent = useRef<THREE.Mesh>(null!);
+function PhysicsLanyard() {
   const fixed = useRef<RapierRigidBody>(null!);
   const jointOne = useRef<RapierRigidBody>(null!);
   const jointTwo = useRef<RapierRigidBody>(null!);
@@ -352,29 +372,78 @@ function PhysicsLanyard({ isMobile }: PhysicsLanyardProps) {
     [],
   );
   const bandGeometry = useMemo(() => createBandGeometry(BAND_SAMPLES + BAND_EXTENSION_SAMPLES + 1), []);
-  const bandTexture = useMemo(() => {
+  // The texture bundle owns mutable Three.js resources and must stay stable for the scene lifetime.
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
+  const bandTextures = useMemo(() => {
     if (typeof document === "undefined") return null;
     const canvas = document.createElement("canvas");
-    canvas.width = 256;
-    canvas.height = 64;
+    canvas.width = 512;
+    canvas.height = 128;
     const context = canvas.getContext("2d");
     if (!context) return null;
 
-    context.fillStyle = "#171522";
+    context.fillStyle = "#0b0d13";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = "rgba(198,179,255,.08)";
-    for (let y = 5; y < canvas.height; y += 10) context.fillRect(0, y, canvas.width, 1);
-    context.fillStyle = "rgba(93,138,255,.22)";
-    for (let x = 8; x < canvas.width; x += 24) context.fillRect(x, 0, 2, canvas.height);
-    context.fillStyle = "rgba(198,179,255,.3)";
-    for (let x = -12; x < canvas.width + 20; x += 24) context.fillRect(x, 0, 1, canvas.height);
+
+    // A restrained woven pattern keeps the ribbon legible without turning it into a glowing line.
+    context.fillStyle = "rgba(255,255,255,.055)";
+    for (let y = 2; y < canvas.height; y += 8) context.fillRect(0, y, canvas.width, 1);
+    context.fillStyle = "rgba(0,0,0,.24)";
+    for (let x = 0; x < canvas.width; x += 7) context.fillRect(x, 0, 1, canvas.height);
+    context.strokeStyle = "rgba(173,153,235,.14)";
+    context.lineWidth = 1;
+    for (let x = -128; x < canvas.width + 128; x += 18) {
+      context.beginPath();
+      context.moveTo(x, 0);
+      context.lineTo(x + 42, canvas.height);
+      context.stroke();
+    }
+    context.fillStyle = "rgba(128,105,193,.32)";
+    context.fillRect(5, 0, 2, canvas.height);
+    context.fillRect(canvas.width - 7, 0, 2, canvas.height);
+    context.fillStyle = "rgba(102,82,157,.12)";
+    context.fillRect(canvas.width * 0.5 - 1, 0, 2, canvas.height);
+
+    const bumpCanvas = document.createElement("canvas");
+    bumpCanvas.width = canvas.width;
+    bumpCanvas.height = canvas.height;
+    const bumpContext = bumpCanvas.getContext("2d");
+    if (!bumpContext) return null;
+    bumpContext.fillStyle = "#808080";
+    bumpContext.fillRect(0, 0, bumpCanvas.width, bumpCanvas.height);
+    bumpContext.strokeStyle = "#a8a8a8";
+    bumpContext.lineWidth = 1;
+    for (let y = 2; y < bumpCanvas.height; y += 8) bumpContext.fillRect(0, y, bumpCanvas.width, 1);
+    bumpContext.strokeStyle = "#5a5a5a";
+    for (let x = 0; x < bumpCanvas.width; x += 7) bumpContext.fillRect(x, 0, 1, bumpCanvas.height);
+
+    const roughnessCanvas = document.createElement("canvas");
+    roughnessCanvas.width = canvas.width;
+    roughnessCanvas.height = canvas.height;
+    const roughnessContext = roughnessCanvas.getContext("2d");
+    if (!roughnessContext) return null;
+    roughnessContext.fillStyle = "#d8d8d8";
+    roughnessContext.fillRect(0, 0, roughnessCanvas.width, roughnessCanvas.height);
+    roughnessContext.fillStyle = "#b4b4b4";
+    for (let x = 0; x < roughnessCanvas.width; x += 7) roughnessContext.fillRect(x, 0, 1, roughnessCanvas.height);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(3, 1);
-    return texture;
+    texture.repeat.set(4, 1);
+
+    const bumpTexture = new THREE.CanvasTexture(bumpCanvas);
+    bumpTexture.wrapS = THREE.RepeatWrapping;
+    bumpTexture.wrapT = THREE.RepeatWrapping;
+    bumpTexture.repeat.set(4, 1);
+
+    const roughnessTexture = new THREE.CanvasTexture(roughnessCanvas);
+    roughnessTexture.wrapS = THREE.RepeatWrapping;
+    roughnessTexture.wrapT = THREE.RepeatWrapping;
+    roughnessTexture.repeat.set(4, 1);
+
+    return { texture, bumpTexture, roughnessTexture };
   }, []);
   const vector = useMemo(() => new THREE.Vector3(), []);
   const direction = useMemo(() => new THREE.Vector3(), []);
@@ -394,9 +463,11 @@ function PhysicsLanyard({ isMobile }: PhysicsLanyardProps) {
   useEffect(() => {
     return () => {
       bandGeometry.dispose();
-      bandTexture?.dispose();
+      bandTextures?.texture.dispose();
+      bandTextures?.bumpTexture.dispose();
+      bandTextures?.roughnessTexture.dispose();
     };
-  }, [bandGeometry, bandTexture]);
+  }, [bandGeometry, bandTextures]);
 
   const segmentProps: RigidBodyProps = {
     type: "dynamic",
@@ -451,8 +522,6 @@ function PhysicsLanyard({ isMobile }: PhysicsLanyardProps) {
     const cardRotation = card.current.rotation();
     const strapTwist = cardRotation.z * 0.9 + cardRotation.x * 0.45;
     updateBandGeometry(bandGeometry, points, state.camera, strapTwist);
-    const accentGeometry = bandAccent.current.geometry as unknown as { setPoints: (points: THREE.Vector3[]) => void };
-    accentGeometry.setPoints(points);
 
     // Let the card keep a little rotational energy while the strap damps it naturally.
     angularVelocity.copy(card.current.angvel());
@@ -509,30 +578,19 @@ function PhysicsLanyard({ isMobile }: PhysicsLanyardProps) {
       </RigidBody>
       <mesh geometry={bandGeometry} frustumCulled={false}>
         <meshPhysicalMaterial
-          map={bandTexture ?? undefined}
-          color="#151320"
-          roughness={0.82}
+          map={bandTextures?.texture ?? undefined}
+          bumpMap={bandTextures?.bumpTexture ?? undefined}
+          bumpScale={0.018}
+          roughnessMap={bandTextures?.roughnessTexture ?? undefined}
+          color="#10121a"
+          roughness={0.88}
           metalness={0.08}
-          clearcoat={0.18}
-          clearcoatRoughness={0.62}
-          sheen={0.32}
-          sheenColor="#34265e"
-          sheenRoughness={0.7}
+          clearcoat={0.12}
+          clearcoatRoughness={0.72}
+          sheen={0.24}
+          sheenColor="#3b2b69"
+          sheenRoughness={0.82}
           side={THREE.DoubleSide}
-        />
-      </mesh>
-      <mesh ref={bandAccent}>
-        <meshLineGeometry />
-        <meshLineMaterial
-          args={[{
-            color: "#aa98e8",
-            lineWidth: 0.14,
-            resolution: new THREE.Vector2(isMobile ? 480 : 800, isMobile ? 640 : 800),
-          }]}
-          transparent
-          opacity={0.62}
-          depthTest
-          depthWrite={false}
         />
       </mesh>
     </>
