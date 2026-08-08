@@ -15,9 +15,7 @@ section[id] { scroll-margin-top: 105px; }
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at 50% -10%, rgba(105, 68, 170, .08), transparent 32rem),
-    var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
   font-size: 1rem;
@@ -28,13 +26,6 @@ body {
 }
 
 body.dialog-open { overflow: hidden; }
-
-main#conteudo {
-  background:
-    radial-gradient(ellipse 72% 12% at 68% 58%, rgb(96 60 155 / 4.2%) 0%, rgb(80 49 132 / 2.4%) 38%, rgb(62 39 101 / 0.8%) 68%, transparent 100%),
-    radial-gradient(ellipse 68% 11% at 28% 76%, rgb(75 54 126 / 3.6%) 0%, rgb(61 44 103 / 1.7%) 46%, rgb(48 34 81 / 0.6%) 72%, transparent 100%),
-    radial-gradient(ellipse 62% 10% at 78% 88%, rgb(92 58 151 / 3.8%) 0%, rgb(75 47 124 / 2.1%) 40%, rgb(57 36 94 / 0.7%) 70%, transparent 100%);
-}
 
 h1, h2, h3, p { margin-block: 0; }
 button, input, textarea, select { font: inherit; }
@@ -69,12 +60,6 @@ img, svg { display: block; }
 .status-card .button { width: fit-content; }
 
 @media (max-width: 700px) {
-  main#conteudo {
-    background:
-      radial-gradient(ellipse 92% 10% at 58% 57%, rgb(96 60 155 / 3.4%) 0%, rgb(80 49 132 / 1.8%) 40%, rgb(62 39 101 / 0.6%) 70%, transparent 100%),
-      radial-gradient(ellipse 86% 9% at 42% 76%, rgb(75 54 126 / 2.8%) 0%, rgb(61 44 103 / 1.3%) 48%, rgb(48 34 81 / 0.4%) 74%, transparent 100%),
-      radial-gradient(ellipse 96% 8% at 66% 88%, rgb(92 58 151 / 3%) 0%, rgb(75 47 124 / 1.6%) 42%, rgb(57 36 94 / 0.5%) 72%, transparent 100%);
-  }
   .status-card .button { width: 100%; }
 }
 

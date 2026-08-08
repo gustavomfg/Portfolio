@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "@fontsource-variable/jetbrains-mono/wght.css";
 import "./globals.css";
-import { LightField } from "@/components/atmosphere/light-field";
 import { siteUrl } from "@/app/site-config";
 
 const title = "Gustavo Maquias — Análise e Desenvolvimento de Sistemas";
@@ -51,7 +50,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <LightField />
         {children}
       </body>
     </html>
