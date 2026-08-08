@@ -336,11 +336,6 @@
 
 .priority-secondary { margin-top: 72px; border-top: 1px solid var(--line); }
 .priority-heading h3, .index-heading h3 { margin: 0; color: var(--text-bright); font-size: var(--font-subtitle); font-weight: 500; letter-spacing: -.02em; text-transform: none; }
-.sysmon-intro { padding: 24px 0 44px; }
-.sysmon-intro > div { max-width: 760px; }
-.sysmon-intro h4 { margin: 8px 0 0; color: var(--text); font-size: clamp(42px, 5vw, 64px); line-height: 1; font-weight: 500; letter-spacing: -.035em; }
-.sysmon-intro .project-role { color: var(--violet-soft); font-size: .8rem; line-height: 1.5; }
-.sysmon-description { max-width: 44ch; margin: 16px 0 0; color: var(--text-bright); font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.7; }
 .sysmon-stack { margin: 18px 0 0; color: var(--violet-soft); font-size: .82rem; line-height: 1.7; letter-spacing: .04em; }
 .sysmon-evidence-gap { margin: 30px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--text-label); font-size: .78rem; line-height: 1.65; }
 .project-index { margin-top: 72px; }
@@ -499,10 +494,6 @@
 .gallery-panel-copy { display: grid; gap: 7px; }
 .gallery-panel-copy p:last-child { color: var(--text-dim); font-size: .68rem; line-height: 1.6; }
 
-@media (max-width: 700px) {
-  .sysmon-description { font-size: .92rem; }
-}
-
 .spotlight-list .project-index-item { position: relative; isolation: isolate; overflow: hidden; }
 .spotlight-list .project-index-item::before { content: ""; position: absolute; z-index: -1; inset: 0; opacity: 0; background: radial-gradient(circle 180px at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(145,103,255,.11), transparent 72%); transition: opacity var(--duration-normal) ease; pointer-events: none; }
 .spotlight-list .project-index-item:hover::before, .spotlight-list .project-index-item:focus-within::before { opacity: 1; }
@@ -617,37 +608,44 @@
 .accordion-gallery-panel-label { overflow: hidden; color: var(--text); font-size: clamp(.78rem, 1.15vw, 1rem); font-weight: 600; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; letter-spacing: .06em; }
 .accordion-gallery-panel-detail { min-height: 2.6em; color: var(--muted); font-size: clamp(.7rem, .88vw, .84rem); line-height: 1.5; }
 
-.sysmon-showcase { position: relative; padding: 4px 0 10px; }
-.sysmon-showcase-topline { display: flex; justify-content: space-between; gap: 20px; color: var(--text-label); font-size: .63rem; line-height: 1.5; text-transform: uppercase; letter-spacing: .09em; }
-.sysmon-showcase-topline span:first-child { color: var(--violet-soft); }
-.depth-carousel { --dc-perspective: 1500px; position: relative; width: 100%; height: clamp(420px, 47vw, 580px); min-height: 360px; display: flex; align-items: center; justify-content: center; perspective: var(--dc-perspective); perspective-origin: 50% 50%; touch-action: pan-y; outline: none; user-select: none; -webkit-user-select: none; cursor: grab; }
+.sysmon-showcase { position: relative; padding: 0 0 18px; }
+.sysmon-project-header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .9fr); gap: clamp(32px, 7vw, 112px); align-items: end; padding: 8px 0 18px; }
+.sysmon-project-identity { min-width: 0; max-width: 52ch; }
+.sysmon-project-identity .project-role { color: var(--violet-soft); font-size: .8rem; line-height: 1.5; }
+.sysmon-project-identity h3 { margin: 8px 0 16px; color: var(--text); font-size: clamp(42px, 5vw, 68px); line-height: 1; font-weight: 500; letter-spacing: -.04em; }
+.sysmon-project-identity > p:not(.project-role):not(.sysmon-stack) { margin: 0; color: var(--text-bright); font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.7; }
+.sysmon-active-context { min-width: 0; max-width: 46ch; min-height: 144px; padding-left: 24px; border-left: 1px solid var(--line-strong); animation: sysmon-active-context-in .32s ease both; }
+.sysmon-active-label { margin: 0 0 12px; color: var(--violet-soft); font-family: monospace; font-size: .73rem; line-height: 1.5; text-transform: uppercase; letter-spacing: .1em; }
+.sysmon-active-context h4 { margin: 0 0 12px; color: var(--text); font-size: clamp(1.45rem, 2.8vw, 2.35rem); line-height: 1.08; font-weight: 500; letter-spacing: -.04em; }
+.sysmon-active-context > p:not(.sysmon-active-label) { margin: 0 0 14px; color: var(--text-bright); font-size: clamp(.92rem, 1.05vw, 1.04rem); line-height: 1.7; }
+.sysmon-active-context > span { color: var(--violet-soft); font-family: monospace; font-size: .7rem; line-height: 1.6; text-transform: uppercase; letter-spacing: .07em; }
+@keyframes sysmon-active-context-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.depth-carousel { --dc-perspective: 1680px; position: relative; width: 100%; height: clamp(460px, 49vw, 610px); min-height: 380px; display: flex; align-items: center; justify-content: center; perspective: var(--dc-perspective); perspective-origin: 50% 50%; touch-action: pan-y; outline: none; user-select: none; -webkit-user-select: none; cursor: grab; }
 .depth-carousel:active { cursor: grabbing; }
 .depth-carousel:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 8px; border-radius: 20px; }
 .depth-carousel__stage { position: absolute; inset: 0; transform-style: preserve-3d; }
-.depth-carousel__card { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; overflow: hidden; border: 1px solid var(--line-strong); background: #0b0d12; box-shadow: 0 34px 70px -22px rgba(0,0,0,.72), 0 10px 26px -12px rgba(0,0,0,.56); transform-origin: center center; will-change: transform, opacity, filter; cursor: pointer; }
+.depth-carousel__card { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(198,179,255,.26); background: radial-gradient(circle at 50% 40%, rgba(145,103,255,.1), transparent 55%), #0b0d12; box-shadow: 0 34px 70px -22px rgba(0,0,0,.72), 0 10px 26px -12px rgba(0,0,0,.56); transform-origin: center center; will-change: transform, opacity, filter; cursor: pointer; transition: border-color .35s ease, box-shadow .35s ease; }
+.depth-carousel__card.is-active { border-color: rgba(198,179,255,.78); box-shadow: 0 42px 90px -24px rgba(0,0,0,.82), 0 0 0 1px rgba(145,103,255,.14), 0 0 42px rgba(145,103,255,.12); }
+.depth-carousel__card.is-rear { border-color: rgba(198,179,255,.38); }
+.depth-carousel__card::before { content: ""; position: absolute; z-index: 1; inset: 10px; pointer-events: none; border: 1px solid rgba(198,179,255,.1); border-radius: inherit; }
 .depth-carousel__card::after { content: ""; position: absolute; inset: 0; pointer-events: none; border: 1px solid rgba(198,179,255,.2); border-radius: inherit; }
-.depth-carousel__img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; -webkit-user-drag: none; }
-.depth-carousel__pending { position: relative; z-index: 1; display: grid; justify-items: center; gap: 12px; width: min(72%, 420px); padding: 30px; border: 1px dashed rgba(198,179,255,.32); color: var(--text-label); text-align: center; }
+.depth-carousel__img { width: 100%; height: 100%; object-fit: contain; display: block; background: #08090f; pointer-events: none; -webkit-user-drag: none; }
+.depth-carousel__pending { position: relative; z-index: 2; display: grid; justify-items: center; gap: 12px; width: min(72%, 420px); padding: 34px 30px; border: 1px dashed rgba(198,179,255,.38); background: linear-gradient(145deg, rgba(145,103,255,.12), rgba(8,9,15,.12)); color: var(--text-label); text-align: center; }
 .depth-carousel__pending-kicker { color: var(--violet-soft); font-family: monospace; font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; }
 .depth-carousel__pending strong { color: var(--text-bright); font-size: clamp(1rem, 1.8vw, 1.35rem); font-weight: 500; }
 .depth-carousel__pending > span:last-child { max-width: 34ch; color: var(--text-label); font-family: monospace; font-size: .7rem; line-height: 1.55; }
 .depth-carousel__tint { position: absolute; inset: 0; pointer-events: none; background: #08090f; mix-blend-mode: multiply; opacity: 0; }
-.depth-carousel__arrow { position: absolute; top: 50%; z-index: 10; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: 999px; background: rgba(12,13,19,.72); color: var(--text-bright); cursor: pointer; transform: translateY(-50%); transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease, transform var(--duration-fast) ease; }
+.depth-carousel-shell { width: 100%; }
+.depth-carousel-controls { width: min(100%, 900px); margin: 14px auto 0; display: grid; grid-template-columns: auto auto 1fr auto auto; align-items: center; gap: 12px; }
+.depth-carousel__arrow { position: relative; top: auto; left: auto; right: auto; z-index: 10; width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid rgba(198,179,255,.4); border-radius: 999px; background: rgba(12,13,19,.82); color: var(--text-bright); font-size: 1.2rem; cursor: pointer; transform: none; transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease, transform var(--duration-fast) ease; }
 .depth-carousel__arrow:hover { border-color: var(--violet-soft); background: rgba(29,24,44,.88); }
-.depth-carousel__arrow:active { transform: translateY(-50%) scale(.94); }
+.depth-carousel__arrow:active { transform: scale(.94); }
 .depth-carousel__arrow:focus-visible, .depth-carousel__dot:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 3px; }
-.depth-carousel__arrow--prev { left: 12px; }
-.depth-carousel__arrow--next { right: 12px; }
-.depth-carousel__dots { position: absolute; bottom: 18px; left: 50%; z-index: 10; display: flex; gap: 8px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(10,11,16,.72); transform: translateX(-50%); }
+.depth-carousel__position { color: var(--violet-soft); font-family: monospace; font-size: .7rem; line-height: 1.5; letter-spacing: .08em; white-space: nowrap; }
+.depth-carousel__dots { justify-self: start; display: flex; gap: 8px; padding: 10px 13px; border: 1px solid var(--line-strong); border-radius: 999px; background: rgba(10,11,16,.82); box-shadow: 0 10px 26px rgba(0,0,0,.28); }
 .depth-carousel__dot { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 999px; background: var(--text-label); cursor: pointer; transition: width var(--duration-fast) ease, background-color var(--duration-fast) ease; }
-.depth-carousel__dot.is-active { width: 22px; background: var(--violet-soft); }
-.sysmon-showcase-caption { display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr); gap: clamp(28px, 7vw, 110px); padding: 28px 0 0; border-top: 1px solid var(--line-strong); }
-.sysmon-showcase-caption > div:last-child { max-width: 54ch; }
-.sysmon-showcase-label { margin: 0 0 10px; color: var(--violet-soft); font-family: monospace; font-size: .73rem; line-height: 1.5; text-transform: uppercase; letter-spacing: .1em; }
-.sysmon-showcase-caption h5 { margin: 0; color: var(--text); font-size: clamp(1.55rem, 3vw, 2.6rem); line-height: 1.08; font-weight: 500; letter-spacing: -.04em; }
-.sysmon-showcase-caption p:not(.sysmon-showcase-label) { margin: 0 0 14px; color: var(--text-bright); font-size: clamp(.92rem, 1.05vw, 1.04rem); line-height: 1.7; }
-.sysmon-showcase-caption span { color: var(--violet-soft); font-family: monospace; font-size: .7rem; line-height: 1.6; text-transform: uppercase; letter-spacing: .07em; }
-.sysmon-showcase-hint { margin: 18px 0 0; color: var(--text-label); font-size: .7rem; line-height: 1.5; text-align: right; }
+.depth-carousel__dot.is-active { width: 24px; background: var(--violet-soft); box-shadow: 0 0 12px rgba(145,103,255,.42); }
+.depth-carousel__hint { margin-left: auto; color: var(--text-label); font-size: .68rem; line-height: 1.5; text-align: right; white-space: nowrap; }
 
 .dot-grid { opacity: .68; background: none; mask-image: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / .9) 68%, transparent 100%); }
 .dot-grid__canvas { display: block; width: 100%; height: 100%; }
@@ -673,16 +671,18 @@
   .studio-evidence-group > p:not(.studio-evidence-group-label) { font-size: .82rem; line-height: 1.65; }
   .accordion-gallery { height: 460px; margin-top: 0; flex-direction: column; perspective: none; }
   .accordion-gallery-panel { flex-basis: 0; }
-  .sysmon-intro { padding-bottom: 30px; }
+  .sysmon-project-header { grid-template-columns: 1fr; gap: 28px; padding-bottom: 18px; }
+  .sysmon-active-context { min-height: 0; padding: 18px 0 0; border-top: 1px solid var(--line-strong); border-left: 0; }
   .depth-carousel { height: 420px; min-height: 340px; }
   .depth-carousel__arrow { width: 40px; height: 40px; }
-  .sysmon-showcase-caption { grid-template-columns: 1fr; gap: 18px; }
-  .sysmon-showcase-hint { text-align: left; }
+  .depth-carousel-controls { grid-template-columns: auto auto 1fr auto; gap: 10px; }
+  .depth-carousel__dots { justify-self: center; }
+  .depth-carousel__hint { grid-column: 1 / -1; margin: 4px 0 0; text-align: left; }
   .sysmon-evidence-gap { margin-top: 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .accordion-gallery-panel, .accordion-gallery-panel-stage { transition: none; will-change: auto; }
-  .depth-carousel__card, .depth-carousel__arrow, .depth-carousel__dot { transition: none; will-change: auto; }
+  .depth-carousel__card, .depth-carousel__arrow, .depth-carousel__dot, .sysmon-active-context { transition: none; animation: none; will-change: auto; }
   .dot-grid { opacity: .38; }
 }

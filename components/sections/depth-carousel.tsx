@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import gsap from "gsap";
+import { SYSMON_EVIDENCE } from "@/data/portfolio";
 
 export interface SysmonCarouselItem {
   label: string;
@@ -97,13 +98,13 @@ function DepthCarousel({
   cardWidth = 820,
   cardHeight = 500,
   radius = 18,
-  depth = 220,
-  spread = 96,
+  depth = 300,
+  spread = 128,
   tilt = 7,
-  perspective = 1500,
-  visibleCards = 2,
-  falloff = 0.2,
-  blur = 4,
+  perspective = 1680,
+  visibleCards = 2.3,
+  falloff = 0.16,
+  blur = 2.5,
   duration = 720,
   ease = "power3.out",
   onChange,
@@ -121,7 +122,7 @@ function DepthCarousel({
   const reducedRef = useRef(false);
   const configRef = useRef<CarouselConfig>({} as CarouselConfig);
   const dragRef = useRef<DragState | null>(null);
-  const wheelTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingIndexRef = useRef(0);
   const [active, setActive] = useState(0);
 
   const config = useMemo<CarouselConfig>(
@@ -158,36 +159,32 @@ function DepthCarousel({
 
       const behind = Math.max(0, distance);
       const absoluteDistance = Math.abs(distance);
+      const isActive = absoluteDistance < 0.5;
       const visible = absoluteDistance <= config.visibleCards + 0.5;
       const translateZ = -config.depth * distance;
       const translateX = config.spread * distance;
-      const rotateY = config.tilt * clamp(distance, 0, 1);
+      const rotateY = config.tilt * clamp(distance, 0, 2);
       const opacity = visible ? (distance < 0 ? Math.max(0, 1 + distance) : 1) : 0;
-      const brightness = Math.max(0.2, 1 - behind * config.falloff);
+      const cardScale = isActive ? 1.045 : clamp(1 - behind * 0.12, 0.72, 1);
+      const brightness = Math.max(0.52, 1 - behind * config.falloff);
       const blurPx = config.blur > 0 ? Math.min(config.blur, (behind / Math.max(1, config.visibleCards)) * config.blur) : 0;
 
-      card.style.transform = `translate(-50%, -50%) scale(${scale}) translateX(${translateX.toFixed(2)}px) translateZ(${translateZ.toFixed(2)}px) rotateY(${rotateY.toFixed(3)}deg)`;
+      card.style.transform = `translate(-50%, -50%) scale(${(scale * cardScale).toFixed(4)}) translateX(${translateX.toFixed(2)}px) translateZ(${translateZ.toFixed(2)}px) rotateY(${rotateY.toFixed(3)}deg)`;
       card.style.opacity = opacity.toFixed(3);
       card.style.filter = `brightness(${brightness.toFixed(3)}) blur(${blurPx.toFixed(2)}px)`;
       card.style.zIndex = String(Math.round(2000 - distance * 20));
       card.style.pointerEvents = visible && opacity > 0.05 ? "auto" : "none";
+      card.classList.toggle("is-active", isActive);
+      card.classList.toggle("is-rear", distance >= 0.5);
 
       const overlay = overlayRefs.current[index];
-      if (overlay) overlay.style.opacity = clamp(behind * config.falloff * 1.2, 0, 0.82).toFixed(3);
+      if (overlay) overlay.style.opacity = clamp(behind * config.falloff * 0.9, 0, 0.42).toFixed(3);
     }
   }, []);
 
   useEffect(() => {
     configRef.current = config;
   }, [config]);
-
-  const notify = useCallback(
-    (index: number) => {
-      setActive(index);
-      onChange?.(index);
-    },
-    [onChange],
-  );
 
   const tweenTo = useCallback(
     (target: number, animate: boolean) => {
@@ -205,10 +202,11 @@ function DepthCarousel({
         onComplete: () => {
           positionRef.current = ((positionRef.current % config.count) + config.count) % config.count;
           layout(positionRef.current);
+          onChange?.(pendingIndexRef.current);
         },
       });
     },
-    [layout],
+    [layout, onChange],
   );
 
   const setFocus = useCallback(
@@ -221,13 +219,14 @@ function DepthCarousel({
         delta = ((delta % config.count) + config.count) % config.count;
         if (delta > config.count / 2) delta -= config.count;
       }
-      tweenTo(positionRef.current + delta, animate);
       if (index !== focusRef.current) {
         focusRef.current = index;
-        notify(index);
+        pendingIndexRef.current = index;
+        setActive(index);
       }
+      tweenTo(positionRef.current + delta, animate);
     },
-    [notify, tweenTo],
+    [tweenTo],
   );
 
   const navigateBy = useCallback((step: number) => setFocus(focusRef.current + step), [setFocus]);
@@ -253,26 +252,6 @@ function DepthCarousel({
     resizeObserver.observe(root);
     return () => resizeObserver.disconnect();
   }, [layout]);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root || count < 2) return;
-    const onWheel = (event: WheelEvent) => {
-      event.preventDefault();
-      tweenRef.current?.kill();
-      const rawDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-      const delta = event.deltaMode === 1 ? rawDelta * 24 : rawDelta;
-      positionRef.current += clamp(delta / (configRef.current.cardWidth * 0.9), -0.6, 0.6);
-      layout(positionRef.current);
-      if (wheelTimerRef.current) clearTimeout(wheelTimerRef.current);
-      wheelTimerRef.current = setTimeout(() => setFocus(Math.round(positionRef.current)), 130);
-    };
-    root.addEventListener("wheel", onWheel, { passive: false });
-    return () => {
-      root.removeEventListener("wheel", onWheel);
-      if (wheelTimerRef.current) clearTimeout(wheelTimerRef.current);
-    };
-  }, [count, layout, setFocus]);
 
   const onPointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
     if (configRef.current.count < 2) return;
@@ -333,62 +312,64 @@ function DepthCarousel({
   );
 
   return (
-    <div
-      ref={rootRef}
-      className={`depth-carousel ${className}`.trim()}
-      style={{ "--dc-perspective": `${perspective}px` } as CSSProperties}
-      role="group"
-      aria-roledescription="carousel"
-      aria-label="Evidências visuais do SysMon"
-      tabIndex={0}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerEnd}
-      onPointerCancel={onPointerEnd}
-      onKeyDown={onKeyDown}
-    >
-      <div className="depth-carousel__stage">
-        {data.map((item, index) => (
-          <article
-            key={item.label}
-            className="depth-carousel__card"
-            ref={(element) => {
-              cardRefs.current[index] = element;
-            }}
-            style={{ width: cardWidth, height: cardHeight, borderRadius: radius }}
-            aria-roledescription="slide"
-            aria-label={`${item.label}: ${item.title}`}
-            aria-hidden={active !== index}
-            onClick={() => setFocus(index)}
-          >
-            {item.image ? (
-              <img className="depth-carousel__img" src={item.image} alt={item.alt} draggable={false} />
-            ) : (
-              <div className="depth-carousel__pending">
-                <span className="depth-carousel__pending-kicker">{item.label}</span>
-                <strong>Screenshot real pendente</strong>
-                <span>{item.alt}</span>
-              </div>
-            )}
-            <span
-              className="depth-carousel__tint"
+    <div className="depth-carousel-shell">
+      <div
+        ref={rootRef}
+        className={`depth-carousel ${className}`.trim()}
+        style={{ "--dc-perspective": `${perspective}px` } as CSSProperties}
+        role="group"
+        aria-roledescription="carousel"
+        aria-label="Evidências visuais do SysMon"
+        tabIndex={0}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerEnd}
+        onPointerCancel={onPointerEnd}
+        onKeyDown={onKeyDown}
+      >
+        <div className="depth-carousel__stage">
+          {data.map((item, index) => (
+            <article
+              key={item.label}
+              className="depth-carousel__card"
               ref={(element) => {
-                overlayRefs.current[index] = element;
+                cardRefs.current[index] = element;
               }}
-              aria-hidden="true"
-            />
-          </article>
-        ))}
+              style={{ width: cardWidth, height: cardHeight, borderRadius: radius }}
+              aria-roledescription="slide"
+              aria-label={`${item.label}: ${item.title}`}
+              aria-hidden={active !== index}
+              onClick={() => setFocus(index)}
+            >
+              {item.image ? (
+                <img className="depth-carousel__img" src={item.image} alt={item.alt} draggable={false} />
+              ) : (
+                <div className="depth-carousel__pending">
+                  <span className="depth-carousel__pending-kicker">{item.label}</span>
+                  <strong>Screenshot real pendente</strong>
+                  <span>{item.alt}</span>
+                </div>
+              )}
+              <span
+                className="depth-carousel__tint"
+                ref={(element) => {
+                  overlayRefs.current[index] = element;
+                }}
+                aria-hidden="true"
+              />
+            </article>
+          ))}
+        </div>
       </div>
 
       {count > 1 ? (
-        <>
+        <div className="depth-carousel-controls" aria-label="Navegação das evidências">
           <button type="button" className="depth-carousel__arrow depth-carousel__arrow--prev" aria-label="Evidência anterior" onClick={() => navigateBy(-1)}>
             <span aria-hidden="true">←</span>
           </button>
-          <button type="button" className="depth-carousel__arrow depth-carousel__arrow--next" aria-label="Próxima evidência" onClick={() => navigateBy(1)}>
-            <span aria-hidden="true">→</span>
-          </button>
+          <span className="depth-carousel__position" aria-live="polite">
+            {String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+          </span>
           <div className="depth-carousel__dots" role="tablist" aria-label="Evidências">
             {data.map((item, index) => (
               <button
@@ -402,7 +383,11 @@ function DepthCarousel({
               />
             ))}
           </div>
-        </>
+          <button type="button" className="depth-carousel__arrow depth-carousel__arrow--next" aria-label="Próxima evidência" onClick={() => navigateBy(1)}>
+            <span aria-hidden="true">→</span>
+          </button>
+          <span className="depth-carousel__hint">Arraste para explorar · setas do teclado</span>
+        </div>
       ) : null}
     </div>
   );
@@ -414,22 +399,21 @@ export function SysmonDepthShowcase() {
 
   return (
     <div className="sysmon-showcase">
-      <div className="sysmon-showcase-topline">
-        <span>Product evidence</span>
-        <span>Local screenshots only / {SYSMON_CAROUSEL_ITEMS.length} prepared slots</span>
-      </div>
-      <DepthCarousel items={SYSMON_CAROUSEL_ITEMS} className="sysmon-depth-carousel" onChange={setActiveIndex} />
-      <div className="sysmon-showcase-caption" aria-live="polite">
-        <div>
-          <p className="sysmon-showcase-label">{activeItem.label}</p>
-          <h5>{activeItem.title}</h5>
+      <div className="sysmon-project-header">
+        <div className="sysmon-project-identity">
+          <p className="project-role">Monitor de sistema</p>
+          <h3 id="sysmon-title">SysMon</h3>
+          <p>Monitor de sistema em Rust para telemetria de CPU, memória, GPU, rede, armazenamento, temperaturas e processos. A arquitetura separa coleta, interpretação e visualização para preservar contexto.</p>
+          <p className="sysmon-stack">{SYSMON_EVIDENCE.stack.join(" · ")}</p>
         </div>
-        <div>
+        <div className="sysmon-active-context" key={activeItem.label} aria-live="polite">
+          <p className="sysmon-active-label">{activeItem.label}</p>
+          <h4>{activeItem.title}</h4>
           <p>{activeItem.description}</p>
           <span>{activeItem.meta}</span>
         </div>
       </div>
-      <p className="sysmon-showcase-hint">Arraste para explorar · setas do teclado também funcionam</p>
+      <DepthCarousel items={SYSMON_CAROUSEL_ITEMS} className="sysmon-depth-carousel" onChange={setActiveIndex} />
     </div>
   );
 }

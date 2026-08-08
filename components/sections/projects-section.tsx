@@ -4,7 +4,7 @@ import { AccordionGallery } from "@/components/sections/accordion-gallery";
 import { SysmonDepthShowcase } from "@/components/sections/depth-carousel";
 import { ProjectExplorer, ProjectTrigger } from "@/components/sections/project-explorer";
 import { SpotlightList } from "@/components/sections/spotlight-list";
-import { NOCTURNE_STUDIO_EVIDENCE, SYSMON_EVIDENCE } from "@/data/portfolio";
+import { NOCTURNE_STUDIO_EVIDENCE } from "@/data/portfolio";
 import type { Project } from "@/types/portfolio";
 
 interface ProjectsSectionProps {
@@ -92,20 +92,6 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
         </Reveal>
 
         <section className="priority-secondary" aria-labelledby="sysmon-title">
-          <div className="priority-heading">
-            <h3 id="sysmon-title">Segundo projeto em destaque</h3>
-            <span>Base factual</span>
-          </div>
-          <div className="sysmon-intro">
-            <div>
-              <p className="project-role">Monitor de sistema</p>
-              <h4>SysMon</h4>
-              <p className="sysmon-description">
-                Monitor de sistema em Rust para telemetria de CPU, memória, GPU, rede, armazenamento, temperaturas e processos. A arquitetura separa coleta, interpretação e visualização para preservar contexto.
-              </p>
-              <p className="sysmon-stack">{SYSMON_EVIDENCE.stack.join(" · ")}</p>
-            </div>
-          </div>
           <SysmonDepthShowcase />
           <p className="evidence-gap sysmon-evidence-gap">Screenshots reais do SysMon ainda não estão disponíveis nesta base. Os slots acima permanecem explícitos para receber apenas capturas locais verificáveis.</p>
         </section>
