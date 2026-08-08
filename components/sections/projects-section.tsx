@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check, Code2 } from "lucide-react";
+import { ArrowUpRight, Code2 } from "lucide-react";
 import { Reveal } from "@/components/animations/reveal";
 import { AccordionGallery } from "@/components/sections/accordion-gallery";
 import { ProjectExplorer, ProjectTrigger } from "@/components/sections/project-explorer";
@@ -31,67 +31,64 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
         <Reveal className="studio-feature" distance={18}>
           <div className="studio-feature-heading">
             <span>Projeto principal / evidência atual</span>
+            <span>{NOCTURNE_STUDIO_EVIDENCE.version}</span>
           </div>
-          <div className="studio-feature-grid" id="projeto-studio">
-            <div className="studio-feature-copy">
+          <div className="studio-feature-intro" id="projeto-studio">
+            <div>
               <p className="project-role">{studio.role}</p>
               <h3>{studio.name}</h3>
               <p className="studio-description">{studio.description}</p>
-              <AccordionGallery />
             </div>
-
-            <dl className="studio-record">
-              <div>
-                <dt>Versão / estado</dt>
-                <dd>{NOCTURNE_STUDIO_EVIDENCE.version} · beta</dd>
-              </div>
-              <div>
-                <dt>Problema técnico</dt>
-                <dd>{studio.problem}</dd>
-              </div>
-              <div>
-                <dt>Evidência de engenharia</dt>
-                <dd>
-                  <ul>
-                    {NOCTURNE_STUDIO_EVIDENCE.keyEvidence.map((item) => (
-                      <li key={item}><Check size={14} aria-hidden="true" />{item}</li>
-                    ))}
-                  </ul>
-                </dd>
-              </div>
-              <div>
-                <dt>Review Mode</dt>
-                <dd>{NOCTURNE_STUDIO_EVIDENCE.reviewModeSummary}</dd>
-              </div>
-              <div>
-                <dt>Arquitetura</dt>
-                <dd>{NOCTURNE_STUDIO_EVIDENCE.architectureSummary}</dd>
-              </div>
-              <div>
-                <dt>Providers documentados</dt>
-                <dd>{NOCTURNE_STUDIO_EVIDENCE.providers.join(", ")}.</dd>
-              </div>
-              <div>
-                <dt>Estado e limitações</dt>
-                <dd>{NOCTURNE_STUDIO_EVIDENCE.stateSummary}</dd>
-              </div>
-              <div>
-                <dt>Evidência pública</dt>
-                <dd>
-                  {studioSource ? (
-                    <a href={studioSource.href} target="_blank" rel="noreferrer">
-                      <Code2 size={15} aria-hidden="true" /> Ver código-fonte
-                    </a>
-                  ) : (
-                    "Nenhum link público disponível."
-                  )}
-                </dd>
-              </div>
-            </dl>
+            <div className="studio-feature-actions">
+              <p className="studio-feature-stack">{studio.tags.join(" · ")}</p>
+              {studioSource ? (
+                <a className="studio-source-link" href={studioSource.href} target="_blank" rel="noreferrer">
+                  <Code2 size={15} aria-hidden="true" /> Ver código-fonte
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </a>
+              ) : null}
+            </div>
           </div>
-          <p className="evidence-gap">
-            Screenshots, diagramas, benchmarks e cobertura de testes ainda não estão disponíveis nesta base. Serão adicionados somente quando houver fontes verificáveis.
-          </p>
+
+          <div className="studio-gallery-wrap">
+            <AccordionGallery />
+          </div>
+
+          <div className="studio-evidence-dossier">
+            <div className="studio-dossier-heading">
+              <span>Depois da superfície</span>
+              <span>Registro técnico verificável</span>
+            </div>
+            <div className="studio-evidence-groups">
+              <article className="studio-evidence-group">
+                <p className="studio-evidence-group-label">01 / Arquitetura</p>
+                <h4>Workspace conectado por fronteiras explícitas.</h4>
+                <p>
+                  Electron, React, TypeScript e SQLite com IPC tipado. O renderer permanece isolado por contextIsolation, nodeIntegration desabilitado e uma fronteira preload/contextBridge; o Provider Abstraction Layer separa o workspace dos provedores.
+                </p>
+              </article>
+              <article className="studio-evidence-group">
+                <p className="studio-evidence-group-label">02 / Review Mode</p>
+                <h4>Recomendações que continuam sob revisão humana.</h4>
+                <p>
+                  O Review Mode analisa arquitetura, segurança, testes, performance, documentação e manutenibilidade. Cada recomendação pode registrar evidência, confiança, origem, responsável, severidade, justificativa e histórico de decisão antes de qualquer alteração.
+                </p>
+              </article>
+              <article className="studio-evidence-group">
+                <p className="studio-evidence-group-label">03 / Estado atual</p>
+                <h4>Beta verificável, com limites declarados.</h4>
+                <p>
+                  <strong>{NOCTURNE_STUDIO_EVIDENCE.version}</strong>. Workspace Memory, Second Brain, Awareness explicável, Secure Provider System, Credential Vault, Typed IPC, Packaging Pipeline e CI Validation estão implementados; recursos avançados de Build Mode, Docs Mode, Workspace Automation e a expansão de providers continuam em desenvolvimento.
+                </p>
+                <p className="studio-evidence-providers">
+                  Providers documentados: {NOCTURNE_STUDIO_EVIDENCE.providers.join(", ")}.
+                </p>
+              </article>
+            </div>
+            <p className="evidence-gap">
+              Screenshots, diagramas, benchmarks e cobertura de testes ainda não estão disponíveis nesta base.
+            </p>
+          </div>
         </Reveal>
 
         <section className="priority-secondary" aria-labelledby="sysmon-title">
