@@ -367,21 +367,23 @@ function DepthCarousel({
           <button type="button" className="depth-carousel__arrow depth-carousel__arrow--prev" aria-label="Evidência anterior" onClick={() => navigateBy(-1)}>
             <span aria-hidden="true">←</span>
           </button>
-          <span className="depth-carousel__position" aria-live="polite">
-            {String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
-          </span>
-          <div className="depth-carousel__dots" role="tablist" aria-label="Evidências">
-            {data.map((item, index) => (
-              <button
-                key={item.label}
-                type="button"
-                role="tab"
-                aria-selected={active === index}
-                aria-label={`Mostrar ${item.label}`}
-                className={`depth-carousel__dot${active === index ? " is-active" : ""}`}
-                onClick={() => setFocus(index)}
-              />
-            ))}
+          <div className="depth-carousel__control-center">
+            <span className="depth-carousel__position" aria-live="polite">
+              {String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+            </span>
+            <div className="depth-carousel__dots" role="tablist" aria-label="Evidências">
+              {data.map((item, index) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  role="tab"
+                  aria-selected={active === index}
+                  aria-label={`Mostrar ${item.label}`}
+                  className={`depth-carousel__dot${active === index ? " is-active" : ""}`}
+                  onClick={() => setFocus(index)}
+                />
+              ))}
+            </div>
           </div>
           <button type="button" className="depth-carousel__arrow depth-carousel__arrow--next" aria-label="Próxima evidência" onClick={() => navigateBy(1)}>
             <span aria-hidden="true">→</span>
@@ -406,14 +408,14 @@ export function SysmonDepthShowcase() {
           <p>Monitor de sistema em Rust para telemetria de CPU, memória, GPU, rede, armazenamento, temperaturas e processos. A arquitetura separa coleta, interpretação e visualização para preservar contexto.</p>
           <p className="sysmon-stack">{SYSMON_EVIDENCE.stack.join(" · ")}</p>
         </div>
-        <div className="sysmon-active-context" key={activeItem.label} aria-live="polite">
-          <p className="sysmon-active-label">{activeItem.label}</p>
-          <h4>{activeItem.title}</h4>
-          <p>{activeItem.description}</p>
-          <span>{activeItem.meta}</span>
-        </div>
       </div>
       <DepthCarousel items={SYSMON_CAROUSEL_ITEMS} className="sysmon-depth-carousel" onChange={setActiveIndex} />
+      <div className="sysmon-active-context" key={activeItem.label} aria-live="polite">
+        <p className="sysmon-active-label">{activeItem.label}</p>
+        <h4>{activeItem.title}</h4>
+        <p>{activeItem.description}</p>
+        <span>{activeItem.meta}</span>
+      </div>
     </div>
   );
 }

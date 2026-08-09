@@ -93,7 +93,6 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
 
         <section className="priority-secondary" aria-labelledby="sysmon-title">
           <SysmonDepthShowcase />
-          <p className="evidence-gap sysmon-evidence-gap">Screenshots reais do SysMon ainda não estão disponíveis nesta base. Os slots acima permanecem explícitos para receber apenas capturas locais verificáveis.</p>
         </section>
 
         <section className="project-index" aria-labelledby="other-projects-title">
