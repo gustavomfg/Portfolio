@@ -3,7 +3,7 @@ import { Reveal } from "@/components/animations/reveal";
 import { AccordionGallery } from "@/components/sections/accordion-gallery";
 import { SysmonDepthShowcase } from "@/components/sections/depth-carousel";
 import { ProjectExplorer, ProjectTrigger } from "@/components/sections/project-explorer";
-import { SpotlightList } from "@/components/sections/spotlight-list";
+import { SmokedGlassList } from "@/components/sections/smoked-glass-list";
 import { NOCTURNE_STUDIO_EVIDENCE } from "@/data/portfolio";
 import type { Project } from "@/types/portfolio";
 
@@ -100,9 +100,9 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             <h3 id="other-projects-title">Outros projetos</h3>
             <p>Índice técnico.</p>
           </div>
-          <SpotlightList>
+          <SmokedGlassList>
             {secondaryProjects.map((project) => (
-              <article className="project-index-item" data-spotlight-item="true" key={project.key}>
+              <article className="project-index-item" data-smoked-glass-item="true" key={project.key}>
                 <div className="project-index-number">{project.id}</div>
                 <div className="project-index-copy">
                   <p className="project-role">{project.role}</p>
@@ -117,7 +117,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                 </div>
               </article>
             ))}
-          </SpotlightList>
+          </SmokedGlassList>
         </section>
       </section>
     </ProjectExplorer>
