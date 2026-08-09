@@ -95,16 +95,16 @@ export const SYSMON_CAROUSEL_ITEMS: readonly SysmonCarouselItem[] = [
 
 function DepthCarousel({
   items,
-  cardWidth = 820,
+  cardWidth = 850,
   cardHeight = 500,
   radius = 18,
-  depth = 300,
-  spread = 128,
+  depth = 340,
+  spread = 142,
   tilt = 7,
   perspective = 1680,
-  visibleCards = 2.3,
-  falloff = 0.16,
-  blur = 2.5,
+  visibleCards = 2.35,
+  falloff = 0.13,
+  blur = 2,
   duration = 720,
   ease = "power3.out",
   onChange,
@@ -165,8 +165,8 @@ function DepthCarousel({
       const translateX = config.spread * distance;
       const rotateY = config.tilt * clamp(distance, 0, 2);
       const opacity = visible ? (distance < 0 ? Math.max(0, 1 + distance) : 1) : 0;
-      const cardScale = isActive ? 1.045 : clamp(1 - behind * 0.12, 0.72, 1);
-      const brightness = Math.max(0.52, 1 - behind * config.falloff);
+      const cardScale = isActive ? 1.075 : clamp(1 - behind * 0.1, 0.76, 1);
+      const brightness = Math.max(0.58, 1 - behind * config.falloff);
       const blurPx = config.blur > 0 ? Math.min(config.blur, (behind / Math.max(1, config.visibleCards)) * config.blur) : 0;
 
       card.style.transform = `translate(-50%, -50%) scale(${(scale * cardScale).toFixed(4)}) translateX(${translateX.toFixed(2)}px) translateZ(${translateZ.toFixed(2)}px) rotateY(${rotateY.toFixed(3)}deg)`;
@@ -178,7 +178,7 @@ function DepthCarousel({
       card.classList.toggle("is-rear", distance >= 0.5);
 
       const overlay = overlayRefs.current[index];
-      if (overlay) overlay.style.opacity = clamp(behind * config.falloff * 0.9, 0, 0.42).toFixed(3);
+      if (overlay) overlay.style.opacity = clamp(behind * config.falloff * 0.8, 0, 0.34).toFixed(3);
     }
   }, []);
 
