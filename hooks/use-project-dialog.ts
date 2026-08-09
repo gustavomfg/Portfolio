@@ -2,8 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+export interface ProjectDialogOrigin {
+  x: number;
+  y: number;
+}
+
 export function useProjectDialog() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const [dialogOrigin, setDialogOrigin] = useState<ProjectDialogOrigin | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
@@ -16,6 +22,11 @@ export function useProjectDialog() {
     if (trigger) {
       triggerRef.current = trigger;
       previousActiveElement.current = trigger;
+      const rect = trigger.getBoundingClientRect();
+      setDialogOrigin({
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+      });
     }
     setSelectedProject(index);
   }, []);
@@ -89,6 +100,7 @@ export function useProjectDialog() {
 
   return {
     selectedProject,
+    dialogOrigin,
     openProject,
     closeProject,
     dialogRef,

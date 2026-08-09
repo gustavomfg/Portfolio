@@ -10,6 +10,7 @@ export interface NavItem {
 export interface Project {
   id: string;
   key: string;
+  image?: string | null;
   name: string;
   role: string;
   description: string;

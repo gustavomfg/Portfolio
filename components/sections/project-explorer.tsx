@@ -31,6 +31,7 @@ export function ProjectExplorer({ children, projects }: ProjectExplorerProps) {
         project={selectedProject}
         onClose={projectDialog.closeProject}
         dialogRef={projectDialog.dialogRef}
+        origin={projectDialog.dialogOrigin}
       />
     </ProjectExplorerContext>
   );
