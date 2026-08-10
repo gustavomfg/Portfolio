@@ -1,7 +1,7 @@
 import { ArrowUpRight, Code2 } from "lucide-react";
 import { Reveal } from "@/components/animations/reveal";
-import { AccordionGallery } from "@/components/sections/accordion-gallery";
 import { SysmonDepthShowcase } from "@/components/sections/depth-carousel";
+import { NocturneStudioEvidence } from "@/components/sections/nocturne-studio-evidence";
 import { ProjectExplorer, ProjectTrigger } from "@/components/sections/project-explorer";
 import { SmokedGlassList } from "@/components/sections/smoked-glass-list";
 import { NOCTURNE_STUDIO_EVIDENCE } from "@/data/portfolio";
@@ -51,7 +51,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           </div>
 
           <div className="studio-gallery-wrap">
-            <AccordionGallery />
+            <NocturneStudioEvidence />
           </div>
 
           <div className="studio-evidence-dossier">
@@ -85,9 +85,6 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                 </p>
               </article>
             </div>
-            <p className="evidence-gap">
-              Screenshots, diagramas, benchmarks e cobertura de testes ainda não estão disponíveis nesta base
-            </p>
           </div>
         </Reveal>
 
