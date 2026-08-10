@@ -13,7 +13,7 @@ interface ProjectsSectionProps {
 
 export function ProjectsSection({ projects }: ProjectsSectionProps) {
   const studio = projects[0];
-  const secondaryProjects = projects.slice(1);
+  const secondaryProjects = projects.filter((project) => project.key !== "studio" && project.key !== "portfolio");
   const studioSource = studio?.links?.find((link) => link.type === "source");
 
   if (!studio) return null;
@@ -22,15 +22,15 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
     <ProjectExplorer projects={projects}>
       <section className="projects-section section-shell" id="projetos">
         <header className="evidence-heading">
-          <h2>Projetos que sustentam minha candidatura.</h2>
+          <h2>Projetos que mostram como eu construo</h2>
           <p>
-            Projetos reais são a principal evidência do que sei construir hoje.
+            Arquitetura, decisões e implementação mostram como cada projeto toma forma
           </p>
         </header>
 
         <Reveal className="studio-feature" distance={18}>
           <div className="studio-feature-heading">
-            <span>Projeto principal / evidência atual</span>
+            <span>Projeto principal / registro atual</span>
             <span>{NOCTURNE_STUDIO_EVIDENCE.version}</span>
           </div>
           <div className="studio-feature-intro" id="projeto-studio">
@@ -57,28 +57,28 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           <div className="studio-evidence-dossier">
             <div className="studio-dossier-heading">
               <span>Depois da superfície</span>
-              <span>Registro técnico verificável</span>
+              <span>Registro técnico</span>
             </div>
             <div className="studio-evidence-groups">
               <article className="studio-evidence-group">
                 <p className="studio-evidence-group-label">01 / Arquitetura</p>
-                <h4>Workspace conectado por fronteiras explícitas.</h4>
+                <h4>Workspace conectado por fronteiras explícitas</h4>
                 <p>
-                  Electron, React, TypeScript e SQLite com IPC tipado. O renderer permanece isolado por contextIsolation, nodeIntegration desabilitado e uma fronteira preload/contextBridge; o Provider Abstraction Layer separa o workspace dos provedores.
+                  Electron, React, TypeScript e SQLite com IPC tipado. O renderer permanece isolado por contextIsolation, nodeIntegration desabilitado e uma fronteira preload/contextBridge; o Provider Abstraction Layer separa o workspace dos provedores
                 </p>
               </article>
               <article className="studio-evidence-group">
                 <p className="studio-evidence-group-label">02 / Review Mode</p>
                 <h4>Recomendações que continuam sob revisão humana.</h4>
                 <p>
-                  O Review Mode analisa arquitetura, segurança, testes, performance, documentação e manutenibilidade. Cada recomendação pode registrar evidência, confiança, origem, responsável, severidade, justificativa e histórico de decisão antes de qualquer alteração.
+                  O Review Mode analisa arquitetura, segurança, testes, performance, documentação e manutenibilidade. Cada recomendação pode registrar evidência, confiança, origem, responsável, severidade, justificativa e histórico de decisão antes de qualquer alteração
                 </p>
               </article>
               <article className="studio-evidence-group">
                 <p className="studio-evidence-group-label">03 / Estado atual</p>
-                <h4>Beta verificável, com limites declarados.</h4>
+                <h4>Base implementada, com frentes em expansão</h4>
                 <p>
-                  <strong>{NOCTURNE_STUDIO_EVIDENCE.version}</strong>. Workspace Memory, Second Brain, Awareness explicável, Secure Provider System, Credential Vault, Typed IPC, Packaging Pipeline e CI Validation estão implementados; recursos avançados de Build Mode, Docs Mode, Workspace Automation e a expansão de providers continuam em desenvolvimento.
+                  Workspace Memory, Second Brain, Awareness explicável, Secure Provider System, Credential Vault, Typed IPC, Packaging Pipeline e CI Validation estão implementados {NOCTURNE_STUDIO_EVIDENCE.stateSummary}
                 </p>
                 <p className="studio-evidence-providers">
                   Providers documentados: {NOCTURNE_STUDIO_EVIDENCE.providers.join(", ")}.
@@ -86,7 +86,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
               </article>
             </div>
             <p className="evidence-gap">
-              Screenshots, diagramas, benchmarks e cobertura de testes ainda não estão disponíveis nesta base.
+              Screenshots, diagramas, benchmarks e cobertura de testes ainda não estão disponíveis nesta base
             </p>
           </div>
         </Reveal>
@@ -98,7 +98,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
         <section className="project-index" aria-labelledby="other-projects-title">
           <div className="index-heading">
             <h3 id="other-projects-title">Outros projetos</h3>
-            <p>Índice técnico.</p>
+            <p>Índice técnico</p>
           </div>
           <SmokedGlassList>
             {secondaryProjects.map((project) => (

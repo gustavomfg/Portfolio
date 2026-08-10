@@ -21,7 +21,7 @@ export const PROJECTS = [
     name: "Nocturne Studio",
     role: "Workspace local-first de engenharia assistida por IA",
     description:
-      "Workspace local-first de engenharia de software assistida por IA. O workspace é o produto; a IA é uma capacidade para manter projeto, documentação, conhecimento, arquitetura e conversas conectados.",
+      "Workspace local-first para manter projeto, documentação, conhecimento, arquitetura e conversas conectados enquanto a IA apoia o trabalho de engenharia.",
     tags: ["Electron", "React", "TypeScript", "SQLite"],
     problem:
       "Permitir que ferramentas de IA trabalhem com o contexto do projeto em vez de prompts isolados, mantendo conhecimento, decisões e conversas conectados no workspace.",
@@ -139,7 +139,7 @@ export const NOCTURNE_STUDIO_EVIDENCE = {
     "LM Studio",
     "Endpoints customizados compatíveis com OpenAI",
   ],
-  stateSummary: "O projeto está em beta. Recursos avançados de Build Mode e Docs Mode, Workspace Automation e a expansão do ecossistema de providers continuam em desenvolvimento.",
+  stateSummary: "Recursos avançados de Build Mode e Docs Mode, Workspace Automation e a expansão do ecossistema de providers continuam em desenvolvimento.",
 } as const;
 
 export const SYSMON_EVIDENCE = {

@@ -87,7 +87,7 @@ export const SYSMON_CAROUSEL_ITEMS: readonly SysmonCarouselItem[] = [
     label: "04 / System Pulse",
     title: "Estado agregado da máquina",
     description: "Representação procedural alimentada pelo estado agregado da máquina.",
-    meta: "System Pulse · evidência visual pendente",
+    meta: "System Pulse · visualização procedural",
     image: null,
     alt: "Screenshot real do System Pulse do SysMon, aguardando fonte local",
   },

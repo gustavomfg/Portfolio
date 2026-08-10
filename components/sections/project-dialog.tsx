@@ -125,7 +125,7 @@ function DialogContent({ project, onClose }: { project: Project; onClose: () => 
             <span className="dialog-section-index">02</span>
             <div>
               <p className="dialog-section-label">Engenharia</p>
-              <h3>Decisões e características verificáveis.</h3>
+              <h3>Decisões e características da construção.</h3>
               <ul className="dialog-highlight-list">
                 {project.highlights.map((highlight, index) => (
                   <li key={highlight}>
@@ -156,7 +156,7 @@ function DialogContent({ project, onClose }: { project: Project; onClose: () => 
 
         <footer className="dialog-actions">
           <div className="dialog-actions-copy">
-            <p>Provas públicas e próximos caminhos</p>
+            <p>Código-fonte e próximos caminhos</p>
             <span>{project.id} / {project.key.toUpperCase()}</span>
           </div>
           {project.links?.length ? (
