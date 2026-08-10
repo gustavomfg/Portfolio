@@ -10,10 +10,10 @@ export function HeroSection() {
         <div className="hero-copy">
           <h1>
             <SplitText text="Gustavo Maquias" />
-            <span>Desenvolvedor Full Stack em início de carreira.</span>
+            <span>Desenvolvedor Full Stack</span>
           </h1>
           <p className="hero-intro">
-            Estudante de ADS que constrói aplicações web e desktop para aprofundar arquitetura, backend e engenharia de software.
+            Estudante de ADS construindo aplicações web e desktop, com foco em arquitetura, backend e engenharia de software
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#projeto-studio">

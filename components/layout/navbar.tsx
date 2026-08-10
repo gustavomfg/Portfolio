@@ -93,11 +93,6 @@ export function Navbar({ items }: NavbarProps) {
         ))}
       </nav>
 
-      <a className="availability" href="#contato">
-        Contato
-        <ArrowUpRight size={15} />
-      </a>
-
       <button
         ref={menuButtonRef}
         className="menu-button"
