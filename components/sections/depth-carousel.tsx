@@ -10,7 +10,9 @@ export interface SysmonCarouselItem {
   title: string;
   description: string;
   meta: string;
-  image: string | null;
+  image: string;
+  width: number;
+  height: number;
   alt: string;
 }
 
@@ -60,36 +62,24 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
 
 export const SYSMON_CAROUSEL_ITEMS: readonly SysmonCarouselItem[] = [
   {
-    label: "01 / Telemetria",
-    title: "Sinais reais da máquina",
-    description: "Telemetria em tempo real de CPU, memória, GPU, rede, armazenamento, temperaturas e processos.",
+    label: "01 / System Monitor",
+    title: "Monitoramento do sistema em uma única interface",
+    description: "CPU, memória, GPU, rede, armazenamento, temperaturas e processos reunidos em uma visão operacional.",
     meta: "Rust · Ratatui · Crossterm · Linux",
-    image: null,
-    alt: "Screenshot real da telemetria do SysMon, aguardando fonte local",
+    image: "/sysmon/Sysmon.png",
+    width: 1271,
+    height: 681,
+    alt: "Interface completa do SysMon mostrando CPU, memória, GPU, rede, armazenamento, temperaturas, processos e contexto do sistema",
   },
   {
-    label: "02 / Metrics Architecture",
-    title: "Coleta → interpretação → visualização",
-    description: "Arquitetura de métricas com históricos limitados, inventário dinâmico de hardware e separação entre coleta, interpretação e visualização.",
-    meta: "Bounded histories · dynamic hardware inventory",
-    image: null,
-    alt: "Screenshot real da arquitetura de métricas do SysMon, aguardando fonte local",
-  },
-  {
-    label: "03 / Health Engine",
-    title: "Atividade ≠ pressão",
-    description: "O Health Engine diferencia atividade de pressão do sistema antes de alimentar o estado agregado.",
-    meta: "Interpretação do estado da máquina",
-    image: null,
-    alt: "Screenshot real do Health Engine do SysMon, aguardando fonte local",
-  },
-  {
-    label: "04 / System Pulse",
-    title: "Estado agregado da máquina",
-    description: "Representação procedural alimentada pelo estado agregado da máquina.",
+    label: "02 / Pulse V2",
+    title: "Visualização procedural em tempo real",
+    description: "Uma representação gráfica gerada pelo próprio SysMon para transformar atividade e métricas do sistema em uma superfície visual dinâmica.",
     meta: "System Pulse · visualização procedural",
-    image: null,
-    alt: "Screenshot real do System Pulse do SysMon, aguardando fonte local",
+    image: "/sysmon/PulseV2.png",
+    width: 1334,
+    height: 749,
+    alt: "Visualização procedural Pulse V2 do SysMon com atividade gráfica gerada em tempo real",
   },
 ] as const;
 
@@ -341,15 +331,15 @@ function DepthCarousel({
               aria-hidden={active !== index}
               onClick={() => setFocus(index)}
             >
-              {item.image ? (
-                <img className="depth-carousel__img" src={item.image} alt={item.alt} draggable={false} />
-              ) : (
-                <div className="depth-carousel__pending">
-                  <span className="depth-carousel__pending-kicker">{item.label}</span>
-                  <strong>Screenshot real pendente</strong>
-                  <span>{item.alt}</span>
-                </div>
-              )}
+              <img
+                className="depth-carousel__img"
+                src={item.image}
+                alt={item.alt}
+                width={item.width}
+                height={item.height}
+                decoding="async"
+                draggable={false}
+              />
               <span
                 className="depth-carousel__tint"
                 ref={(element) => {
