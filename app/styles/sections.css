@@ -520,14 +520,23 @@
 .smoked-glass-list .project-index-item > * { position: relative; z-index: 1; }
 
 /* Nocturne Control: the real product lives beneath the approved smoked-glass surface. */
-.smoked-glass-list .project-index-item--control > .project-index-evidence { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 44%; opacity: .42; transform: scale(1.008); pointer-events: none; user-select: none; -webkit-user-drag: none; transition: opacity 420ms ease, transform 620ms cubic-bezier(.16,1,.3,1); }
+.smoked-glass-list .project-index-item--control { background-color: rgba(5,8,14,.3); }
+.smoked-glass-list .project-index-item--control > .project-index-evidence { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; opacity: .28; transform: scale(1.008); pointer-events: none; user-select: none; -webkit-user-drag: none; transition: opacity 420ms ease, transform 620ms cubic-bezier(.16,1,.3,1); }
 .smoked-glass-list .project-index-item--control::before, .smoked-glass-list .project-index-item--control::after { z-index: 1; }
+.smoked-glass-list .project-index-item--control::before { opacity: .32; }
+.smoked-glass-list .project-index-item--control::after { opacity: .16; }
 
 @media (hover: hover) {
-  .smoked-glass-list .project-index-item--control:hover > .project-index-evidence { opacity: .58; transform: scale(1.014); }
+  .smoked-glass-list .project-index-item--control:hover { background-color: rgba(5,8,14,.27); }
+  .smoked-glass-list .project-index-item--control:hover > .project-index-evidence { opacity: .4; transform: scale(1.012); }
+  .smoked-glass-list .project-index-item--control:hover::before { opacity: .48; }
+  .smoked-glass-list .project-index-item--control:hover::after { opacity: .3; }
 }
 
-.smoked-glass-list .project-index-item--control:has(:focus-visible) > .project-index-evidence { opacity: .58; transform: scale(1.014); }
+.smoked-glass-list .project-index-item--control:has(:focus-visible) { background-color: rgba(5,8,14,.27); }
+.smoked-glass-list .project-index-item--control:has(:focus-visible) > .project-index-evidence { opacity: .4; transform: scale(1.012); }
+.smoked-glass-list .project-index-item--control:has(:focus-visible)::before { opacity: .48; }
+.smoked-glass-list .project-index-item--control:has(:focus-visible)::after { opacity: .3; }
 
 @supports not (backdrop-filter: blur(10px)) {
   .smoked-glass-list .project-index-item { background-color: rgba(5,8,14,.72); backdrop-filter: none; -webkit-backdrop-filter: none; }
@@ -541,6 +550,8 @@
   .smoked-glass-list .project-index-item:hover .project-index-copy > p:last-child { color: var(--muted); }
   .smoked-glass-list .project-index-item:hover .project-index-meta .project-dialog-trigger { border-bottom-color: rgba(198,179,255,.32); color: var(--text-bright); background: transparent; transform: none; }
   .smoked-glass-list .project-index-item:hover .project-index-meta .project-dialog-trigger svg { transform: none; }
+  .smoked-glass-list .project-index-item--control { background-color: rgba(5,8,14,.3); }
+  .smoked-glass-list .project-index-item--control > .project-index-evidence { opacity: .34; transform: scale(1.008); }
 }
 
 @media (max-width: 1000px) {
