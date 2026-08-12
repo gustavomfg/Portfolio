@@ -1,4 +1,5 @@
 import { ArrowUpRight, Code2 } from "lucide-react";
+import Image from "next/image";
 import { Reveal } from "@/components/animations/reveal";
 import { SysmonDepthShowcase } from "@/components/sections/depth-carousel";
 import { NocturneStudioEvidence } from "@/components/sections/nocturne-studio-evidence";
@@ -99,7 +100,20 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           </div>
           <SmokedGlassList>
             {secondaryProjects.map((project) => (
-              <article className="project-index-item" data-smoked-glass-item="true" key={project.key}>
+              <article className={`project-index-item${project.key === "control" ? " project-index-item--control" : ""}`} data-smoked-glass-item="true" key={project.key}>
+                {project.key === "control" ? (
+                  <Image
+                    className="project-index-evidence"
+                    src="/nocturne-control/dashboard.png"
+                    alt=""
+                    aria-hidden="true"
+                    width={1920}
+                    height={959}
+                    sizes="(max-width: 700px) calc(100vw - 32px), 1240px"
+                    unoptimized
+                    draggable={false}
+                  />
+                ) : null}
                 <div className="project-index-number">{project.id}</div>
                 <div className="project-index-copy">
                   <p className="project-role">{project.role}</p>

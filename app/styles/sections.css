@@ -519,6 +519,16 @@
 .project-index-meta .project-dialog-trigger:hover svg, .project-index-meta .project-dialog-trigger:focus-visible svg { transform: translate(3px, -3px); }
 .smoked-glass-list .project-index-item > * { position: relative; z-index: 1; }
 
+/* Nocturne Control: the real product lives beneath the approved smoked-glass surface. */
+.smoked-glass-list .project-index-item--control > .project-index-evidence { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 44%; opacity: .42; transform: scale(1.008); pointer-events: none; user-select: none; -webkit-user-drag: none; transition: opacity 420ms ease, transform 620ms cubic-bezier(.16,1,.3,1); }
+.smoked-glass-list .project-index-item--control::before, .smoked-glass-list .project-index-item--control::after { z-index: 1; }
+
+@media (hover: hover) {
+  .smoked-glass-list .project-index-item--control:hover > .project-index-evidence { opacity: .58; transform: scale(1.014); }
+}
+
+.smoked-glass-list .project-index-item--control:has(:focus-visible) > .project-index-evidence { opacity: .58; transform: scale(1.014); }
+
 @supports not (backdrop-filter: blur(10px)) {
   .smoked-glass-list .project-index-item { background-color: rgba(5,8,14,.72); backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
@@ -554,7 +564,7 @@
   .hero h1 > .split-text > span { animation: none; opacity: 1; transform: none; }
   .hero-lanyard { transition: none; transform: none; }
   .smoked-glass-list .project-index-item { --glass-reflect-x: 50% !important; --glass-reflect-y: 50% !important; --glass-rotate-x: 0deg !important; --glass-rotate-y: 0deg !important; transition: none; }
-  .smoked-glass-list .project-index-item::before, .smoked-glass-list .project-index-item::after, .smoked-glass-list .project-index-copy h4, .smoked-glass-list .project-index-copy > p:last-child, .smoked-glass-list .project-index-meta .project-dialog-trigger { transition: none; }
+  .smoked-glass-list .project-index-item::before, .smoked-glass-list .project-index-item::after, .smoked-glass-list .project-index-copy h4, .smoked-glass-list .project-index-copy > p:last-child, .smoked-glass-list .project-index-meta .project-dialog-trigger, .smoked-glass-list .project-index-item--control > .project-index-evidence { transition: none; }
   .smoked-glass-list .project-index-item::after { transform: translateZ(1px) rotate(-7deg); }
 }
 
