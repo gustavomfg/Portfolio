@@ -105,7 +105,6 @@ function DialogContent({ project, onClose }: { project: Project; onClose: () => 
               </div>
               <div className="dialog-visual-empty-meta">
                 <span>{project.tags.join(" · ")}</span>
-                <span>Imagem real será adicionada quando estiver disponível.</span>
               </div>
             </div>
           )}
