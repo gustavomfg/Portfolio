@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-07T15:34:57-03:00",
+  "generatedAt": "2026-08-13T00:00:00-03:00",
   "title": "Design System: Gustavo Maquias Portfolio",
   "extensions": {
     "colorMeta": {
@@ -10,6 +10,7 @@
         "canonical": "#000000",
         "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(36% 0 0)", "oklch(48% 0 0)", "oklch(60% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
       },
+      "surface-root": { "role": "neutral", "displayName": "Surface Root", "canonical": "#08090f" },
       "carbon-surface": {
         "role": "neutral",
         "displayName": "Carbon Surface",
@@ -123,14 +124,62 @@
         "displayName": "Action Ink",
         "canonical": "#121016",
         "tonalRamp": ["oklch(15% 0.01 300)", "oklch(25% 0.01 300)", "oklch(36% 0.01 300)", "oklch(48% 0.01 300)", "oklch(60% 0.01 300)", "oklch(72% 0.01 300)", "oklch(84% 0.01 300)", "oklch(95% 0.01 300)"]
-      }
+      },
+      "text-inverse": { "role": "neutral", "displayName": "Text Inverse", "canonical": "#ffffff" },
+      "text-on-light": { "role": "neutral", "displayName": "Text on Light", "canonical": "#0b0a0e" },
+      "text-navigation": { "role": "neutral", "displayName": "Text Navigation", "canonical": "#aaa6b2" },
+      "text-mobile-nav": { "role": "neutral", "displayName": "Text Mobile Navigation", "canonical": "#b4b0bb" },
+      "text-footer": { "role": "neutral", "displayName": "Text Footer", "canonical": "#8f8b97" },
+      "text-action-muted": { "role": "neutral", "displayName": "Text Action Muted", "canonical": "#8b8793" },
+      "text-index": { "role": "neutral", "displayName": "Text Index", "canonical": "#4c4954" },
+      "line-link": { "role": "neutral", "displayName": "Line Link", "canonical": "#66616e" },
+      "verified-green-muted": { "role": "tertiary", "displayName": "Verified Green Muted", "canonical": "#4a9d78" },
+      "surface-badge": { "role": "neutral", "displayName": "Surface Badge", "canonical": "#101018" },
+      "surface-visual": { "role": "neutral", "displayName": "Surface Visual", "canonical": "#080a10" },
+      "surface-control": { "role": "neutral", "displayName": "Surface Control", "canonical": "rgba(12, 13, 19, 0.88)" },
+      "surface-control-hover": { "role": "neutral", "displayName": "Surface Control Hover", "canonical": "rgba(29, 24, 44, 0.88)" },
+      "surface-ink-wash": { "role": "neutral", "displayName": "Surface Ink Wash", "canonical": "rgba(5, 8, 14, 0.18)" },
+      "surface-ink-deep": { "role": "neutral", "displayName": "Surface Ink Deep", "canonical": "rgba(3, 5, 10, 0.11)" },
+      "line-cool": { "role": "neutral", "displayName": "Line Cool", "canonical": "rgba(198, 209, 230, 0.2)" },
+      "line-cool-strong": { "role": "neutral", "displayName": "Line Cool Strong", "canonical": "rgba(214, 223, 241, 0.34)" }
     },
     "typographyMeta": {
       "display": { "displayName": "Display", "purpose": "Títulos principais do hero e momentos de maior impacto." },
       "headline": { "displayName": "Headline", "purpose": "Títulos de seção e chamadas principais." },
       "title": { "displayName": "Title", "purpose": "Títulos compactos de cards e itens de trajetória." },
       "body": { "displayName": "Body", "purpose": "Explicações, descrições e conteúdo corrido." },
-      "label": { "displayName": "Label", "purpose": "Navegação, eyebrows, tags, status e metadados." }
+      "label": { "displayName": "Label", "purpose": "Navegação, eyebrows, tags, status e metadados." },
+      "body-base": { "displayName": "Body Base", "purpose": "Texto-base de introduções e superfícies compactas." },
+      "body-mobile": { "displayName": "Body Mobile", "purpose": "Texto corrido em telas estreitas." },
+      "body-compact": { "displayName": "Body Compact", "purpose": "Metadados e descrições técnicas compactas." },
+      "utility": { "displayName": "Utility", "purpose": "Texto funcional compacto." },
+      "title-mobile": { "displayName": "Title Mobile", "purpose": "Título de card em telas estreitas." },
+      "caption": { "displayName": "Caption", "purpose": "Notas e legendas de baixa hierarquia." },
+      "meta": { "displayName": "Meta", "purpose": "Índices e legendas técnicas." },
+      "micro": { "displayName": "Micro", "purpose": "Rótulos mínimos em telas compactas." },
+      "lanyard-header": { "displayName": "Lanyard Header", "purpose": "Cabeçalho do badge estático do hero." },
+      "lanyard-note": { "displayName": "Lanyard Note", "purpose": "Nota compacta do badge estático do hero." },
+      "sysmon-role": { "displayName": "Sysmon Role", "purpose": "Papel do showcase técnico." },
+      "sysmon-label": { "displayName": "Sysmon Label", "purpose": "Rótulo do contexto técnico ativo." },
+      "sysmon-value": { "displayName": "Sysmon Value", "purpose": "Valor técnico auxiliar." },
+      "control": { "displayName": "Control", "purpose": "Ícones de controle e navegação." },
+      "dialog-index-mobile": { "displayName": "Dialog Index Mobile", "purpose": "Índice do diálogo em telas estreitas." },
+      "dialog-section-mobile": { "displayName": "Dialog Section Mobile", "purpose": "Título editorial do diálogo em telas estreitas." }
+    },
+    "roundedMeta": {
+      "button": { "canonical": "9px" },
+      "card": { "canonical": "14px" },
+      "dialog": { "canonical": "17px" },
+      "pill": { "canonical": "99px", "role": "pill" },
+      "control": { "canonical": "8px" },
+      "control-compact": { "canonical": "7px" },
+      "special": { "canonical": "18px" },
+      "visual": { "canonical": "20px" },
+      "icon": { "canonical": "12px" },
+      "icon-medium": { "canonical": "11px" },
+      "icon-compact": { "canonical": "6px" },
+      "media": { "canonical": "10px" },
+      "cord": { "canonical": "42px" }
     },
     "shadows": [
       { "name": "glass-highlight", "value": "inset 0 1px 0 rgba(255, 255, 255, 0.05)", "purpose": "Linha de luz interna em superfícies especiais translúcidas." },

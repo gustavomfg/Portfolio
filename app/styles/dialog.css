@@ -13,7 +13,7 @@
 }
 
 .project-dialog {
-  --dialog-radius: 20px;
+  --dialog-radius: var(--radius-visual);
   --project-accent: var(--violet);
   position: relative;
   display: flex;
@@ -83,7 +83,7 @@
 .dialog-topbar button:hover,
 .dialog-topbar button:focus-visible {
   border-bottom-color: var(--violet-soft);
-  color: #fff;
+  color: var(--text-inverse);
   transform: translateY(-1px);
 }
 
@@ -185,7 +185,7 @@
   justify-content: space-between;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.16);
-  border-radius: 18px;
+  border-radius: var(--radius-special);
   background:
     linear-gradient(125deg, rgba(255,255,255,.07), transparent 20% 72%, color-mix(in srgb, var(--project-accent) 10%, transparent)),
     rgba(6,7,12,.62);
@@ -202,7 +202,7 @@
   height: 100%;
   min-height: inherit;
   object-fit: contain;
-  background: #080a10;
+  background: var(--surface-visual);
 }
 
 .dialog-visual--empty {
@@ -277,7 +277,7 @@
 
 .dialog-visual-empty-meta span:last-child {
   color: var(--text-dim);
-  font-size: .68rem;
+  font-size: var(--font-caption);
   letter-spacing: .04em;
   text-transform: none;
 }
@@ -617,7 +617,7 @@
 .dialog-links a:hover,
 .dialog-links a:focus-visible {
   border-bottom-color: var(--violet-soft);
-  color: #fff;
+  color: var(--text-inverse);
   transform: translateY(-2px);
 }
 
@@ -638,7 +638,7 @@
   .project-dialog { width: min(94vw, 820px); }
   .dialog-hero { grid-template-columns: 1fr; gap: 24px; }
   .dialog-hero-index { width: min(100%, 220px); justify-items: start; text-align: left; }
-  .dialog-hero-index span:first-child { font-size: 3.2rem; }
+  .dialog-hero-index span:first-child { font-size: var(--font-dialog-index-mobile); }
   .dialog-editorial-section { grid-template-columns: 58px minmax(0, 1fr); gap: 20px; }
   .dialog-purpose { grid-template-columns: 58px minmax(0, 1fr); }
   .dialog-purpose > div { padding-left: 0; }
@@ -654,7 +654,7 @@
   .dialog-case-study { padding: 28px 18px 36px; }
   .dialog-hero { padding-bottom: 32px; }
   .dialog-hero h2 { font-size: clamp(3rem, 15vw, 5.4rem); }
-  .dialog-lede { font-size: 1rem; }
+  .dialog-lede { font-size: var(--font-body-base); }
   .dialog-visual { min-height: 230px; }
   .dialog-visual--empty { min-height: 190px; }
   .dialog-visual-empty { grid-template-columns: 1fr; align-items: start; gap: 14px; }
@@ -667,7 +667,7 @@
   .dialog-stack-section { min-height: 0; }
   .dialog-stack-signature { grid-template-columns: 1fr; }
   .dialog-stack-signature span + span { padding-left: 0; border-left: 0; }
-  .dialog-editorial-section h3 { font-size: 1.28rem; }
+  .dialog-editorial-section h3 { font-size: var(--font-dialog-section-mobile); }
   .dialog-actions { align-items: flex-start; flex-direction: column; padding-top: 34px; }
   .dialog-links { width: 100%; justify-content: flex-start; gap: 18px; }
   .dialog-note { text-align: left; }

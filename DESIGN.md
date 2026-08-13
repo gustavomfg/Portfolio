@@ -3,6 +3,7 @@ name: "Gustavo Maquias Portfolio"
 description: "Um caderno técnico noturno para apresentar evolução, engenharia e projetos reais."
 colors:
   carbon-night: "#000000"
+  surface-root: "#08090f"
   carbon-surface: "#0d0d13"
   carbon-surface-soft: "#111119"
   carbon-overlay: "rgba(10, 10, 16, 0.82)"
@@ -15,13 +16,30 @@ colors:
   text-muted: "#b3afbb"
   text-label: "#9d99a6"
   text-dim: "#8d8996"
+  text-inverse: "#ffffff"
+  text-on-light: "#0b0a0e"
+  text-navigation: "#aaa6b2"
+  text-mobile-nav: "#b4b0bb"
+  text-footer: "#8f8b97"
+  text-action-muted: "#8b8793"
+  text-index: "#4c4954"
+  line-link: "#66616e"
   engineering-violet: "#9167ff"
   engineering-violet-soft: "#c6b3ff"
   diagnostic-blue: "#5d8aff"
   diagnostic-cyan: "#55d9e8"
   verified-green: "#78e0b2"
+  verified-green-muted: "#4a9d78"
   action-light: "#f1edf9"
   action-ink: "#121016"
+  surface-badge: "#101018"
+  surface-visual: "#080a10"
+  surface-control: "rgba(12, 13, 19, 0.88)"
+  surface-control-hover: "rgba(29, 24, 44, 0.88)"
+  surface-ink-wash: "rgba(5, 8, 14, 0.18)"
+  surface-ink-deep: "rgba(3, 5, 10, 0.11)"
+  line-cool: "rgba(198, 209, 230, 0.2)"
+  line-cool-strong: "rgba(214, 223, 241, 0.34)"
 typography:
   display:
     fontFamily: "JetBrains Mono Variable, JetBrains Mono, monospace"
@@ -53,11 +71,37 @@ typography:
     fontWeight: 600
     lineHeight: 1.5
     letterSpacing: "0.07em"
+  scale:
+    body-base: "1rem"
+    body-mobile: "0.9rem"
+    body-compact: "0.82rem"
+    utility: "0.875rem"
+    title-mobile: "1.5rem"
+    caption: "0.68rem"
+    meta: "0.67rem"
+    micro: "0.62rem"
+    lanyard-header: "0.57rem"
+    lanyard-note: "0.61rem"
+    sysmon-role: "0.8rem"
+    sysmon-label: "0.73rem"
+    sysmon-value: "0.7rem"
+    control: "1.25rem"
+    dialog-index-mobile: "3.2rem"
+    dialog-section-mobile: "1.28rem"
 rounded:
   button: "9px"
   card: "14px"
   dialog: "17px"
   pill: "99px"
+  control: "8px"
+  control-compact: "7px"
+  special: "18px"
+  visual: "20px"
+  icon: "12px"
+  icon-medium: "11px"
+  icon-compact: "6px"
+  media: "10px"
+  cord: "42px"
 components:
   button-primary:
     backgroundColor: "{colors.action-light}"
@@ -158,6 +202,8 @@ A paleta combina negros de carbono e texto levemente violeta com sinais cromáti
 
 **The One Technical Voice Rule.** A tipografia monoespaçada é editorial, não cenográfica: evitar prompts falsos, código decorativo e jargão de terminal sem função.
 
+Os tamanhos fixos recorrentes vivem em `app/styles/tokens.css` (`--font-*`). As escalas `clamp()` específicas de hero, diálogo, evidência e contato são exceções responsivas: seus extremos expressam composição e não devem ser achatados em uma única escala fixa.
+
 ## Layout
 
 O conteúdo usa um shell central de até `1240px`, com gutters de `28px` no desktop, `16px` abaixo de `700px` e `12px` abaixo de `430px`. A navegação flutua dentro de até `1280px`. Seções principais usam espaço vertical amplo e separadores horizontais sutis para criar capítulos no caderno.
@@ -169,6 +215,8 @@ Em `1000px`, hero e navegação mudam de estrutura, capacidades passam a duas co
 O ritmo interno recorre a passos compactos de 8–18px, padding de componentes entre 18–34px e separações de seção entre aproximadamente 50–75px. Espaço vazio deve agrupar conteúdo e estabelecer importância antes que um novo contêiner seja introduzido.
 
 **The Evidence Leads Rule.** A composição deve conduzir primeiro ao nome, ao papel e à profundidade técnica de cada projeto; controles, tags e decoração permanecem subordinados.
+
+`app/styles/tokens.css` é a fonte de verdade para cores, raios, sombras e tamanhos compartilhados. Tons translúcidos dentro de gradientes, máscaras e superfícies smoked-glass permanecem locais quando representam uma camada óptica específica; não são novos papéis semânticos.
 
 ## Elevation & Depth
 
@@ -186,7 +234,9 @@ O sistema é quase plano. Fundos em diferentes níveis de carbono, bordas transl
 
 ## Shapes
 
-A geometria é contida e consistente: botões usam raio de `9px`, cards `14px`, diálogos `17px` e chips cápsula de `99px`. Superfícies especiais podem chegar a `18–20px`; ícones internos usam cantos menores, normalmente entre `7–11px`.
+A geometria é contida e consistente: botões usam raio de `9px`, cards `14px`, diálogos `17px` e chips cápsula de `99px`. Superfícies especiais usam os tokens `18px` ou `20px`; ícones internos usam os tokens compactos de `6–12px`.
+
+Raios de `50%`, `inherit`, `0` e a forma composta do cordão do hero são exceções geométricas intencionais para círculos, herança de componentes e bordas abertas. `app/styles/journey.css` não faz parte da superfície vigente e permanece ausente.
 
 Bordas de 1px definem estrutura com mais frequência que sombras. Círculos aparecem apenas em indicadores de estado, órbitas e elementos atmosféricos; não constituem uma linguagem decorativa universal. Cantos arredondados suavizam a densidade técnica sem transformar os componentes em formas excessivamente amigáveis.
 
