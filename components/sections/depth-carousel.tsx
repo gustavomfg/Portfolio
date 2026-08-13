@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import gsap from "gsap";
+import Image from "next/image";
 import { SYSMON_EVIDENCE } from "@/data/portfolio";
 
 export interface SysmonCarouselItem {
@@ -11,6 +12,8 @@ export interface SysmonCarouselItem {
   description: string;
   meta: string;
   image: string;
+  webp?: string;
+  avif?: string;
   width: number;
   height: number;
   alt: string;
@@ -77,6 +80,8 @@ export const SYSMON_CAROUSEL_ITEMS: readonly SysmonCarouselItem[] = [
     description: "Uma representação gráfica gerada pelo próprio SysMon para transformar atividade e métricas do sistema em uma superfície visual dinâmica.",
     meta: "System Pulse · visualização procedural",
     image: "/sysmon/PulseV2.png",
+    webp: "/sysmon/PulseV2.webp",
+    avif: "/sysmon/PulseV2.avif",
     width: 1334,
     height: 749,
     alt: "Visualização procedural Pulse V2 do SysMon com atividade gráfica gerada em tempo real",
@@ -331,15 +336,20 @@ function DepthCarousel({
               aria-hidden={active !== index}
               onClick={() => setFocus(index)}
             >
-              <img
-                className="depth-carousel__img"
-                src={item.image}
-                alt={item.alt}
-                width={item.width}
-                height={item.height}
-                decoding="async"
-                draggable={false}
-              />
+              <picture>
+                {item.avif ? <source type="image/avif" srcSet={item.avif} /> : null}
+                <Image
+                  className="depth-carousel__img"
+                  src={item.webp ?? item.image}
+                  alt={item.alt}
+                  width={item.width}
+                  height={item.height}
+                  sizes="(max-width: 700px) calc(100vw - 32px), 850px"
+                  loading="lazy"
+                  decoding="async"
+                  draggable={false}
+                />
+              </picture>
               <span
                 className="depth-carousel__tint"
                 ref={(element) => {

@@ -104,13 +104,13 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                 {project.key === "control" ? (
                   <Image
                     className="project-index-evidence"
-                    src="/nocturne-control/dashboard.png"
+                    src="/nocturne-control/dashboard.webp"
                     alt=""
                     aria-hidden="true"
                     width={1920}
                     height={959}
                     sizes="(max-width: 700px) calc(100vw - 32px), 1240px"
-                    unoptimized
+                    loading="lazy"
                     draggable={false}
                   />
                 ) : null}
@@ -123,7 +123,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                     width={1294}
                     height={811}
                     sizes="(max-width: 700px) calc(100vw - 32px), 1240px"
-                    unoptimized
+                    loading="lazy"
                     draggable={false}
                   />
                 ) : null}

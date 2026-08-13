@@ -77,7 +77,7 @@ function EvidenceCopy({ item }: { item: NocturneStudioEvidenceItem }) {
   );
 }
 
-function EvidenceFigure({ item, priority = false }: { item: NocturneStudioEvidenceItem; priority?: boolean }) {
+function EvidenceFigure({ item }: { item: NocturneStudioEvidenceItem }) {
   return (
     <figure className={`nocturne-evidence-figure nocturne-evidence-figure--${item.id}`}>
       <div className="nocturne-evidence-media">
@@ -87,8 +87,7 @@ function EvidenceFigure({ item, priority = false }: { item: NocturneStudioEviden
           width={item.width}
           height={item.height}
           sizes={item.sizes}
-          unoptimized={item.id === "workspace"}
-          priority={priority}
+          loading="lazy"
           className="nocturne-evidence-image"
           draggable={false}
         />
@@ -108,7 +107,7 @@ export function NocturneStudioEvidence() {
     <section className="nocturne-evidence-story" aria-label="Evidências visuais do Nocturne Studio">
       <article className="nocturne-evidence-entry nocturne-evidence-entry--workspace">
         <EvidenceCopy item={workspace} />
-        <EvidenceFigure item={workspace} priority />
+        <EvidenceFigure item={workspace} />
       </article>
 
       <article className="nocturne-evidence-entry nocturne-evidence-entry--review">
