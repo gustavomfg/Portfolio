@@ -2,6 +2,48 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 const localSiteUrl = "http://localhost:3000";
+const initialScriptBudgetBytes = 900_000;
+const responsiveWidths = [320, 430, 700, 1000] as const;
+
+function holdHeroSceneLoad() {
+  window.requestIdleCallback = () => 0;
+  window.cancelIdleCallback = () => {};
+}
+
+function forceHeroSceneVisible() {
+  class ForcedIntersectionObserver {
+    readonly root = null;
+    readonly rootMargin = "0px";
+    readonly thresholds = [0];
+
+    constructor(private readonly callback: IntersectionObserverCallback) {}
+
+    observe(target: Element) {
+      const bounds = target.getBoundingClientRect();
+      window.setTimeout(() => this.callback([
+        {
+          boundingClientRect: bounds,
+          intersectionRatio: 1,
+          intersectionRect: bounds,
+          isIntersecting: true,
+          isVisible: true,
+          rootBounds: null,
+          target,
+          time: performance.now(),
+        } as IntersectionObserverEntry,
+      ], this as unknown as IntersectionObserver), 0);
+    }
+
+    unobserve() {}
+    disconnect() {}
+    takeRecords() { return []; }
+  }
+
+  Object.defineProperty(window, "IntersectionObserver", {
+    configurable: true,
+    value: ForcedIntersectionObserver,
+  });
+}
 
 function getExpectedSiteUrl() {
   const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -155,10 +197,186 @@ test("menu móvel, links e reduced motion", async ({ page }, testInfo) => {
 
   await expect(page.locator(".hero")).toBeVisible();
   await expect(page.locator(".studio-feature")).toBeVisible();
+  await expect(page.locator(".hero-lanyard .lanyard-badge")).toBeVisible();
+  await expect(page.locator(".hero-lanyard-canvas canvas")).toHaveCount(0);
+  const dotGridSize = await page.locator(".dot-grid__canvas").evaluate((element) => {
+    const canvas = element as HTMLCanvasElement;
+    return {
+      width: canvas.width,
+      height: canvas.height,
+    };
+  });
+  expect(dotGridSize.width).toBeGreaterThan(0);
+  expect(dotGridSize.height).toBeGreaterThan(0);
   expect(await page.evaluate(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   )).toBe(true);
 
   const accessibility = await new AxeBuilder({ page }).analyze();
   expect(accessibility.violations).toEqual([]);
+});
+
+test("carousel navega por setas, tabs e mantém imagens acessíveis", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.setViewportSize({ width: 1000, height: 900 });
+  await page.goto("/");
+
+  const carousel = page.locator(".depth-carousel-shell");
+  await expect(page.getByRole("heading", { name: "SysMon" })).toBeVisible();
+  await carousel.scrollIntoViewIfNeeded();
+  await expect(carousel.locator(".depth-carousel__img")).toHaveCount(2);
+  await expect(carousel.locator(".depth-carousel__img").first()).toHaveAttribute("loading", "lazy");
+
+  const position = carousel.locator(".depth-carousel__position");
+  await expect(position).toHaveText("01 / 02");
+  await carousel.getByRole("button", { name: "Próxima evidência" }).click();
+  await expect(position).toHaveText("02 / 02");
+  await expect(carousel.locator('.depth-carousel__card').nth(1)).toHaveAttribute("aria-hidden", "false");
+  await expect(carousel.locator('button[role="tab"][aria-selected="true"]')).toHaveAttribute(
+    "aria-label",
+    "Mostrar 02 / Pulse V2",
+  );
+
+  await carousel.locator('button[role="tab"][aria-label="Mostrar 01 / System Monitor"]').click();
+  await expect(position).toHaveText("01 / 02");
+  await carousel.getByRole("button", { name: "Evidência anterior" }).click();
+  await expect(position).toHaveText("02 / 02");
+});
+
+test("carousel respeita reduced motion", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const carousel = page.locator(".depth-carousel-shell");
+  await carousel.scrollIntoViewIfNeeded();
+  await expect.poll(() => page.evaluate(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  )).toBe(true);
+
+  const cardMotion = await carousel.locator(".depth-carousel__card").first().evaluate((card) => {
+    const styles = getComputedStyle(card);
+    return {
+      transitionProperty: styles.transitionProperty,
+      animationName: styles.animationName,
+      willChange: styles.willChange,
+    };
+  });
+  expect(cardMotion.transitionProperty).toBe("none");
+  expect(cardMotion.animationName).toBe("none");
+  expect(cardMotion.willChange).toBe("auto");
+
+  await carousel.getByRole("button", { name: "Próxima evidência" }).click();
+  await expect(carousel.locator(".depth-carousel__position")).toHaveText("02 / 02");
+});
+
+test("hero mantém fallback antes do idle", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.addInitScript(holdHeroSceneLoad);
+  await page.goto("/");
+
+  const hero = page.locator(".hero-lanyard");
+  await expect(hero.locator(".lanyard-badge")).toBeVisible();
+  await expect(hero.locator(".hero-lanyard-canvas canvas")).toHaveCount(0);
+});
+
+test("hero monta o canvas após interação", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.addInitScript(forceHeroSceneVisible);
+  await page.goto("/");
+  await page.waitForTimeout(250);
+  await page.locator(".hero-lanyard-entry > div").dispatchEvent("pointerenter");
+  await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible({ timeout: 15_000 });
+  const canvasSize = await page.locator(".hero-lanyard-canvas canvas").evaluate((element) => {
+    const canvas = element as HTMLCanvasElement;
+    return {
+      width: canvas.width,
+      height: canvas.height,
+    };
+  });
+  expect(canvasSize.width).toBeGreaterThan(0);
+  expect(canvasSize.height).toBeGreaterThan(0);
+});
+
+test("carousel permanece utilizável quando imagens falham", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.route("**/_next/image**", (route) => route.abort());
+  await page.route("**/sysmon/**", (route) => route.abort());
+  await page.goto("/");
+
+  const carousel = page.locator(".depth-carousel-shell");
+  await carousel.scrollIntoViewIfNeeded();
+  await expect(carousel.locator(".depth-carousel__img")).toHaveCount(2);
+  await expect(carousel.locator(".depth-carousel__img").first()).toHaveAttribute(
+    "alt",
+    /Interface completa do SysMon/,
+  );
+  await carousel.getByRole("button", { name: "Próxima evidência" }).click();
+  await expect(carousel.locator(".depth-carousel__position")).toHaveText("02 / 02");
+});
+
+test("contato expõe links e navegação ativa", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.goto("/");
+
+  const contact = page.locator("#contato");
+  await contact.scrollIntoViewIfNeeded();
+  await expect(contact.getByRole("link")).toHaveCount(3);
+  await expect(contact.getByRole("link", { name: /gustavomfgdev@gmail.com/ })).toHaveAttribute(
+    "href",
+    "mailto:gustavomfgdev@gmail.com",
+  );
+  await expect(contact.getByRole("link", { name: /linkedin.com\/in\/gustavomfg/ })).toHaveAttribute(
+    "href",
+    "https://www.linkedin.com/in/gustavomfg",
+  );
+  await expect(contact.getByRole("link", { name: /github.com\/gustavomfg/ })).toHaveAttribute(
+    "href",
+    "https://github.com/gustavomfg",
+  );
+  await expect(contact.locator(".contact-channel.is-primary")).toHaveCount(1);
+  await expect(page.getByRole("navigation", { name: "Navegação principal" }).getByRole("link", { name: "Contato" }))
+    .toHaveAttribute("aria-current", "location");
+});
+
+test("primeira viewport respeita orçamento de JavaScript", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.addInitScript(holdHeroSceneLoad);
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+  await expect(page.locator(".hero-lanyard .lanyard-badge")).toBeVisible();
+  await expect(page.locator(".hero-lanyard-canvas canvas")).toHaveCount(0);
+
+  const initialScriptBytes = await page.evaluate(() => {
+    const resources = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
+    return resources
+      .filter((resource) => resource.initiatorType === "script" && resource.name.includes("/_next/"))
+      .reduce((total, resource) => total + Math.max(resource.transferSize, resource.encodedBodySize), 0);
+  });
+  expect(initialScriptBytes).toBeLessThan(initialScriptBudgetBytes);
+});
+
+test("limites responsivos mantêm superfícies principais contidas", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.addInitScript(holdHeroSceneLoad);
+
+  for (const width of responsiveWidths) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    await expect(page.locator(".hero")).toBeVisible();
+    await page.locator("#contato").scrollIntoViewIfNeeded();
+
+    const dimensions = await page.evaluate(() => ({
+      innerWidth: window.innerWidth,
+      regions: Array.from(document.querySelectorAll(".hero, .depth-carousel-shell, #contato, .contact-links")).map((element) => {
+        const rect = element.getBoundingClientRect();
+        return { left: rect.left, right: rect.right };
+      }),
+    }));
+    expect(dimensions.regions.length).toBeGreaterThan(0);
+    for (const region of dimensions.regions) {
+      expect(region.left, `region starts outside viewport at ${width}px`).toBeGreaterThanOrEqual(-1);
+      expect(region.right, `region ends outside viewport at ${width}px`).toBeLessThanOrEqual(dimensions.innerWidth + 1);
+    }
+  }
 });
