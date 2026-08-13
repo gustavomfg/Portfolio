@@ -1,8 +1,24 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+const localSiteUrl = "http://localhost:3000";
+
+function getExpectedSiteUrl() {
+  const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.NODE_ENV === "production" && !configuredSiteUrl) {
+    throw new Error("Defina NEXT_PUBLIC_SITE_URL para executar os smoke tests de produção.");
+  }
+
+  return (configuredSiteUrl ?? localSiteUrl).replace(/\/+$/, "");
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium");
+  const expectedSiteUrl = getExpectedSiteUrl();
   const firstResponse = await page.goto("/");
   const contentSecurityPolicy = firstResponse?.headers()["content-security-policy"];
 
@@ -12,7 +28,7 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "http://localhost:3000",
+    expectedSiteUrl,
   );
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute(
     "content",
@@ -20,7 +36,7 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    /^http:\/\/localhost:3000\/opengraph-image\?[a-f0-9]+$/,
+    new RegExp(`^${escapeRegExp(expectedSiteUrl)}/opengraph-image\\?[a-f0-9]+$`),
   );
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
     "content",
@@ -29,14 +45,15 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
 
   const robotsResponse = await page.request.get("/robots.txt");
   expect(robotsResponse.ok()).toBe(true);
-  expect(await robotsResponse.text()).toContain(
-    "Sitemap: http://localhost:3000/sitemap.xml",
+  const robotsText = await robotsResponse.text();
+  expect(robotsText).toContain(
+    `Sitemap: ${expectedSiteUrl}/sitemap.xml`,
   );
 
   const sitemapResponse = await page.request.get("/sitemap.xml");
   expect(sitemapResponse.ok()).toBe(true);
   expect(await sitemapResponse.text()).toContain(
-    "<loc>http://localhost:3000/</loc>",
+    `<loc>${expectedSiteUrl}/</loc>`,
   );
 
   for (const imagePath of ["/opengraph-image", "/twitter-image"]) {
@@ -88,6 +105,35 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
 
   const accessibility = await new AxeBuilder({ page }).analyze();
   expect(accessibility.violations).toEqual([]);
+});
+
+test("URLs públicas em produção", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  test.skip(process.env.NODE_ENV !== "production");
+
+  const expectedSiteUrl = getExpectedSiteUrl();
+  expect(expectedSiteUrl).not.toMatch(/^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(?::|\/|$)/);
+
+  await page.goto("/");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    expectedSiteUrl,
+  );
+
+  const robotsResponse = await page.request.get("/robots.txt");
+  expect(robotsResponse.ok()).toBe(true);
+  const robotsText = await robotsResponse.text();
+  expect(robotsText).toContain("Allow: /");
+  expect(robotsText).not.toContain("Disallow: /");
+  expect(robotsText).toContain(
+    `Sitemap: ${expectedSiteUrl}/sitemap.xml`,
+  );
+
+  const sitemapResponse = await page.request.get("/sitemap.xml");
+  expect(sitemapResponse.ok()).toBe(true);
+  expect(await sitemapResponse.text()).toContain(
+    `<loc>${expectedSiteUrl}/</loc>`,
+  );
 });
 
 test("menu móvel, links e reduced motion", async ({ page }, testInfo) => {

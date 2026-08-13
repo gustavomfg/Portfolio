@@ -147,12 +147,20 @@ Configure:
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
+`NEXT_PUBLIC_SITE_URL` is required for every production build, regardless of the hosting provider. It must be an absolute HTTPS URL for the public domain. The `http://localhost:3000` fallback is available only during development; a production build without a public URL fails immediately.
+
 Then build normally:
 
 ```bash
 pnpm install --frozen-lockfile
 pnpm build
 pnpm start
+```
+
+For the production URL smoke tests, use the same public URL when starting the test environment:
+
+```bash
+NODE_ENV=production NEXT_PUBLIC_SITE_URL=https://your-domain.com pnpm test:e2e
 ```
 
 The portfolio automatically generates:

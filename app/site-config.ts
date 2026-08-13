@@ -1,5 +1,7 @@
 const localUrl = "http://localhost:3000";
 const isDevelopment = process.env.NODE_ENV === "development";
+const isProduction = process.env.NODE_ENV === "production";
+const localHostnames = ["localhost", "127.0.0.1", "[::1]"];
 
 function normalizeUrl(value: string | undefined) {
   if (!value) {
@@ -13,7 +15,13 @@ function normalizeUrl(value: string | undefined) {
   const isLocalDevelopment =
     isDevelopment
     && url.protocol === "http:"
-    && ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+    && localHostnames.includes(url.hostname);
+
+  if (localHostnames.includes(url.hostname) && !isLocalDevelopment) {
+    throw new Error(
+      "A URL pública do portfólio não pode apontar para um endereço local fora do desenvolvimento.",
+    );
+  }
 
   if (url.protocol !== "https:" && !isLocalDevelopment) {
     throw new Error(
@@ -25,13 +33,12 @@ function normalizeUrl(value: string | undefined) {
 }
 
 const configuredUrl = normalizeUrl(
-  process.env.NEXT_PUBLIC_SITE_URL
-    ?? process.env.VERCEL_PROJECT_PRODUCTION_URL,
+  process.env.NEXT_PUBLIC_SITE_URL,
 );
 
-if (process.env.VERCEL === "1" && !configuredUrl) {
+if (isProduction && !configuredUrl) {
   throw new Error(
-    "A URL pública do portfólio não está configurada. Defina NEXT_PUBLIC_SITE_URL.",
+    "A URL pública do portfólio é obrigatória em produção. Defina NEXT_PUBLIC_SITE_URL.",
   );
 }
 
