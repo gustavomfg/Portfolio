@@ -1,6 +1,5 @@
 export type ProjectAccent = "violet" | "blue" | "cyan";
 export type ProjectIconKey = "brain-circuit" | "panels-top-left" | "scan-search" | "radar";
-export type TimelineIconKey = "code" | "layers" | "terminal" | "file-text";
 
 export interface NavItem {
   label: string;
@@ -28,20 +27,7 @@ export interface ProjectLink {
   type: "source" | "demo";
 }
 
-export interface Capability {
-  number: string;
-  title: string;
-  description: string;
-}
-
 export interface TechnicalProfileItem {
   label: string;
   value: string;
-}
-
-export interface TimelineItem {
-  year: string;
-  title: string;
-  text: string;
-  icon: TimelineIconKey;
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CAPABILITIES, NAV_ITEMS, PROJECTS, STACK, TIMELINE } from "@/data/portfolio";
+import { NAV_ITEMS, PROJECTS } from "@/data/portfolio";
 
 describe("portfolio data", () => {
   it("keeps project identifiers unique and complete", () => {
@@ -51,11 +51,5 @@ describe("portfolio data", () => {
 
   it("keeps navigation targets unique", () => {
     expect(new Set(NAV_ITEMS.map((item) => item.href)).size).toBe(NAV_ITEMS.length);
-  });
-
-  it("keeps each public collection populated", () => {
-    expect(CAPABILITIES.length).toBeGreaterThan(0);
-    expect(STACK.length).toBeGreaterThan(0);
-    expect(TIMELINE.length).toBeGreaterThan(0);
   });
 });

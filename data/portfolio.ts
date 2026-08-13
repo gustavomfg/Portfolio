@@ -1,4 +1,4 @@
-import type { Capability, NavItem, Project, TechnicalProfileItem, TimelineItem } from "@/types/portfolio";
+import type { NavItem, Project, TechnicalProfileItem } from "@/types/portfolio";
 
 export const NAV_ITEMS = [
   { label: "Projetos", href: "#projetos" },
@@ -152,61 +152,3 @@ export const SYSMON_EVIDENCE = {
   ],
   healthEngine: "O Health Engine diferencia atividade de pressão do sistema e alimenta o System Pulse, uma representação procedural que reage ao estado agregado da máquina.",
 } as const;
-
-export const STACK = [
-  "Java",
-  "TypeScript",
-  "JavaScript",
-  "React",
-  "Node.js",
-  "Electron",
-  "HTML",
-  "CSS",
-  "Python",
-  "Rust",
-] as const;
-
-export const CAPABILITIES = [
-  {
-    number: "01",
-    title: "Interfaces web",
-    description: "Desenvolvimento de interfaces responsivas e componentizadas com React, TypeScript, JavaScript, HTML e CSS.",
-  },
-  {
-    number: "02",
-    title: "Backend e arquitetura",
-    description: "Construção de APIs e lógica de aplicação com Node.js, priorizando organização, manutenção e decisões arquiteturais claras.",
-  },
-  {
-    number: "03",
-    title: "Aplicações desktop",
-    description: "Criação de aplicações multiplataforma com Electron, considerando segurança, persistência e experiência de uso desde o início.",
-  },
-] as const satisfies readonly Capability[];
-
-export const TIMELINE = [
-  {
-    year: "BASE",
-    title: "Fundamentos",
-    text: "Formação em Análise e Desenvolvimento de Sistemas, com Java como principal linguagem acadêmica e uma base em lógica, web e engenharia de software.",
-    icon: "code",
-  },
-  {
-    year: "PRÁTICA",
-    title: "Aprendizado aplicado",
-    text: "React, TypeScript, Node.js e Electron aplicados na criação de projetos completos para web e desktop.",
-    icon: "layers",
-  },
-  {
-    year: "AGORA",
-    title: "Evolução técnica",
-    text: "Aprofundamento em arquitetura, backend, inteligência artificial, documentação e práticas que tornam o software mais seguro e sustentável.",
-    icon: "terminal",
-  },
-  {
-    year: "CONTÍNUO",
-    title: "Próximos passos",
-    text: "Iniciar minha carreira como desenvolvedor Full Stack, continuar estudando Python e Rust e contribuir para software útil e bem construído.",
-    icon: "file-text",
-  },
-] as const satisfies readonly TimelineItem[];
