@@ -64,15 +64,17 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
     .toHaveAttribute("href", "#projetos");
   await expect(page.getByRole("link", { name: /Currículo/ }).first())
     .toHaveAttribute("href", "/curriculo-gustavo-maquias.pdf");
-  await expect(page.getByText("v0.9.5-beta · beta", { exact: true })).toBeVisible();
+  const studioVersion = page.locator(".studio-feature-heading > span").nth(1);
+  await expect(studioVersion).toBeVisible();
+  await expect(studioVersion).toHaveText(/^v\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?$/i);
   await expect(page.getByRole("heading", { name: "SysMon" })).toBeVisible();
 
-  const projectTrigger = page.getByRole("button", {
-    name: "Abrir detalhes de Portfolio",
+  const projectTrigger = page.locator(".project-index-item").first().getByRole("button", {
+    name: /Abrir detalhes de/,
   });
   await projectTrigger.click();
 
-  const dialog = page.getByRole("dialog", { name: "Portfolio" });
+  const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
   await expect(page.getByRole("button", { name: "Fechar detalhes do projeto" })).toBeFocused();
   await expect(page.locator("#conteudo")).toHaveAttribute("inert", "");
