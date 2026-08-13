@@ -100,7 +100,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           </div>
           <SmokedGlassList>
             {secondaryProjects.map((project) => (
-              <article className={`project-index-item${project.key === "control" ? " project-index-item--control" : ""}`} data-smoked-glass-item="true" key={project.key}>
+              <article className={`project-index-item${project.key === "control" ? " project-index-item--control" : ""}${project.key === "inspector" ? " project-index-item--inspector" : ""}`} data-smoked-glass-item="true" key={project.key}>
                 {project.key === "control" ? (
                   <Image
                     className="project-index-evidence"
@@ -109,6 +109,19 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                     aria-hidden="true"
                     width={1920}
                     height={959}
+                    sizes="(max-width: 700px) calc(100vw - 32px), 1240px"
+                    unoptimized
+                    draggable={false}
+                  />
+                ) : null}
+                {project.key === "inspector" ? (
+                  <Image
+                    className="project-index-evidence"
+                    src="/nocturne-inspector/inspector.png"
+                    alt=""
+                    aria-hidden="true"
+                    width={1294}
+                    height={811}
                     sizes="(max-width: 700px) calc(100vw - 32px), 1240px"
                     unoptimized
                     draggable={false}
