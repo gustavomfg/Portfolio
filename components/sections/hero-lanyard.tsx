@@ -107,7 +107,7 @@ function updateBandGeometry(geometry: THREE.BufferGeometry, points: THREE.Vector
   geometry.computeBoundingSphere();
 }
 
-export function HeroLanyard({ active = true }: { active?: boolean }) {
+export function HeroLanyard() {
   const reduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
 
@@ -132,7 +132,6 @@ export function HeroLanyard({ active = true }: { active?: boolean }) {
         <Canvas
           camera={{ position: [0.12, 2, 11.5], fov: 31 }}
           dpr={[1, isMobile ? 1 : 1.5]}
-          frameloop={active ? "always" : "never"}
           gl={{ alpha: true, antialias: !isMobile }}
           onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), 0)}
         >
