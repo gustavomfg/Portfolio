@@ -8,7 +8,7 @@ allowBuilds:
 # - sharp >=0.35.0 fixes inherited libvips vulnerabilities tracked by
 #   GHSA-f88m-g3jw-g9cj.
 overrides:
-  postcss: 8.5.20
+  postcss: 8.5.23
   sharp: 0.35.0
   'minimatch@3>brace-expansion': 1.1.18
   'minimatch@10>brace-expansion': 5.0.9
