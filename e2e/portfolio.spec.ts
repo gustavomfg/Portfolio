@@ -5,46 +5,6 @@ const localSiteUrl = "http://localhost:3000";
 const initialScriptBudgetBytes = 900_000;
 const responsiveWidths = [320, 430, 700, 1000] as const;
 
-function holdHeroSceneLoad() {
-  window.requestIdleCallback = () => 0;
-  window.cancelIdleCallback = () => {};
-}
-
-function forceHeroSceneVisible() {
-  class ForcedIntersectionObserver {
-    readonly root = null;
-    readonly rootMargin = "0px";
-    readonly thresholds = [0];
-
-    constructor(private readonly callback: IntersectionObserverCallback) {}
-
-    observe(target: Element) {
-      const bounds = target.getBoundingClientRect();
-      window.setTimeout(() => this.callback([
-        {
-          boundingClientRect: bounds,
-          intersectionRatio: 1,
-          intersectionRect: bounds,
-          isIntersecting: true,
-          isVisible: true,
-          rootBounds: null,
-          target,
-          time: performance.now(),
-        } as IntersectionObserverEntry,
-      ], this as unknown as IntersectionObserver), 0);
-    }
-
-    unobserve() {}
-    disconnect() {}
-    takeRecords() { return []; }
-  }
-
-  Object.defineProperty(window, "IntersectionObserver", {
-    configurable: true,
-    value: ForcedIntersectionObserver,
-  });
-}
-
 function getExpectedSiteUrl() {
   const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (process.env.NODE_ENV === "production" && !configuredSiteUrl) {
@@ -197,8 +157,8 @@ test("menu móvel, links e reduced motion", async ({ page }, testInfo) => {
 
   await expect(page.locator(".hero")).toBeVisible();
   await expect(page.locator(".studio-feature")).toBeVisible();
-  await expect(page.locator(".hero-lanyard .lanyard-badge")).toBeVisible();
-  await expect(page.locator(".hero-lanyard-canvas canvas")).toHaveCount(0);
+  await expect(page.locator(".hero-lanyard")).toBeVisible();
+  await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible();
   const dotGridSize = await page.locator(".dot-grid__canvas").evaluate((element) => {
     const canvas = element as HTMLCanvasElement;
     return {
@@ -270,22 +230,18 @@ test("carousel respeita reduced motion", async ({ page }, testInfo) => {
   await expect(carousel.locator(".depth-carousel__position")).toHaveText("02 / 02");
 });
 
-test("hero mantém fallback antes do idle", async ({ page }, testInfo) => {
+test("hero monta a cena 3D diretamente", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium");
-  await page.addInitScript(holdHeroSceneLoad);
   await page.goto("/");
 
   const hero = page.locator(".hero-lanyard");
-  await expect(hero.locator(".lanyard-badge")).toBeVisible();
-  await expect(hero.locator(".hero-lanyard-canvas canvas")).toHaveCount(0);
+  await expect(hero).toBeVisible();
+  await expect(hero.locator(".hero-lanyard-canvas canvas")).toBeVisible();
 });
 
-test("hero monta o canvas após interação", async ({ page }, testInfo) => {
+test("hero mantém o canvas 3D interativo", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium");
-  await page.addInitScript(forceHeroSceneVisible);
   await page.goto("/");
-  await page.waitForTimeout(250);
-  await page.locator(".hero-lanyard-entry > div").dispatchEvent("pointerenter");
   await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible({ timeout: 15_000 });
   const canvasSize = await page.locator(".hero-lanyard-canvas canvas").evaluate((element) => {
     const canvas = element as HTMLCanvasElement;
@@ -341,11 +297,10 @@ test("contato expõe links e navegação ativa", async ({ page }, testInfo) => {
 
 test("primeira viewport respeita orçamento de JavaScript", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium");
-  await page.addInitScript(holdHeroSceneLoad);
   await page.goto("/");
   await page.waitForLoadState("networkidle");
-  await expect(page.locator(".hero-lanyard .lanyard-badge")).toBeVisible();
-  await expect(page.locator(".hero-lanyard-canvas canvas")).toHaveCount(0);
+  await expect(page.locator(".hero-lanyard")).toBeVisible();
+  await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible();
 
   const initialScriptBytes = await page.evaluate(() => {
     const resources = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
@@ -358,7 +313,6 @@ test("primeira viewport respeita orçamento de JavaScript", async ({ page }, tes
 
 test("limites responsivos mantêm superfícies principais contidas", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium");
-  await page.addInitScript(holdHeroSceneLoad);
 
   for (const width of responsiveWidths) {
     await page.setViewportSize({ width, height: 900 });
