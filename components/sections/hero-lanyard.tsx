@@ -3,7 +3,7 @@
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint, type RapierRigidBody, type RigidBodyProps } from "@react-three/rapier";
 import { useReducedMotion } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { Environment, Lightformer, RoundedBox } from "@react-three/drei";
 
@@ -104,12 +104,42 @@ function updateBandGeometry(geometry: THREE.BufferGeometry, points: THREE.Vector
   position.needsUpdate = true;
   normal.needsUpdate = true;
   uv.needsUpdate = true;
-  geometry.computeBoundingSphere();
 }
 
-export function HeroLanyard() {
+interface HeroLanyardProps {
+  active?: boolean;
+  onReady?: () => void;
+  onContextLost?: () => void;
+}
+
+export function HeroLanyard({ active = true, onReady, onContextLost }: HeroLanyardProps) {
   const reduceMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => (
+    typeof window !== "undefined" && window.matchMedia("(max-width: 700px)").matches
+  ));
+  const [sceneMode, setSceneMode] = useState<"rapier" | "simple">("rapier");
+  const contextCleanup = useRef<(() => void) | null>(null);
+
+  const handleCreated = useCallback(({ gl }: { gl: THREE.WebGLRenderer }) => {
+    gl.setClearColor(new THREE.Color(0x000000), 0);
+    const canvas = gl.domElement;
+    const handleContextLost = (event: Event) => {
+      event.preventDefault();
+      setSceneMode("simple");
+      onContextLost?.();
+    };
+    const handleContextRestored = () => onReady?.();
+    canvas.addEventListener("webglcontextlost", handleContextLost);
+    canvas.addEventListener("webglcontextrestored", handleContextRestored);
+    contextCleanup.current?.();
+    contextCleanup.current = () => {
+      canvas.removeEventListener("webglcontextlost", handleContextLost);
+      canvas.removeEventListener("webglcontextrestored", handleContextRestored);
+    };
+    onReady?.();
+  }, [onContextLost, onReady]);
+
+  useEffect(() => () => contextCleanup.current?.(), []);
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 700px)");
@@ -130,10 +160,12 @@ export function HeroLanyard() {
       </span>
       <div className="hero-lanyard-canvas" aria-hidden="true">
         <Canvas
+          key={sceneMode}
           camera={{ position: [0.12, 2, 11.5], fov: 31 }}
           dpr={[1, isMobile ? 1 : 1.5]}
+          frameloop={active ? "always" : "never"}
           gl={{ alpha: true, antialias: !isMobile }}
-          onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), 0)}
+          onCreated={handleCreated}
         >
           <ambientLight intensity={0.48} />
           <hemisphereLight args={["#a89be4", "#05060b", 0.52]} />
@@ -147,6 +179,8 @@ export function HeroLanyard() {
           </Environment>
           {reduceMotion ? (
             <StaticBadge />
+          ) : sceneMode === "simple" ? (
+            <SimpleLanyard />
           ) : (
             <Physics gravity={[0, -18, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
               <PhysicsLanyard />
@@ -265,6 +299,13 @@ function BadgeFace({ back = false }: { back?: boolean }) {
 
     const nextTexture = new THREE.CanvasTexture(canvas);
     nextTexture.colorSpace = THREE.SRGBColorSpace;
+    // The badge canvas is intentionally not power-of-two in height. Disable
+    // mipmaps so WebGL 1 does not reject the texture during upload.
+    nextTexture.generateMipmaps = false;
+    nextTexture.minFilter = THREE.LinearFilter;
+    nextTexture.magFilter = THREE.LinearFilter;
+    nextTexture.wrapS = THREE.ClampToEdgeWrapping;
+    nextTexture.wrapT = THREE.ClampToEdgeWrapping;
     // The texture is an external Canvas resource created after the client mounts.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTexture(nextTexture);
@@ -353,6 +394,177 @@ function StaticBadge() {
       </mesh>
       <BadgeCard />
     </group>
+  );
+}
+
+interface SimpleRopeNode {
+  position: THREE.Vector3;
+  velocity: THREE.Vector3;
+}
+
+function enforceDistance(
+  first: THREE.Vector3,
+  second: THREE.Vector3,
+  target: number,
+  fixedFirst: boolean,
+  delta: THREE.Vector3,
+) {
+  delta.subVectors(second, first);
+  const distance = delta.length();
+  if (!Number.isFinite(distance) || distance < 0.0001) return;
+
+  const correction = (distance - target) / distance;
+  if (fixedFirst) {
+    second.addScaledVector(delta, -correction);
+    return;
+  }
+
+  delta.multiplyScalar(correction * 0.5);
+  first.add(delta);
+  second.sub(delta);
+}
+
+function SimpleLanyard() {
+  const cardGroup = useRef<THREE.Group>(null);
+  const draggedRef = useRef(false);
+  const dragOffset = useRef(new THREE.Vector3());
+  const fixed = useMemo(() => new THREE.Vector3(0, 6, 0), []);
+  const nodes = useMemo<SimpleRopeNode[]>(
+    () => [
+      { position: new THREE.Vector3(0.03, 5.03, 0), velocity: new THREE.Vector3() },
+      { position: new THREE.Vector3(-0.05, 4.07, 0), velocity: new THREE.Vector3() },
+      { position: new THREE.Vector3(0.04, 3.11, 0), velocity: new THREE.Vector3() },
+    ],
+    [],
+  );
+  const cardRotation = useRef(new THREE.Euler()).current;
+  const curve = useMemo(
+    () => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]),
+    [],
+  );
+  const bandGeometry = useMemo(() => createBandGeometry(BAND_POINT_COUNT), []);
+  const bandPoints = useMemo(() => createBandPoints(), []);
+  const bandFrame = useMemo(() => createBandFrameScratch(), []);
+  const scratch = useMemo(() => ({
+    cardTop: new THREE.Vector3(),
+    cardPosition: new THREE.Vector3(0, 1.34, 0),
+    pointer: new THREE.Vector3(),
+    direction: new THREE.Vector3(),
+    ropeDirection: new THREE.Vector3(),
+    constraintDelta: new THREE.Vector3(),
+    extensionDirection: new THREE.Vector3(),
+  }), []);
+  const [dragged, setDragged] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    return () => bandGeometry.dispose();
+  }, [bandGeometry]);
+
+  useEffect(() => {
+    if (!hovered && !dragged) return;
+    const previousCursor = document.body.style.cursor;
+    document.body.style.cursor = dragged ? "grabbing" : "grab";
+    return () => {
+      document.body.style.cursor = previousCursor;
+    };
+  }, [dragged, hovered]);
+
+  useFrame((state, delta) => {
+    const frameDelta = Math.min(delta, 1 / 30);
+    const { cardTop, cardPosition, pointer, direction, ropeDirection } = scratch;
+
+    if (!draggedRef.current) {
+      nodes.forEach((node) => {
+        node.velocity.y -= 18 * frameDelta;
+        node.velocity.multiplyScalar(Math.pow(0.92, frameDelta * 60));
+        node.position.addScaledVector(node.velocity, frameDelta);
+      });
+    } else {
+      pointer.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
+      direction.copy(pointer).sub(state.camera.position).normalize();
+      pointer.add(direction.multiplyScalar(state.camera.position.length()));
+      cardPosition.lerp(pointer.sub(dragOffset.current), Math.min(1, frameDelta * 18));
+    }
+
+    for (let iteration = 0; iteration < 6; iteration += 1) {
+      enforceDistance(fixed, nodes[0].position, 1, true, scratch.constraintDelta);
+      enforceDistance(nodes[0].position, nodes[1].position, 1, false, scratch.constraintDelta);
+      enforceDistance(nodes[1].position, nodes[2].position, 1, false, scratch.constraintDelta);
+    }
+
+    ropeDirection.subVectors(nodes[2].position, nodes[1].position).normalize();
+    cardRotation.x += (THREE.MathUtils.clamp(-ropeDirection.z * 0.3, -0.24, 0.24) - cardRotation.x) * Math.min(1, frameDelta * 8);
+    cardRotation.z += (THREE.MathUtils.clamp(ropeDirection.x * 0.34, -0.3, 0.3) - cardRotation.z) * Math.min(1, frameDelta * 8);
+    cardRotation.y *= Math.max(0, 1 - frameDelta * 4);
+
+    cardTop.set(0, BADGE_HEIGHT / 2, 0).applyEuler(cardRotation);
+    if (!draggedRef.current) cardPosition.copy(nodes[2].position).sub(cardTop);
+    nodes[2].position.copy(cardPosition).add(cardTop);
+
+    if (cardGroup.current) {
+      cardGroup.current.position.copy(cardPosition);
+      cardGroup.current.rotation.copy(cardRotation);
+    }
+
+    curve.points[0].copy(nodes[2].position);
+    curve.points[1].copy(nodes[1].position);
+    curve.points[2].copy(nodes[0].position);
+    curve.points[3].copy(fixed);
+    sampleBandCurve(curve, bandPoints, scratch.extensionDirection);
+    const strapTwist = THREE.MathUtils.clamp(
+      cardRotation.z * STRAP_TWIST_Z + cardRotation.x * STRAP_TWIST_X,
+      -STRAP_MAX_TWIST,
+      STRAP_MAX_TWIST,
+    );
+    updateBandGeometry(bandGeometry, bandPoints, state.camera, strapTwist, bandFrame);
+  });
+
+  const handlePointerDown = (event: ThreeEvent<PointerEvent>) => {
+    if (event.pointerType === "touch") return;
+    event.stopPropagation();
+    (event.target as unknown as Element).setPointerCapture(event.pointerId);
+    dragOffset.current.copy(event.point).sub(scratch.cardPosition);
+    draggedRef.current = true;
+    setDragged(true);
+  };
+
+  const handlePointerUp = (event: ThreeEvent<PointerEvent>) => {
+    if (event.pointerType === "touch") return;
+    event.stopPropagation();
+    try {
+      (event.target as unknown as Element).releasePointerCapture(event.pointerId);
+    } catch {
+      // Pointer capture can already be released by the browser on cancellation.
+    }
+    draggedRef.current = false;
+    setDragged(false);
+  };
+
+  return (
+    <>
+      <group ref={cardGroup}>
+        <group
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          onPointerOver={(event) => {
+            if (event.pointerType !== "touch") setHovered(true);
+          }}
+          onPointerOut={(event) => {
+            if (event.pointerType !== "touch") setHovered(false);
+          }}
+        >
+          <BadgeCard />
+        </group>
+      </group>
+      <mesh geometry={bandGeometry} frustumCulled={false}>
+        <meshBasicMaterial
+          color="#6d55ac"
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+    </>
   );
 }
 
