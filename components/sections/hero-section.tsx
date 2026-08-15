@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowUpRight, Mail } from "lucide-react";
 import { SplitText } from "@/components/animations/split-text";
 import { Reveal } from "@/components/animations/reveal";
-import { HeroLanyard } from "@/components/sections/hero-lanyard";
+import { HeroLanyardShell } from "@/components/sections/hero-lanyard-shell";
 
 export function HeroSection() {
   return (
@@ -37,7 +37,7 @@ export function HeroSection() {
         </div>
 
         <Reveal className="hero-lanyard-entry" delay={0.08} distance={12}>
-          <HeroLanyard />
+          <HeroLanyardShell />
         </Reveal>
       </div>
     </section>
