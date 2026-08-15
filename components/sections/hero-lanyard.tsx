@@ -13,8 +13,111 @@ const BADGE_DEPTH = 0.32;
 const BAND_SAMPLES = 28;
 const BAND_EXTENSION_SAMPLES = 12;
 const BAND_EXTENSION_LENGTH = 2.1;
+const BAND_EXTENSION_BLEND = 0.35;
 const BAND_WIDTH = 0.21;
 const BAND_THICKNESS = 0.045;
+const STRAP_TWIST_Z = 0.42;
+const STRAP_TWIST_X = 0.2;
+const STRAP_MAX_TWIST = 0.18;
+const BAND_POINT_COUNT = BAND_SAMPLES + BAND_EXTENSION_SAMPLES + 1;
+const BAND_UP = new THREE.Vector3(0, 1, 0);
+const BAND_CORNERS = [
+  [1, 1],
+  [-1, 1],
+  [-1, -1],
+  [1, -1],
+] as const;
+
+interface BandFrameScratch {
+  tangent: THREE.Vector3;
+  previousTangent: THREE.Vector3;
+  viewDirection: THREE.Vector3;
+  side: THREE.Vector3;
+  thicknessAxis: THREE.Vector3;
+  renderedSide: THREE.Vector3;
+  renderedThickness: THREE.Vector3;
+  vertex: THREE.Vector3;
+  cornerNormal: THREE.Vector3;
+  twistRotation: THREE.Quaternion;
+  fallbackAxis: THREE.Vector3;
+  transportAxis: THREE.Vector3;
+  rotationAxis: THREE.Vector3;
+}
+
+function createBandFrameScratch(): BandFrameScratch {
+  return {
+    tangent: new THREE.Vector3(),
+    previousTangent: new THREE.Vector3(),
+    viewDirection: new THREE.Vector3(),
+    side: new THREE.Vector3(),
+    thicknessAxis: new THREE.Vector3(),
+    renderedSide: new THREE.Vector3(),
+    renderedThickness: new THREE.Vector3(),
+    vertex: new THREE.Vector3(),
+    cornerNormal: new THREE.Vector3(),
+    twistRotation: new THREE.Quaternion(),
+    fallbackAxis: new THREE.Vector3(),
+    transportAxis: new THREE.Vector3(),
+    rotationAxis: new THREE.Vector3(),
+  };
+}
+
+function createBandPoints() {
+  return Array.from({ length: BAND_POINT_COUNT }, () => new THREE.Vector3());
+}
+
+function sampleBandCurve(curve: THREE.CatmullRomCurve3, points: THREE.Vector3[], extensionDirection: THREE.Vector3) {
+  for (let pointIndex = 0; pointIndex <= BAND_SAMPLES; pointIndex += 1) {
+    curve.getPoint(pointIndex / BAND_SAMPLES, points[pointIndex]);
+  }
+
+  const physicalAnchor = points[BAND_SAMPLES];
+  extensionDirection.subVectors(physicalAnchor, points[BAND_SAMPLES - 1]);
+  if (extensionDirection.lengthSq() < 0.0001 || !isFiniteVector(extensionDirection)) {
+    extensionDirection.copy(BAND_UP);
+  } else {
+    extensionDirection.normalize().lerp(BAND_UP, BAND_EXTENSION_BLEND).normalize();
+  }
+
+  for (let extensionIndex = 1; extensionIndex <= BAND_EXTENSION_SAMPLES; extensionIndex += 1) {
+    points[BAND_SAMPLES + extensionIndex]
+      .copy(physicalAnchor)
+      .addScaledVector(extensionDirection, (BAND_EXTENSION_LENGTH * extensionIndex) / BAND_EXTENSION_SAMPLES);
+  }
+
+  return points;
+}
+
+function isFiniteVector(value: THREE.Vector3) {
+  return Number.isFinite(value.x) && Number.isFinite(value.y) && Number.isFinite(value.z);
+}
+
+function chooseStableSide(
+  side: THREE.Vector3,
+  viewDirection: THREE.Vector3,
+  fallbackAxis: THREE.Vector3,
+  tangent: THREE.Vector3,
+  point: THREE.Vector3,
+  camera: THREE.Camera,
+) {
+  viewDirection.subVectors(camera.position, point);
+  viewDirection.addScaledVector(tangent, -viewDirection.dot(tangent));
+  if (viewDirection.lengthSq() < 0.0001 || !isFiniteVector(viewDirection)) {
+    viewDirection.copy(camera.up);
+    viewDirection.addScaledVector(tangent, -viewDirection.dot(tangent));
+  }
+  if (viewDirection.lengthSq() < 0.0001 || !isFiniteVector(viewDirection)) {
+    fallbackAxis.set(Math.abs(tangent.y) < 0.9 ? 0 : 1, Math.abs(tangent.y) < 0.9 ? 1 : 0, 0);
+    viewDirection.copy(fallbackAxis).addScaledVector(tangent, -fallbackAxis.dot(tangent));
+  }
+  viewDirection.normalize();
+  side.crossVectors(tangent, viewDirection);
+  if (side.lengthSq() < 0.0001 || !isFiniteVector(side)) {
+    fallbackAxis.set(0, 0, 1);
+    side.crossVectors(tangent, fallbackAxis);
+  }
+  side.normalize();
+}
 
 function createBandGeometry(sampleCount: number) {
   const geometry = new THREE.BufferGeometry();
@@ -22,7 +125,9 @@ function createBandGeometry(sampleCount: number) {
   const positions = new Float32Array(vertexCount * 3);
   const normals = new Float32Array(vertexCount * 3);
   const uvs = new Float32Array(vertexCount * 2);
-  const indices = new Uint32Array((sampleCount - 1) * 24 + 12);
+  // The geometry never needs more than 16-bit indices. Keeping this as a
+  // Uint16Array also keeps the ribbon compatible with WebGL 1 contexts.
+  const indices = new Uint16Array((sampleCount - 1) * 24 + 12);
   let index = 0;
 
   for (let segment = 0; segment < sampleCount - 1; segment += 1) {
@@ -60,42 +165,82 @@ function createBandGeometry(sampleCount: number) {
   return geometry;
 }
 
-function updateBandGeometry(geometry: THREE.BufferGeometry, points: THREE.Vector3[], camera: THREE.Camera, twist = 0) {
+function updateBandGeometry(
+  geometry: THREE.BufferGeometry,
+  points: THREE.Vector3[],
+  camera: THREE.Camera,
+  twist: number,
+  frame: BandFrameScratch,
+) {
+  if (points.length < 2) return;
+  for (const point of points) {
+    if (!isFiniteVector(point)) return;
+  }
+
   const position = geometry.getAttribute("position") as THREE.BufferAttribute;
   const normal = geometry.getAttribute("normal") as THREE.BufferAttribute;
   const uv = geometry.getAttribute("uv") as THREE.BufferAttribute;
-  const tangent = new THREE.Vector3();
-  const viewDirection = new THREE.Vector3();
-  const side = new THREE.Vector3();
-  const thicknessAxis = new THREE.Vector3();
-  const vertex = new THREE.Vector3();
-  const cornerNormal = new THREE.Vector3();
-  const twistRotation = new THREE.Quaternion();
-  const corners = [
-    [1, 1],
-    [-1, 1],
-    [-1, -1],
-    [1, -1],
-  ] as const;
-
+  const {
+    tangent,
+    previousTangent,
+    viewDirection,
+    side,
+    thicknessAxis,
+    renderedSide,
+    renderedThickness,
+    vertex,
+    cornerNormal,
+    twistRotation,
+    fallbackAxis,
+    transportAxis,
+    rotationAxis,
+  } = frame;
   points.forEach((point, pointIndex) => {
     const previous = points[Math.max(0, pointIndex - 1)];
     const next = points[Math.min(points.length - 1, pointIndex + 1)];
-    tangent.subVectors(next, previous).normalize();
-    viewDirection.subVectors(camera.position, point).normalize();
-    side.crossVectors(tangent, viewDirection);
-    if (side.lengthSq() < 0.0001) side.set(1, 0, 0);
-    else side.normalize();
-    thicknessAxis.crossVectors(side, tangent).normalize();
-    twistRotation.setFromAxisAngle(tangent, twist * (pointIndex / (points.length - 1)));
-    side.applyQuaternion(twistRotation);
-    thicknessAxis.applyQuaternion(twistRotation);
+    tangent.subVectors(next, previous);
+    if (tangent.lengthSq() < 0.000001 || !isFiniteVector(tangent)) {
+      tangent.set(0, 1, 0);
+    } else {
+      tangent.normalize();
+    }
+    if (pointIndex === 0) {
+      chooseStableSide(side, viewDirection, fallbackAxis, tangent, point, camera);
+    } else {
+      transportAxis.crossVectors(previousTangent, tangent);
+      if (transportAxis.lengthSq() > 0.000001 && isFiniteVector(transportAxis)) {
+        rotationAxis.copy(transportAxis).normalize();
+        twistRotation.setFromAxisAngle(
+          rotationAxis,
+          Math.acos(THREE.MathUtils.clamp(previousTangent.dot(tangent), -1, 1)),
+        );
+        side.applyQuaternion(twistRotation);
+      }
+      side.addScaledVector(tangent, -side.dot(tangent));
+      if (side.lengthSq() < 0.0001 || !isFiniteVector(side)) {
+        chooseStableSide(side, viewDirection, fallbackAxis, tangent, point, camera);
+      } else {
+        side.normalize();
+      }
+    }
+    previousTangent.copy(tangent);
 
-    corners.forEach(([sideSign, thicknessSign], cornerIndex) => {
+    thicknessAxis.crossVectors(side, tangent);
+    if (thicknessAxis.lengthSq() < 0.0001 || !isFiniteVector(thicknessAxis)) {
+      fallbackAxis.set(0, 0, 1);
+      thicknessAxis.crossVectors(side, fallbackAxis);
+      if (thicknessAxis.lengthSq() < 0.0001) thicknessAxis.set(0, 1, 0);
+    }
+    thicknessAxis.normalize();
+    twistRotation.setFromAxisAngle(tangent, twist * (pointIndex / (points.length - 1)));
+    renderedSide.copy(side).applyQuaternion(twistRotation);
+    renderedThickness.copy(thicknessAxis).applyQuaternion(twistRotation);
+
+    BAND_CORNERS.forEach(([sideSign, thicknessSign], cornerIndex) => {
       const vertexIndex = pointIndex * 4 + cornerIndex;
-      vertex.copy(point).addScaledVector(side, sideSign * BAND_WIDTH).addScaledVector(thicknessAxis, thicknessSign * BAND_THICKNESS);
+      vertex.copy(point).addScaledVector(renderedSide, sideSign * BAND_WIDTH).addScaledVector(renderedThickness, thicknessSign * BAND_THICKNESS);
       position.setXYZ(vertexIndex, vertex.x, vertex.y, vertex.z);
-      cornerNormal.copy(side).multiplyScalar(sideSign).addScaledVector(thicknessAxis, thicknessSign).normalize();
+      cornerNormal.copy(renderedSide).multiplyScalar(sideSign).addScaledVector(renderedThickness, thicknessSign).normalize();
       normal.setXYZ(vertexIndex, cornerNormal.x, cornerNormal.y, cornerNormal.z);
       uv.setXY(vertexIndex, pointIndex / (points.length - 1), cornerIndex === 0 || cornerIndex === 3 ? 0 : 1);
     });
@@ -583,7 +728,9 @@ function PhysicsLanyard() {
     () => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]),
     [],
   );
-  const bandGeometry = useMemo(() => createBandGeometry(BAND_SAMPLES + BAND_EXTENSION_SAMPLES + 1), []);
+  const bandGeometry = useMemo(() => createBandGeometry(BAND_POINT_COUNT), []);
+  const bandPoints = useMemo(() => createBandPoints(), []);
+  const bandFrame = useMemo(() => createBandFrameScratch(), []);
   // The texture bundle owns mutable Three.js resources and must stay stable for the scene lifetime.
   // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const bandTextures = useMemo(() => {
@@ -659,6 +806,7 @@ function PhysicsLanyard() {
   }, []);
   const vector = useMemo(() => new THREE.Vector3(), []);
   const direction = useMemo(() => new THREE.Vector3(), []);
+  const extensionDirection = useMemo(() => new THREE.Vector3(), []);
   const [dragged, setDragged] = useState(false);
   const [hovered, setHovered] = useState(false);
 
@@ -685,14 +833,15 @@ function PhysicsLanyard() {
     type: "dynamic",
     canSleep: true,
     colliders: false,
-    angularDamping: 5,
-    linearDamping: 4,
+    angularDamping: 6,
+    linearDamping: 4.5,
   };
 
   useRopeJoint(fixed, jointOne, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(jointOne, jointTwo, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(jointTwo, jointThree, [[0, 0, 0], [0, 0, 0], 1]);
-  useSphericalJoint(jointThree, card, [[0, 0, 0], [0, BADGE_HEIGHT / 2, 0]]);
+  // Anchor the rope at the existing ring center instead of the badge top.
+  useSphericalJoint(jointThree, card, [[0, 0, 0], [0, BADGE_HEIGHT / 2 + 0.19, 0.025]]);
 
   useFrame((state, delta) => {
     if (!fixed.current || !card.current || !jointOne.current || !jointTwo.current || !jointThree.current) return;
@@ -719,25 +868,22 @@ function PhysicsLanyard() {
     curve.points[1].copy(lerpedTwo.current);
     curve.points[2].copy(lerpedOne.current);
     curve.points[3].copy(fixed.current.translation());
-
-    const points = curve.getPoints(BAND_SAMPLES);
-    const physicalAnchor = points[points.length - 1];
-    for (let extensionIndex = 1; extensionIndex <= BAND_EXTENSION_SAMPLES; extensionIndex += 1) {
-      points.push(
-        new THREE.Vector3(
-          physicalAnchor.x,
-          physicalAnchor.y + (BAND_EXTENSION_LENGTH * extensionIndex) / BAND_EXTENSION_SAMPLES,
-          physicalAnchor.z,
-        ),
-      );
-    }
+    sampleBandCurve(curve, bandPoints, extensionDirection);
     const cardRotation = card.current.rotation();
-    const strapTwist = cardRotation.z * 0.9 + cardRotation.x * 0.45;
-    updateBandGeometry(bandGeometry, points, state.camera, strapTwist);
+    const strapTwist = THREE.MathUtils.clamp(
+      cardRotation.z * STRAP_TWIST_Z + cardRotation.x * STRAP_TWIST_X,
+      -STRAP_MAX_TWIST,
+      STRAP_MAX_TWIST,
+    );
+    updateBandGeometry(bandGeometry, bandPoints, state.camera, strapTwist, bandFrame);
 
     // Let the card keep a little rotational energy while the strap damps it naturally.
     angularVelocity.copy(card.current.angvel());
-    card.current.setAngvel({ x: angularVelocity.x, y: angularVelocity.y - cardRotation.y * 0.24, z: angularVelocity.z }, true);
+    card.current.setAngvel({
+      x: angularVelocity.x,
+      y: angularVelocity.y * 0.96 - cardRotation.y * 0.12,
+      z: angularVelocity.z,
+    }, true);
   });
 
   const handlePointerDown = (event: ThreeEvent<PointerEvent>) => {
