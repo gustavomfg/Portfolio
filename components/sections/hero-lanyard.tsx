@@ -1,9 +1,9 @@
 "use client";
 
-import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
+import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint, type RapierRigidBody, type RigidBodyProps } from "@react-three/rapier";
 import { useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { Environment, Lightformer, RoundedBox } from "@react-three/drei";
 
@@ -325,10 +325,10 @@ export function HeroLanyard({ active = true, onReady, onContextLost }: HeroLanya
           {reduceMotion ? (
             <StaticBadge />
           ) : sceneMode === "simple" ? (
-            <SimpleLanyard />
+            <SimpleLanyard active={active} />
           ) : (
-            <Physics gravity={[0, -18, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
-              <PhysicsLanyard />
+            <Physics paused={!active} gravity={[0, -18, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+              <PhysicsLanyard active={active} />
             </Physics>
           )}
         </Canvas>
@@ -569,7 +569,22 @@ function enforceDistance(
   second.sub(delta);
 }
 
-function SimpleLanyard() {
+function useLanyardClock(active: boolean) {
+  const clock = useThree((state) => state.clock);
+
+  useLayoutEffect(() => {
+    if (active) {
+      // Restart from the current timestamp so the first frame after an
+      // offscreen pause cannot inherit the time spent outside the viewport.
+      clock.start();
+    } else {
+      clock.stop();
+    }
+  }, [active, clock]);
+}
+
+function SimpleLanyard({ active }: { active: boolean }) {
+  useLanyardClock(active);
   const cardGroup = useRef<THREE.Group>(null);
   const draggedRef = useRef(false);
   const dragOffset = useRef(new THREE.Vector3());
@@ -713,7 +728,8 @@ function SimpleLanyard() {
   );
 }
 
-function PhysicsLanyard() {
+function PhysicsLanyard({ active }: { active: boolean }) {
+  useLanyardClock(active);
   const fixed = useRef<RapierRigidBody>(null!);
   const jointOne = useRef<RapierRigidBody>(null!);
   const jointTwo = useRef<RapierRigidBody>(null!);
@@ -862,8 +878,9 @@ function PhysicsLanyard() {
       lerpedTwo.current.copy(jointTwo.current.translation());
       initialized.current = true;
     }
-    lerpedOne.current.lerp(jointOne.current.translation(), delta * 10);
-    lerpedTwo.current.lerp(jointTwo.current.translation(), delta * 10);
+    const interpolationAlpha = Math.min(1, Math.max(0, delta * 10));
+    lerpedOne.current.lerp(jointOne.current.translation(), interpolationAlpha);
+    lerpedTwo.current.lerp(jointTwo.current.translation(), interpolationAlpha);
     curve.points[0].copy(jointThree.current.translation());
     curve.points[1].copy(lerpedTwo.current);
     curve.points[2].copy(lerpedOne.current);
