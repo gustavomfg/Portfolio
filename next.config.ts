@@ -58,6 +58,9 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  experimental: {
+    useTypeScriptCli: false,
+  },
   async headers() {
     return [
       {
