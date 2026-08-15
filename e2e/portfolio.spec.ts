@@ -157,8 +157,8 @@ test("menu móvel, links e reduced motion", async ({ page }, testInfo) => {
 
   await expect(page.locator(".hero")).toBeVisible();
   await expect(page.locator(".studio-feature")).toBeVisible();
-  await expect(page.locator(".hero-lanyard")).toBeVisible();
-  await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible();
+  await expect(page.locator('.hero-lanyard[data-lanyard-state="fallback"]')).toBeVisible();
+  await expect(page.locator(".hero-lanyard-canvas canvas")).toHaveCount(0);
   const dotGridSize = await page.locator(".dot-grid__canvas").evaluate((element) => {
     const canvas = element as HTMLCanvasElement;
     return {
@@ -230,18 +230,20 @@ test("carousel respeita reduced motion", async ({ page }, testInfo) => {
   await expect(carousel.locator(".depth-carousel__position")).toHaveText("02 / 02");
 });
 
-test("hero monta a cena 3D diretamente", async ({ page }, testInfo) => {
+test("hero monta a cena 3D na primeira viewport", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium");
   await page.goto("/");
 
-  const hero = page.locator(".hero-lanyard");
-  await expect(hero).toBeVisible();
-  await expect(hero.locator(".hero-lanyard-canvas canvas")).toBeVisible();
+  await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible({ timeout: 15_000 });
+  await expect(page.locator('.hero-lanyard[data-lanyard-state="fallback"]')).toHaveCount(0);
+  await expect(page.locator(".hero-lanyard-stage")).toHaveAttribute("data-lanyard-state", "ready");
 });
 
-test("hero mantém o canvas 3D interativo", async ({ page }, testInfo) => {
+test("hero mantém o canvas 3D após interação", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium");
   await page.goto("/");
+  await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible({ timeout: 15_000 });
+  await page.locator(".hero-lanyard-entry > div").dispatchEvent("pointerenter");
   await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible({ timeout: 15_000 });
   const canvasSize = await page.locator(".hero-lanyard-canvas canvas").evaluate((element) => {
     const canvas = element as HTMLCanvasElement;
@@ -299,16 +301,28 @@ test("primeira viewport respeita orçamento de JavaScript", async ({ page }, tes
   test.skip(testInfo.project.name !== "desktop-chromium");
   await page.goto("/");
   await page.waitForLoadState("networkidle");
-  await expect(page.locator(".hero-lanyard")).toBeVisible();
-  await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible();
+  await expect(page.locator(".hero-lanyard-canvas canvas")).toBeVisible({ timeout: 15_000 });
 
-  const initialScriptBytes = await page.evaluate(() => {
+  const scriptMetrics = await page.evaluate(() => {
+    const sceneRequest = performance.getEntriesByName("hero-lanyard-scene-request")[0];
     const resources = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
-    return resources
+    const scripts = resources
       .filter((resource) => resource.initiatorType === "script" && resource.name.includes("/_next/"))
-      .reduce((total, resource) => total + Math.max(resource.transferSize, resource.encodedBodySize), 0);
+      .map((resource) => ({
+        startTime: resource.startTime,
+        bytes: Math.max(resource.transferSize, resource.encodedBodySize),
+      }));
+    const initial = scripts.filter((resource) => !sceneRequest || resource.startTime < sceneRequest.startTime);
+    const scene = scripts.filter((resource) => sceneRequest && resource.startTime >= sceneRequest.startTime);
+    return {
+      initialBytes: initial.reduce((total, resource) => total + resource.bytes, 0),
+      sceneBytes: scene.reduce((total, resource) => total + resource.bytes, 0),
+      sceneRequest: Boolean(sceneRequest),
+    };
   });
-  expect(initialScriptBytes).toBeLessThan(initialScriptBudgetBytes);
+  expect(scriptMetrics.sceneRequest).toBe(true);
+  expect(scriptMetrics.initialBytes).toBeLessThan(initialScriptBudgetBytes);
+  expect(scriptMetrics.sceneBytes).toBeGreaterThan(0);
 });
 
 test("limites responsivos mantêm superfícies principais contidas", async ({ page }, testInfo) => {
