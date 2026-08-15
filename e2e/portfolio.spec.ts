@@ -256,6 +256,30 @@ test("hero mantém o canvas 3D após interação", async ({ page }, testInfo) =>
   expect(canvasSize.height).toBeGreaterThan(0);
 });
 
+test("hero retoma o canvas após sair e voltar do viewport", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.goto("/");
+
+  const canvas = page.locator(".hero-lanyard-canvas canvas");
+  const stage = page.locator(".hero-lanyard-stage");
+  await expect(canvas).toBeVisible({ timeout: 15_000 });
+  await expect(stage).toHaveAttribute("data-lanyard-state", "ready");
+
+  await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }));
+  await expect.poll(() => page.evaluate(() => {
+    const element = document.querySelector<HTMLElement>(".hero-lanyard-stage");
+    if (!element) return false;
+    const bounds = element.getBoundingClientRect();
+    return bounds.bottom <= 0 || bounds.top >= window.innerHeight;
+  })).toBe(true);
+  await page.waitForTimeout(500);
+
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect(canvas).toBeVisible({ timeout: 5_000 });
+  await expect(stage).toHaveAttribute("data-lanyard-state", "ready");
+  await expect.poll(() => canvas.count()).toBe(1);
+});
+
 test("carousel permanece utilizável quando imagens falham", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium");
   await page.route("**/_next/image**", (route) => route.abort());
