@@ -341,6 +341,7 @@ function BadgeFace({ back = false }: { back?: boolean }) {
   const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null);
 
   useEffect(() => {
+    let disposed = false;
     const canvas = document.createElement("canvas");
     canvas.width = 1024;
     canvas.height = 1350;
@@ -454,7 +455,55 @@ function BadgeFace({ back = false }: { back?: boolean }) {
     // The texture is an external Canvas resource created after the client mounts.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTexture(nextTexture);
-    return () => nextTexture.dispose();
+
+    if (!back) {
+      const photo = new Image();
+      photo.decoding = "async";
+      photo.onload = () => {
+        if (disposed) return;
+
+        const sourceSize = Math.min(photo.naturalWidth, photo.naturalHeight);
+        const sourceX = (photo.naturalWidth - sourceSize) / 2;
+        const sourceY = Math.max(0, (photo.naturalHeight - sourceSize) * 0.34);
+        const photoSize = 236;
+        const photoCenterX = canvas.width / 2;
+        const photoCenterY = 318;
+
+        context.save();
+        context.beginPath();
+        context.arc(photoCenterX, photoCenterY, photoSize / 2, 0, Math.PI * 2);
+        context.clip();
+        context.globalAlpha = 0.88;
+        context.drawImage(
+          photo,
+          sourceX,
+          sourceY,
+          sourceSize,
+          sourceSize,
+          photoCenterX - photoSize / 2,
+          photoCenterY - photoSize / 2,
+          photoSize,
+          photoSize,
+        );
+        context.globalAlpha = 1;
+        context.fillStyle = "rgba(10, 11, 18, .2)";
+        context.fillRect(photoCenterX - photoSize / 2, photoCenterY - photoSize / 2, photoSize, photoSize);
+        context.restore();
+
+        context.strokeStyle = "rgba(198,179,255,.5)";
+        context.lineWidth = 4;
+        context.beginPath();
+        context.arc(photoCenterX, photoCenterY, photoSize / 2 + 10, 0, Math.PI * 2);
+        context.stroke();
+        nextTexture.needsUpdate = true;
+      };
+      photo.src = "/profile/eu.jpeg";
+    }
+
+    return () => {
+      disposed = true;
+      nextTexture.dispose();
+    };
   }, [back]);
 
   if (!texture) return null;
