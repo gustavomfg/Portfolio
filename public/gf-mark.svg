@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>GF</title>
+  <rect width="56" height="56" x="4" y="4" rx="10" fill="#101018" stroke="#9167ff"/>
+  <text x="32" y="39" fill="#c6b3ff" font-family="monospace" font-size="20" font-weight="600" letter-spacing="-2" text-anchor="middle">GF</text>
+</svg>
