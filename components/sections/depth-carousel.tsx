@@ -241,7 +241,9 @@ function DepthCarousel({
       const width = entry.contentRect.width;
       const config = configRef.current;
       const neededWidth = config.cardWidth + Math.abs(config.spread) * 2 + 120;
-      scaleRef.current = clamp(width / neededWidth, 0.46, 1);
+      const isMobile = width < 700;
+      const mobileScale = (width * 0.92) / (config.cardWidth * 1.075);
+      scaleRef.current = clamp(isMobile ? mobileScale : width / neededWidth, isMobile ? 0.28 : 0.46, 1);
       layout(positionRef.current);
     });
     resizeObserver.observe(root);
@@ -344,7 +346,7 @@ function DepthCarousel({
                   alt={item.alt}
                   width={item.width}
                   height={item.height}
-                  sizes="(max-width: 700px) calc(100vw - 32px), 850px"
+                  sizes="(max-width: 700px) 430px, 850px"
                   loading="lazy"
                   decoding="async"
                   draggable={false}
