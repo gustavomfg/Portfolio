@@ -9,18 +9,21 @@ const CONTACT_CHANNELS = [
     index: "01",
     label: "Email",
     value: "gustavomfgdev@gmail.com",
+    breakAfter: "@",
     href: "mailto:gustavomfgdev@gmail.com",
   },
   {
     index: "02",
     label: "LinkedIn",
     value: "linkedin.com/in/gustavomfg",
+    breakAfter: "/in/",
     href: "https://www.linkedin.com/in/gustavomfg",
   },
   {
     index: "03",
     label: "GitHub",
     value: "github.com/gustavomfg",
+    breakAfter: undefined,
     href: "https://github.com/gustavomfg",
   },
 ] as const;
@@ -142,7 +145,15 @@ export function ContactSection() {
                   </span>
                   <span className="contact-channel-copy">
                     <span className="contact-channel-label">{channel.label}</span>
-                    <span className="contact-channel-value">{channel.value}</span>
+                    <span className="contact-channel-value">
+                      {channel.breakAfter ? (
+                        <>
+                          {channel.value.slice(0, channel.value.indexOf(channel.breakAfter) + channel.breakAfter.length)}
+                          <wbr />
+                          {channel.value.slice(channel.value.indexOf(channel.breakAfter) + channel.breakAfter.length)}
+                        </>
+                      ) : channel.value}
+                    </span>
                   </span>
                   <ArrowUpRight className="contact-channel-arrow" size={20} aria-hidden="true" />
                 </a>
