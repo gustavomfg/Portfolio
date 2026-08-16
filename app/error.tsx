@@ -1,13 +1,13 @@
 "use client";
 
 import { AlertTriangle, RotateCcw } from "lucide-react";
-import { BrandMark } from "@/components/ui/brand-mark";
+import { GFMark } from "@/components/ui/gf-mark";
 
 export default function ErrorPage({ reset }: { reset: () => void }) {
   return (
     <main className="status-page">
       <div className="status-card">
-        <div className="status-brand"><BrandMark /><span>GUSTAVO MAQUIAS</span></div>
+        <div className="status-brand"><GFMark /><span>GUSTAVO MAQUIAS</span></div>
         <span className="status-code">FALHA / INTERFACE</span>
         <AlertTriangle size={34} aria-hidden="true" />
         <h1>Algo interrompeu a experiência.</h1>

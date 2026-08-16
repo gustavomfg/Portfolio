@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Gustavo Maquias" }],
   creator: "Gustavo Maquias",
   icons: {
-    icon: "/nocturne-mark.svg",
+    icon: "/gf-mark.svg",
   },
   openGraph: {
     type: "website",
