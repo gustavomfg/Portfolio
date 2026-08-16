@@ -3,7 +3,7 @@
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
-import { BrandMark } from "@/components/ui/brand-mark";
+import { GFMark } from "@/components/ui/gf-mark";
 import { usePortfolioNavigation } from "@/hooks/use-portfolio-navigation";
 import { useScrollProgress } from "@/hooks/use-scroll-progress";
 import type { NavItem } from "@/types/portfolio";
@@ -73,7 +73,7 @@ export function Navbar({ items }: NavbarProps) {
         <span ref={progressRef} />
       </span>
       <a className="brand" href="#inicio" aria-label="Gustavo Maquias, voltar ao início">
-        <BrandMark />
+        <GFMark />
         <span className="brand-copy">
           <strong>GUSTAVO MAQUIAS</strong>
           <small>ADS • FULL STACK</small>

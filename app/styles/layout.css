@@ -12,6 +12,8 @@
 .brand-mark { position: relative; display: block; width: 32px; height: 32px; flex: 0 0 auto; filter: drop-shadow(0 0 7px rgba(145,103,255,.25)); transition: filter var(--duration-normal) ease; }
 .brand:hover .brand-mark { filter: drop-shadow(0 0 11px rgba(145,103,255,.5)); }
 .brand-mark img { display: block; width: 100%; height: 100%; }
+.gf-mark { position: relative; display: grid; place-items: center; width: 32px; height: 32px; flex: 0 0 auto; border: 1px solid rgb(145 103 255 / 42%); border-radius: 8px; background: rgb(16 16 24 / 78%); color: var(--violet-soft); font-family: monospace; font-size: .66rem; font-weight: 600; line-height: 1; letter-spacing: -.12em; padding-right: .12em; }
+.brand:hover .gf-mark { border-color: rgb(198 179 255 / 68%); color: var(--text-inverse); }
 .brand-copy { display: grid; gap: 1px; }
 .brand-copy strong { font-size: var(--font-label); letter-spacing: .16em; }
 .brand-copy small { color: var(--text-label); font-size: var(--font-label); letter-spacing: .07em; }
@@ -27,6 +29,7 @@
 .site-footer { min-height: 100px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); color: var(--text-label); font-size: var(--font-label); }
 .footer-brand { color: var(--text-bright); font-size: var(--font-label); letter-spacing: .12em; }
 .footer-brand .brand-mark { scale: .75; }
+.footer-brand .gf-mark { scale: .75; }
 .site-footer a { display: flex; align-items: center; gap: 7px; color: var(--text-footer); transition: color var(--duration-fast) ease; }
 .site-footer a:hover { color: var(--text-bright); }
 .site-footer a svg { transition: transform .25s ease; }
@@ -80,6 +83,7 @@
 .site-header.is-compact { top: 0; height: 62px; border-color: rgb(198 179 255 / 22%); background: linear-gradient(180deg, rgb(8 9 15 / 98%), rgb(8 9 15 / 88%)); }
 .brand { gap: 10px; }
 .brand-mark { width: 28px; height: 28px; filter: drop-shadow(0 0 7px rgb(145 103 255 / 24%)); }
+.gf-mark { width: 28px; height: 28px; border-radius: 7px; }
 .brand-copy { gap: 0; }
 .brand-copy strong { color: var(--text-bright); font-size: var(--font-body-sm); font-weight: 600; letter-spacing: .13em; }
 .brand-copy small { color: var(--text-label); font-size: var(--font-label); letter-spacing: .08em; }
@@ -104,6 +108,7 @@
   .site-header { width: 100vw; height: 60px; padding-inline: 12px 14px; }
   .site-header.is-compact { height: 56px; }
   .brand-mark { width: 26px; height: 26px; }
+  .gf-mark { width: 26px; height: 26px; border-radius: 6px; }
   .scroll-progress { right: 12px; left: 12px; }
 }
 
