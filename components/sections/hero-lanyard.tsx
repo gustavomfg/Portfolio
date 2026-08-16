@@ -298,10 +298,10 @@ export function HeroLanyard({ active = true, onReady, onContextLost }: HeroLanya
     <div
       className="hero-lanyard"
       role="img"
-      aria-label="Identidade visual de Gustavo Maquias, desenvolvedor Full Stack em início de carreira"
+      aria-label="Identidade visual de Gustavo Maquias, desenvolvedor Full Stack"
     >
       <span className="sr-only">
-        Gustavo Maquias, desenvolvedor Full Stack em início de carreira. Identidade visual em formato de crachá técnico.
+        Gustavo Maquias, desenvolvedor Full Stack. Identidade visual em formato de crachá técnico.
       </span>
       <div className="hero-lanyard-canvas" aria-hidden="true">
         <Canvas

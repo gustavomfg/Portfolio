@@ -52,10 +52,10 @@ function HeroLanyardFallback({ visible }: { visible: boolean }) {
       data-lanyard-state={visible ? "fallback" : "loading"}
       role="img"
       aria-hidden={!visible}
-      aria-label="Identidade visual de Gustavo Maquias, desenvolvedor Full Stack em início de carreira"
+      aria-label="Identidade visual de Gustavo Maquias, desenvolvedor Full Stack"
     >
       <span className="sr-only">
-        Gustavo Maquias, desenvolvedor Full Stack em início de carreira. Identidade visual em formato de crachá técnico.
+        Gustavo Maquias, desenvolvedor Full Stack. Identidade visual em formato de crachá técnico.
       </span>
       <div className="lanyard-cord" aria-hidden="true">
         <span />
