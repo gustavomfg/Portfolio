@@ -14,7 +14,13 @@ export function SplitText({ text, className = "" }: SplitTextProps) {
           {[...word].map((character, characterIndex) => (
             <span
               key={`${character}-${characterIndex}`}
-              style={{ "--split-index": wordIndex * 20 + characterIndex } as CSSProperties}
+              style={
+                {
+                  "--split-index": wordIndex * 20 + characterIndex,
+                  "--split-word-index": wordIndex,
+                  "--split-character-index": characterIndex,
+                } as CSSProperties
+              }
             >
               {character}
             </span>
