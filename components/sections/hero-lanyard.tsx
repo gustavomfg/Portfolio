@@ -410,20 +410,20 @@ function BadgeFace({ back = false }: { back?: boolean }) {
       context.fillRect(846, 86, 100, 2);
       context.fillStyle = "#f4f2f8";
       context.font = "600 88px JetBrains Mono, monospace";
-      context.fillText("GUSTAVO", 78, 470);
-      context.fillText("MAQUIAS", 78, 575);
+      context.fillText("GUSTAVO", 78, 742);
+      context.fillText("MAQUIAS", 78, 847);
       context.fillStyle = "#b3afbb";
       context.font = "500 34px JetBrains Mono, monospace";
-      context.fillText("FULL STACK DEVELOPER", 78, 690);
+      context.fillText("FULL STACK DEVELOPER", 78, 940);
       context.strokeStyle = "rgba(255,255,255,.14)";
       context.lineWidth = 2;
       context.beginPath();
-      context.moveTo(78, 760);
-      context.lineTo(946, 760);
+      context.moveTo(78, 1008);
+      context.lineTo(946, 1008);
       context.stroke();
       context.fillStyle = "#9d99a6";
       context.font = "400 25px JetBrains Mono, monospace";
-      context.fillText("SOFTWARE ENGINEERING / PORTFOLIO", 78, 840);
+      context.fillText("SOFTWARE ENGINEERING / PORTFOLIO", 78, 1080);
       context.fillText("BUILD · DOCUMENT · EVOLVE", 78, 1210);
       context.strokeStyle = "rgba(145,103,255,.45)";
       context.lineWidth = 3;
@@ -462,38 +462,44 @@ function BadgeFace({ back = false }: { back?: boolean }) {
       photo.onload = () => {
         if (disposed) return;
 
-        const sourceSize = Math.min(photo.naturalWidth, photo.naturalHeight);
-        const sourceX = (photo.naturalWidth - sourceSize) / 2;
-        const sourceY = Math.max(0, (photo.naturalHeight - sourceSize) * 0.34);
-        const photoSize = 236;
-        const photoCenterX = canvas.width / 2;
-        const photoCenterY = 318;
+        const photoX = 78;
+        const photoY = 216;
+        const photoWidth = 360;
+        const photoHeight = 430;
+        const targetAspect = photoWidth / photoHeight;
+        const sourceWidth = photo.naturalHeight * targetAspect > photo.naturalWidth
+          ? photo.naturalWidth
+          : photo.naturalHeight * targetAspect;
+        const sourceHeight = sourceWidth / targetAspect;
+        const sourceX = (photo.naturalWidth - sourceWidth) / 2;
+        const sourceY = Math.max(0, (photo.naturalHeight - sourceHeight) * 0.34);
+        const photoCorner = 18;
 
         context.save();
         context.beginPath();
-        context.arc(photoCenterX, photoCenterY, photoSize / 2, 0, Math.PI * 2);
+        context.roundRect(photoX, photoY, photoWidth, photoHeight, photoCorner);
         context.clip();
         context.globalAlpha = 0.88;
         context.drawImage(
           photo,
           sourceX,
           sourceY,
-          sourceSize,
-          sourceSize,
-          photoCenterX - photoSize / 2,
-          photoCenterY - photoSize / 2,
-          photoSize,
-          photoSize,
+          sourceWidth,
+          sourceHeight,
+          photoX,
+          photoY,
+          photoWidth,
+          photoHeight,
         );
         context.globalAlpha = 1;
         context.fillStyle = "rgba(10, 11, 18, .2)";
-        context.fillRect(photoCenterX - photoSize / 2, photoCenterY - photoSize / 2, photoSize, photoSize);
+        context.fillRect(photoX, photoY, photoWidth, photoHeight);
         context.restore();
 
         context.strokeStyle = "rgba(198,179,255,.5)";
         context.lineWidth = 4;
         context.beginPath();
-        context.arc(photoCenterX, photoCenterY, photoSize / 2 + 10, 0, Math.PI * 2);
+        context.roundRect(photoX - 10, photoY - 10, photoWidth + 20, photoHeight + 20, photoCorner + 5);
         context.stroke();
         nextTexture.needsUpdate = true;
       };
