@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState, type ComponentType } from "react";
-import { BrandMark } from "@/components/ui/brand-mark";
+import Image from "next/image";
 
 interface HeroLanyardSceneProps {
   active: boolean;
@@ -67,7 +67,7 @@ function HeroLanyardFallback({ visible }: { visible: boolean }) {
           <span>PORTFÓLIO</span>
         </div>
         <div className="lanyard-mark">
-          <BrandMark />
+          <Image className="lanyard-photo" src="/profile/eu.jpeg" alt="" aria-hidden="true" width={54} height={54} unoptimized draggable={false} />
         </div>
         <div className="lanyard-name">GUSTAVO MAQUIAS</div>
         <div className="lanyard-role">FULL STACK DEVELOPER</div>
@@ -127,6 +127,7 @@ export function HeroLanyardShell() {
 
   return (
     <div ref={setHeroVisualRoot} className="hero-lanyard-stage" data-lanyard-state={sceneState}>
+      <span className="lanyard-anchor" aria-hidden="true" />
       {!SceneComponent ? (
         <HeroLanyardFallback visible={fallbackVisible} />
       ) : (
