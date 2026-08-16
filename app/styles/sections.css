@@ -375,12 +375,12 @@
 .lanyard-cord::before { left: 18px; }
 .lanyard-cord::after { right: 18px; }
 .lanyard-cord span { position: absolute; right: 50%; bottom: -7px; width: 14px; height: 14px; border: 1px solid var(--violet-soft); border-radius: 50%; background: var(--surface); transform: translateX(50%); }
-.lanyard-badge { position: relative; width: 236px; min-height: 298px; padding: 22px 20px 18px; border: 1px solid var(--line-strong); border-radius: var(--radius-icon); background: var(--surface-badge); box-shadow: 0 18px 38px rgba(0,0,0,.22); transform: translateY(4px); }
+.lanyard-badge { position: relative; width: 236px; min-height: 298px; padding: 22px 20px 18px; border: 1px solid var(--line-strong); border-radius: var(--radius-icon); background: var(--surface-badge); box-shadow: 0 18px 38px rgba(0,0,0,.22); transform: translateY(4px); overflow: hidden; }
 .lanyard-clip { position: absolute; top: -7px; left: 50%; width: 28px; height: 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-icon-compact); background: var(--surface-soft); transform: translateX(-50%); }
 .lanyard-header { display: flex; justify-content: space-between; gap: 8px; color: var(--text-label); font-size: var(--font-lanyard-header); letter-spacing: .08em; text-transform: uppercase; }
 .lanyard-header span:last-child { color: var(--violet-soft); }
-.lanyard-mark { display: grid; place-items: center; width: 74px; height: 74px; margin: 34px auto 23px; border: 1px solid rgba(145,103,255,.28); border-radius: 50%; background: rgba(145,103,255,.06); }
-.lanyard-photo { display: block; width: 54px; height: 54px; border: 1px solid rgb(198 179 255 / 42%); border-radius: 50%; object-fit: cover; object-position: 50% 42%; filter: saturate(.78) contrast(.96) brightness(.9); }
+.lanyard-mark { display: grid; place-items: center; width: 94px; height: 116px; margin: 24px 0 20px; border: 1px solid rgba(145,103,255,.28); border-radius: 6px; background: rgba(145,103,255,.06); }
+.lanyard-photo { display: block; width: 100%; height: 100%; border: 1px solid rgb(198 179 255 / 42%); border-radius: 4px; object-fit: cover; object-position: 50% 34%; filter: saturate(.78) contrast(.96) brightness(.9); }
 .lanyard-name { color: var(--text); font-size: var(--font-body-base); letter-spacing: -.025em; }
 .lanyard-role { margin-top: 6px; color: var(--violet-soft); font-size: var(--font-meta); text-transform: uppercase; letter-spacing: .08em; }
 .lanyard-rule { height: 1px; margin: 25px 0 12px; background: var(--line); }
@@ -470,8 +470,8 @@
   .hero-lanyard { min-height: 244px; }
   .lanyard-cord { height: 72px; }
   .lanyard-badge { width: 212px; min-height: 232px; padding: 18px 17px 15px; }
-  .lanyard-mark { width: 58px; height: 58px; margin: 22px auto 16px; }
-  .lanyard-photo { width: 43px; height: 43px; }
+  .lanyard-mark { width: 76px; height: 96px; margin: 16px 0 14px; }
+  .lanyard-photo { width: 100%; height: 100%; }
   .lanyard-rule { margin: 18px 0 10px; }
 }
 
@@ -652,9 +652,9 @@
 .hero-lanyard-entry { position: relative; min-height: 500px; display: grid; place-items: center; isolation: isolate; }
 .hero-lanyard-entry::before { content: ""; position: absolute; z-index: -1; top: 8%; bottom: 8%; left: 8%; width: 1px; background: linear-gradient(180deg, transparent, rgb(198 179 255 / 18%) 22%, rgb(145 103 255 / 25%) 52%, transparent 84%); }
 .hero-lanyard-stage { position: relative; width: 100%; height: 100%; min-height: 0; }
-.lanyard-anchor { position: absolute; z-index: 4; top: 7px; left: min(50%, 180px); width: 38px; height: 11px; border: 1px solid rgb(198 179 255 / 34%); border-radius: 6px 6px 3px 3px; background: rgb(8 9 15 / 72%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%); transform: translate(-50%, -50%); pointer-events: none; }
-.lanyard-anchor::before { content: ""; position: absolute; top: 2px; left: 50%; width: 1px; height: 7px; background: rgb(145 103 255 / 64%); transform: translateX(-50%); }
-.lanyard-anchor::after { content: ""; position: absolute; bottom: -7px; left: 50%; width: 6px; height: 6px; border: 1px solid rgb(198 179 255 / 72%); border-radius: 50%; background: var(--surface); transform: translateX(-50%); }
+.lanyard-anchor { position: absolute; z-index: 4; top: 7px; left: min(50%, 180px); width: 46px; height: 12px; border: 1px solid rgb(198 179 255 / 32%); border-top-color: rgb(198 179 255 / 18%); border-radius: 0 0 5px 5px; background: var(--surface-root); box-shadow: inset 0 -1px 0 rgb(145 103 255 / 28%); transform: translate(-50%, -50%); pointer-events: none; }
+.lanyard-anchor::before { content: ""; position: absolute; z-index: -1; top: -26px; left: -4px; width: 54px; height: 26px; background: var(--surface-root); }
+.lanyard-anchor::after { content: ""; position: absolute; bottom: -2px; left: 50%; width: 12px; height: 4px; border: 1px solid rgb(198 179 255 / 52%); border-top: 0; border-radius: 0 0 4px 4px; background: var(--surface-root); transform: translateX(-50%); }
 @media (min-width: 701px) and (max-width: 1000px) { .lanyard-anchor { left: 210px; } }
 @media (min-width: 1001px) { .lanyard-anchor { left: 240px; } }
 .hero-lanyard-fallback-layer { position: absolute; z-index: 2; inset: 0; display: grid; place-items: center; pointer-events: none; }
