@@ -20,6 +20,10 @@ const STRAP_TWIST_Z = 0.42;
 const STRAP_TWIST_X = 0.2;
 const STRAP_MAX_TWIST = 0.18;
 const BAND_POINT_COUNT = BAND_SAMPLES + BAND_EXTENSION_SAMPLES + 1;
+// The stage clips the very top of the canvas on larger screens. Keep the
+// transition below that clip so the visible ribbon can still emerge softly.
+const BAND_FADE_START = 0.22;
+const BAND_FADE_END = 0.14;
 const BAND_UP = new THREE.Vector3(0, 1, 0);
 const BAND_CORNERS = [
   [1, 1],
@@ -64,6 +68,15 @@ function createBandFrameScratch(): BandFrameScratch {
 
 function createBandPoints() {
   return Array.from({ length: BAND_POINT_COUNT }, () => new THREE.Vector3());
+}
+
+function bandFadeAt(pointProgress: number) {
+  const progress = THREE.MathUtils.clamp(
+    (BAND_FADE_START - pointProgress) / (BAND_FADE_START - BAND_FADE_END),
+    0,
+    1,
+  );
+  return progress * progress * (3 - 2 * progress);
 }
 
 function sampleBandCurve(curve: THREE.CatmullRomCurve3, points: THREE.Vector3[], extensionDirection: THREE.Vector3) {
@@ -125,6 +138,7 @@ function createBandGeometry(sampleCount: number) {
   const positions = new Float32Array(vertexCount * 3);
   const normals = new Float32Array(vertexCount * 3);
   const uvs = new Float32Array(vertexCount * 2);
+  const colors = new Float32Array(vertexCount * 4);
   // The geometry never needs more than 16-bit indices. Keeping this as a
   // Uint16Array also keeps the ribbon compatible with WebGL 1 contexts.
   const indices = new Uint16Array((sampleCount - 1) * 24 + 12);
@@ -141,6 +155,17 @@ function createBandGeometry(sampleCount: number) {
       indices[index++] = current + corner;
       indices[index++] = next + nextCorner;
       indices[index++] = next + corner;
+    }
+  }
+
+  for (let pointIndex = 0; pointIndex < sampleCount; pointIndex += 1) {
+    const alpha = bandFadeAt(pointIndex / (sampleCount - 1));
+    for (let cornerIndex = 0; cornerIndex < 4; cornerIndex += 1) {
+      const colorIndex = (pointIndex * 4 + cornerIndex) * 4;
+      colors[colorIndex] = 1;
+      colors[colorIndex + 1] = 1;
+      colors[colorIndex + 2] = 1;
+      colors[colorIndex + 3] = alpha;
     }
   }
 
@@ -161,6 +186,7 @@ function createBandGeometry(sampleCount: number) {
   geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
   geometry.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
+  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 4));
   geometry.setIndex(new THREE.BufferAttribute(indices, 1));
   return geometry;
 }
@@ -409,31 +435,23 @@ function BadgeFace({ back = false }: { back?: boolean }) {
       context.fillStyle = "rgba(93,138,255,.75)";
       context.fillRect(846, 86, 100, 2);
       context.fillStyle = "#f4f2f8";
-      context.font = "600 88px JetBrains Mono, monospace";
-      context.fillText("GUSTAVO", 78, 742);
-      context.fillText("MAQUIAS", 78, 847);
-      context.fillStyle = "#b3afbb";
+      context.font = "600 94px JetBrains Mono, monospace";
+      context.fillText("GUSTAVO", 548, 425);
+      context.fillText("MAQUIAS", 548, 535);
+      context.fillStyle = "#c6b3ff";
       context.font = "500 34px JetBrains Mono, monospace";
-      context.fillText("FULL STACK DEVELOPER", 78, 940);
+      context.fillText("FULL STACK", 548, 655);
+      context.fillText("DEVELOPER", 548, 712);
       context.strokeStyle = "rgba(255,255,255,.14)";
       context.lineWidth = 2;
       context.beginPath();
-      context.moveTo(78, 1008);
-      context.lineTo(946, 1008);
+      context.moveTo(78, 820);
+      context.lineTo(946, 820);
       context.stroke();
       context.fillStyle = "#9d99a6";
       context.font = "400 25px JetBrains Mono, monospace";
-      context.fillText("SOFTWARE ENGINEERING / PORTFOLIO", 78, 1080);
+      context.fillText("SOFTWARE ENGINEERING", 78, 900);
       context.fillText("BUILD · DOCUMENT · EVOLVE", 78, 1210);
-      context.strokeStyle = "rgba(145,103,255,.45)";
-      context.lineWidth = 3;
-      context.beginPath();
-      context.arc(846, 1088, 66, 0, Math.PI * 2);
-      context.stroke();
-      context.fillStyle = "#9167ff";
-      context.beginPath();
-      context.arc(824, 1088, 26, 0, Math.PI * 2);
-      context.fill();
     }
 
     context.restore();
@@ -463,23 +481,21 @@ function BadgeFace({ back = false }: { back?: boolean }) {
         if (disposed) return;
 
         const photoX = 78;
-        const photoY = 216;
-        const photoWidth = 360;
-        const photoHeight = 430;
+        const photoY = 240;
+        const photoWidth = 430;
+        const photoHeight = 500;
         const targetAspect = photoWidth / photoHeight;
-        const sourceWidth = photo.naturalHeight * targetAspect > photo.naturalWidth
-          ? photo.naturalWidth
-          : photo.naturalHeight * targetAspect;
-        const sourceHeight = sourceWidth / targetAspect;
+        const sourceHeight = Math.min(photo.naturalHeight, 700);
+        const sourceWidth = sourceHeight * targetAspect;
         const sourceX = (photo.naturalWidth - sourceWidth) / 2;
-        const sourceY = Math.max(0, (photo.naturalHeight - sourceHeight) * 0.34);
-        const photoCorner = 18;
+        const sourceY = Math.max(0, Math.min(photo.naturalHeight - sourceHeight, 430));
+        const photoCorner = 14;
 
         context.save();
         context.beginPath();
         context.roundRect(photoX, photoY, photoWidth, photoHeight, photoCorner);
         context.clip();
-        context.globalAlpha = 0.88;
+        context.globalAlpha = 0.92;
         context.drawImage(
           photo,
           sourceX,
@@ -492,7 +508,7 @@ function BadgeFace({ back = false }: { back?: boolean }) {
           photoHeight,
         );
         context.globalAlpha = 1;
-        context.fillStyle = "rgba(10, 11, 18, .2)";
+        context.fillStyle = "rgba(10, 11, 18, .12)";
         context.fillRect(photoX, photoY, photoWidth, photoHeight);
         context.restore();
 
@@ -673,7 +689,9 @@ function SimpleLanyard({ active }: { active: boolean }) {
   const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
-    return () => bandGeometry.dispose();
+    return () => {
+      bandGeometry.dispose();
+    };
   }, [bandGeometry]);
 
   useEffect(() => {
@@ -776,6 +794,9 @@ function SimpleLanyard({ active }: { active: boolean }) {
       <mesh geometry={bandGeometry} frustumCulled={false}>
         <meshBasicMaterial
           color="#6d55ac"
+          vertexColors
+          transparent
+          alphaTest={0.001}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -1020,6 +1041,9 @@ function PhysicsLanyard({ active }: { active: boolean }) {
           sheen={0.24}
           sheenColor="#3b2b69"
           sheenRoughness={0.82}
+          vertexColors
+          transparent
+          alphaTest={0.001}
           side={THREE.DoubleSide}
         />
       </mesh>
