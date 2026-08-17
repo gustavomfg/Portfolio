@@ -375,16 +375,18 @@
 .lanyard-cord::before { left: 18px; }
 .lanyard-cord::after { right: 18px; }
 .lanyard-cord span { position: absolute; right: 50%; bottom: -7px; width: 14px; height: 14px; border: 1px solid var(--violet-soft); border-radius: 50%; background: var(--surface); transform: translateX(50%); }
-.lanyard-badge { position: relative; width: 236px; min-height: 298px; padding: 22px 20px 18px; border: 1px solid var(--line-strong); border-radius: var(--radius-icon); background: var(--surface-badge); box-shadow: 0 18px 38px rgba(0,0,0,.22); transform: translateY(4px); overflow: hidden; }
+.lanyard-badge { position: relative; width: 236px; min-height: 298px; padding: 22px 20px 18px; border: 1px solid var(--line-strong); border-radius: var(--radius-icon); background: var(--surface-badge); box-shadow: 0 18px 38px rgba(0,0,0,.22); transform: translateY(4px); overflow: hidden; display: grid; grid-template-columns: 104px minmax(0, 1fr); column-gap: 12px; align-content: start; }
 .lanyard-clip { position: absolute; top: -7px; left: 50%; width: 28px; height: 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-icon-compact); background: var(--surface-soft); transform: translateX(-50%); }
-.lanyard-header { display: flex; justify-content: space-between; gap: 8px; color: var(--text-label); font-size: var(--font-lanyard-header); letter-spacing: .08em; text-transform: uppercase; }
+.lanyard-header { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 8px; color: var(--text-label); font-size: var(--font-lanyard-header); letter-spacing: .08em; text-transform: uppercase; }
 .lanyard-header span:last-child { color: var(--violet-soft); }
-.lanyard-mark { display: grid; place-items: center; width: 94px; height: 116px; margin: 24px 0 20px; border: 1px solid rgba(145,103,255,.28); border-radius: 6px; background: rgba(145,103,255,.06); }
-.lanyard-photo { display: block; width: 100%; height: 100%; border: 1px solid rgb(198 179 255 / 42%); border-radius: 4px; object-fit: cover; object-position: 50% 34%; filter: saturate(.78) contrast(.96) brightness(.9); }
-.lanyard-name { color: var(--text); font-size: var(--font-body-base); letter-spacing: -.025em; }
-.lanyard-role { margin-top: 6px; color: var(--violet-soft); font-size: var(--font-meta); text-transform: uppercase; letter-spacing: .08em; }
-.lanyard-rule { height: 1px; margin: 25px 0 12px; background: var(--line); }
-.lanyard-note { color: var(--text-label); font-size: var(--font-lanyard-note); line-height: 1.5; }
+.lanyard-mark { grid-column: 1; grid-row: 2 / span 2; display: grid; place-items: center; width: 104px; height: 118px; margin: 22px 0 0; border: 1px solid rgba(145,103,255,.28); border-radius: 6px; background: rgba(145,103,255,.06); }
+.lanyard-photo { display: block; width: 100%; height: 100%; border: 1px solid rgb(198 179 255 / 42%); border-radius: 4px; object-fit: cover; object-position: 50% 60%; filter: saturate(.82) contrast(.98) brightness(.93); }
+.lanyard-name { grid-column: 2; grid-row: 2; align-self: end; color: var(--text); font-size: 1.05rem; line-height: 1.08; font-weight: 600; letter-spacing: -.025em; }
+.lanyard-role { grid-column: 2; grid-row: 3; margin-top: 8px; color: var(--violet-soft); font-size: var(--font-meta); line-height: 1.35; text-transform: uppercase; letter-spacing: .055em; }
+.lanyard-role span { display: block; }
+.lanyard-rule { grid-column: 1 / -1; grid-row: 4; height: 1px; margin: 25px 0 12px; background: var(--line); }
+.lanyard-engineering { grid-column: 1 / -1; grid-row: 5; color: var(--text-label); font-size: var(--font-lanyard-note); line-height: 1.5; letter-spacing: .06em; text-transform: uppercase; }
+.lanyard-note { grid-column: 1 / -1; grid-row: 6; margin-top: 20px; color: var(--text-label); font-size: var(--font-lanyard-note); line-height: 1.5; }
 
 .smoked-glass-list { perspective: 1400px; }
 .smoked-glass-list .project-index-item::before { content: ""; position: absolute; z-index: 0; inset: 1px; opacity: .22; border-radius: inherit; background: linear-gradient(108deg, rgba(255,255,255,.018) 0%, rgba(255,255,255,.085) 22%, rgba(224,232,249,.05) 36%, rgba(255,255,255,0) 58%) var(--glass-reflect-x, 50%) 0 / 190% 100% no-repeat, linear-gradient(180deg, rgba(255,255,255,.085), transparent 18%, transparent 76%, rgba(0,0,0,.25) 100%), linear-gradient(145deg, rgba(255,255,255,.03), transparent 32%, rgba(0,0,0,.16) 84%); filter: blur(2.5px); mix-blend-mode: screen; transition: opacity 520ms ease; pointer-events: none; }
@@ -470,9 +472,13 @@
   .hero-lanyard { min-height: 244px; }
   .lanyard-cord { height: 72px; }
   .lanyard-badge { width: 212px; min-height: 232px; padding: 18px 17px 15px; }
-  .lanyard-mark { width: 76px; height: 96px; margin: 16px 0 14px; }
+  .lanyard-badge { grid-template-columns: 78px minmax(0, 1fr); column-gap: 10px; }
+  .lanyard-mark { width: 78px; height: 94px; margin: 18px 0 0; }
+  .lanyard-name { font-size: .88rem; }
+  .lanyard-role { font-size: .56rem; letter-spacing: .045em; }
   .lanyard-photo { width: 100%; height: 100%; }
   .lanyard-rule { margin: 18px 0 10px; }
+  .lanyard-note { margin-top: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -651,12 +657,7 @@
 .hero-links a:hover { border-bottom-color: var(--violet-soft); color: var(--text-bright); transform: translateY(-2px); }
 .hero-lanyard-entry { position: relative; min-height: 500px; display: grid; place-items: center; isolation: isolate; }
 .hero-lanyard-entry::before { content: ""; position: absolute; z-index: -1; top: 8%; bottom: 8%; left: 8%; width: 1px; background: linear-gradient(180deg, transparent, rgb(198 179 255 / 18%) 22%, rgb(145 103 255 / 25%) 52%, transparent 84%); }
-.hero-lanyard-stage { position: relative; width: 100%; height: 100%; min-height: 0; }
-.lanyard-anchor { position: absolute; z-index: 4; top: 7px; left: min(50%, 180px); width: 46px; height: 12px; border: 1px solid rgb(198 179 255 / 32%); border-top-color: rgb(198 179 255 / 18%); border-radius: 0 0 5px 5px; background: var(--surface-root); box-shadow: inset 0 -1px 0 rgb(145 103 255 / 28%); transform: translate(-50%, -50%); pointer-events: none; }
-.lanyard-anchor::before { content: ""; position: absolute; z-index: -1; top: -26px; left: -4px; width: 54px; height: 26px; background: var(--surface-root); }
-.lanyard-anchor::after { content: ""; position: absolute; bottom: -2px; left: 50%; width: 12px; height: 4px; border: 1px solid rgb(198 179 255 / 52%); border-top: 0; border-radius: 0 0 4px 4px; background: var(--surface-root); transform: translateX(-50%); }
-@media (min-width: 701px) and (max-width: 1000px) { .lanyard-anchor { left: 210px; } }
-@media (min-width: 1001px) { .lanyard-anchor { left: 240px; } }
+.hero-lanyard-stage { position: relative; width: 100%; height: 100%; min-height: 0; overflow: clip; }
 .hero-lanyard-fallback-layer { position: absolute; z-index: 2; inset: 0; display: grid; place-items: center; pointer-events: none; }
 .hero-lanyard-fallback-layer .hero-lanyard { width: 100%; height: 100%; min-height: 0; }
 .hero-lanyard-stage[data-lanyard-state="loading"] > .hero-lanyard,

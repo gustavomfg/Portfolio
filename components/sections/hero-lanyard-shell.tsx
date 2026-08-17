@@ -64,14 +64,14 @@ function HeroLanyardFallback({ visible }: { visible: boolean }) {
         <div className="lanyard-clip" />
         <div className="lanyard-header">
           <span>CADERNO TÉCNICO / 01</span>
-          <span>PORTFÓLIO</span>
         </div>
         <div className="lanyard-mark">
           <Image className="lanyard-photo" src="/profile/eu.jpeg" alt="" aria-hidden="true" width={54} height={54} unoptimized draggable={false} />
         </div>
         <div className="lanyard-name">GUSTAVO MAQUIAS</div>
-        <div className="lanyard-role">FULL STACK DEVELOPER</div>
+        <div className="lanyard-role"><span>FULL STACK</span><span>DEVELOPER</span></div>
         <div className="lanyard-rule" />
+        <div className="lanyard-engineering">SOFTWARE ENGINEERING</div>
         <div className="lanyard-note">BUILD · DOCUMENT · EVOLVE</div>
       </div>
     </div>
@@ -127,7 +127,6 @@ export function HeroLanyardShell() {
 
   return (
     <div ref={setHeroVisualRoot} className="hero-lanyard-stage" data-lanyard-state={sceneState}>
-      <span className="lanyard-anchor" aria-hidden="true" />
       {!SceneComponent ? (
         <HeroLanyardFallback visible={fallbackVisible} />
       ) : (
