@@ -23,7 +23,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
     <ProjectExplorer projects={projects}>
       <section className="projects-section section-shell" id="projetos">
         <header className="evidence-heading">
-          <h2>Projetos que mostram como eu construo</h2>
+          <h2>Projetos selecionados</h2>
           <p>
             Arquitetura, decisões e implementação mostram como cada projeto toma forma
           </p>
@@ -31,7 +31,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
 
         <Reveal className="studio-feature" distance={18}>
           <div className="studio-feature-heading">
-            <span>Projeto principal / registro atual</span>
+            <span>Projeto principal</span>
             <span>{NOCTURNE_STUDIO_EVIDENCE.version}</span>
           </div>
           <div className="studio-feature-intro" id="projeto-studio">
@@ -55,11 +55,8 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             <NocturneStudioEvidence />
           </div>
 
-          <div className="studio-evidence-dossier">
-            <div className="studio-dossier-heading">
-              <span>Depois da superfície</span>
-              <span>Registro técnico</span>
-            </div>
+          <details className="studio-evidence-dossier">
+            <summary>Explore a engenharia do projeto <span aria-hidden="true">+</span></summary>
             <div className="studio-evidence-groups">
               <article className="studio-evidence-group">
                 <p className="studio-evidence-group-label">01 / Arquitetura</p>
@@ -86,7 +83,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                 </p>
               </article>
             </div>
-          </div>
+          </details>
         </Reveal>
 
         <section className="priority-secondary" aria-labelledby="sysmon-title">
@@ -96,7 +93,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
         <section className="project-index" aria-labelledby="other-projects-title">
           <div className="index-heading">
             <h3 id="other-projects-title">Outros projetos</h3>
-            <p>Índice técnico</p>
+            <p>Mais formas de construir software</p>
           </div>
           <SmokedGlassList>
             {secondaryProjects.map((project) => (

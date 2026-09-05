@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 
 interface NocturneStudioEvidenceItem {
@@ -64,66 +67,33 @@ const EVIDENCE_ITEMS: readonly NocturneStudioEvidenceItem[] = [
   },
 ] as const;
 
-function EvidenceCopy({ item }: { item: NocturneStudioEvidenceItem }) {
-  return (
-    <div className="nocturne-evidence-copy">
-      <p className="nocturne-evidence-label">
-        <span>{item.index}</span>
-        <span>{item.label}</span>
-      </p>
-      <h4>{item.title}</h4>
-      <p>{item.description}</p>
-    </div>
-  );
-}
-
-function EvidenceFigure({ item }: { item: NocturneStudioEvidenceItem }) {
-  return (
-    <figure className={`nocturne-evidence-figure nocturne-evidence-figure--${item.id}`}>
-      <div className="nocturne-evidence-media">
-        <Image
-          src={item.src}
-          alt={item.alt}
-          width={item.width}
-          height={item.height}
-          sizes={item.sizes}
-          loading="lazy"
-          className="nocturne-evidence-image"
-          draggable={false}
-        />
-      </div>
-      <figcaption>
-        <span>{item.index}</span>
-        <span>Captura real · {item.label}</span>
-      </figcaption>
-    </figure>
-  );
-}
-
 export function NocturneStudioEvidence() {
-  const [workspace, review, health, providers] = EVIDENCE_ITEMS;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const item = EVIDENCE_ITEMS[activeIndex];
 
   return (
-    <section className="nocturne-evidence-story" aria-label="Evidências visuais do Nocturne Studio">
-      <article className="nocturne-evidence-entry nocturne-evidence-entry--workspace">
-        <EvidenceCopy item={workspace} />
-        <EvidenceFigure item={workspace} />
-      </article>
-
-      <article className="nocturne-evidence-entry nocturne-evidence-entry--review">
-        <EvidenceCopy item={review} />
-        <EvidenceFigure item={review} />
-      </article>
-
-      <div className="nocturne-evidence-support-grid">
-        <article className="nocturne-evidence-entry nocturne-evidence-entry--health">
-          <EvidenceCopy item={health} />
-          <EvidenceFigure item={health} />
-        </article>
-        <article className="nocturne-evidence-entry nocturne-evidence-entry--providers">
-          <EvidenceCopy item={providers} />
-          <EvidenceFigure item={providers} />
-        </article>
+    <section className="studio-gallery" aria-label="Evidências visuais do Nocturne Studio">
+      <figure className="studio-gallery-main">
+        <div className="studio-gallery-image">
+          <Image src={item.src} alt={item.alt} width={item.width} height={item.height}
+            sizes="(max-width: 700px) calc(100vw - 40px), 1120px" loading="lazy" draggable={false} />
+        </div>
+        <figcaption aria-live="polite" aria-atomic="true">
+          <h4>{item.title}</h4>
+          <p>{item.description}</p>
+        </figcaption>
+      </figure>
+      <div className="studio-gallery-options" role="group" aria-label="Escolha uma captura">
+        {EVIDENCE_ITEMS.map((evidence, index) => (
+          <button type="button" key={evidence.id} aria-pressed={activeIndex === index}
+            onClick={() => setActiveIndex(index)} aria-label={`Mostrar ${evidence.label}`}>
+            <span className="studio-gallery-preview">
+              <Image src={evidence.src} alt="" width={evidence.width} height={evidence.height}
+                sizes="(max-width: 700px) 80px, 240px" loading="lazy" draggable={false} />
+            </span>
+            <span>{evidence.label}</span>
+          </button>
+        ))}
       </div>
     </section>
   );
