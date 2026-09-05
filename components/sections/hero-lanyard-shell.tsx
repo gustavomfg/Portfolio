@@ -83,14 +83,14 @@ export function HeroLanyardShell() {
   const [sceneComponent, setSceneComponent] = useState<HeroLanyardSceneComponent | null>(null);
   const [sceneCanvasReady, setSceneCanvasReady] = useState(false);
   const [sceneLoadFailed, setSceneLoadFailed] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [staticPresentation, setStaticPresentation] = useState(false);
   const sceneVisible = useHeroSceneVisibility(heroVisualRoot);
 
   useEffect(() => {
     if (!heroVisualRoot) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const frame = window.requestAnimationFrame(() => setReducedMotion(true));
+    if (window.matchMedia("(prefers-reduced-motion: reduce), (max-width: 700px)").matches) {
+      const frame = window.requestAnimationFrame(() => setStaticPresentation(true));
       return () => window.cancelAnimationFrame(frame);
     }
 
@@ -118,7 +118,7 @@ export function HeroLanyardShell() {
   }, []);
   const handleSceneContextLost = useCallback(() => setSceneCanvasReady(false), []);
   const SceneComponent = sceneComponent;
-  const fallbackVisible = reducedMotion || sceneLoadFailed;
+  const fallbackVisible = staticPresentation || sceneLoadFailed;
   const sceneState = fallbackVisible
     ? "fallback"
     : SceneComponent && sceneCanvasReady

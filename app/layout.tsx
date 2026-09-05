@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "@fontsource-variable/jetbrains-mono/wght.css";
+import "@fontsource-variable/manrope/wght.css";
 import "./globals.css";
 import { siteUrl } from "@/app/site-config";
 

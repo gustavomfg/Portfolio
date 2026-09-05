@@ -112,10 +112,7 @@ export function ContactSection() {
       <div className="contact-stage">
         <Reveal className="contact-layout" distance={18}>
           <div className="contact-intro">
-            <div className="contact-index" aria-hidden="true">
-              <span>04</span>
-              <span>ENCERRAMENTO</span>
-            </div>
+
             <h2>
               Vamos conversar sobre uma <em>oportunidade?</em>
             </h2>
@@ -124,7 +121,7 @@ export function ContactSection() {
             </p>
             <div className="contact-signature" aria-label="Identidade do contato">
               <span>GUSTAVO MAQUIAS</span>
-              <span>CONTATO / 04</span>
+              <span>DESENVOLVEDOR FULL STACK</span>
             </div>
           </div>
 

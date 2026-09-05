@@ -107,17 +107,14 @@ export function AboutSection({ profile }: AboutSectionProps) {
     <section className="profile-section section-shell" id="perfil" aria-labelledby="profile-title">
       <div className="profile-layout">
         <Reveal className="profile-statement" distance={18}>
-          <h2 id="profile-title">Perfil técnico em construção contínua.</h2>
+          <h2 id="profile-title">Aprendizado em prática.</h2>
           <p className="profile-lede">
             Registro o que estou construindo, o que já consigo demonstrar e o que ainda precisa evoluir.
           </p>
           <p className="profile-body">
             Aprendo por meio de projetos reais, com atenção às decisões de engenharia, à manutenção e à documentação.
           </p>
-          <div className="profile-signature" aria-label="Resumo do registro técnico">
-            <span>ENTRADAS ATUAIS</span>
-            <strong>{String(profile.length).padStart(2, "0")} / EVOLUÇÃO</strong>
-          </div>
+
         </Reveal>
 
         <Reveal className="profile-evolution" delay={0.06} distance={18}>

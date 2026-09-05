@@ -1,4 +1,6 @@
 :root {
+  --font-sans: "Manrope Variable", "Manrope", sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
   --surface-root: #08090f;
   --bg: var(--surface-root);
   --surface: #0d0d13;

@@ -301,3 +301,10 @@ Eyebrow pequeno e técnico abre o capítulo; título grande fornece a ideia; tex
 - **Don't** usar cor apenas para preencher espaço ou tornar uma superfície artificialmente futurista.
 - **Don't** permitir que componentes, efeitos ou animações sejam mais importantes que os projetos apresentados.
 - **Don't** introduzir novos cards quando agrupamento, alinhamento ou espaço vazio resolverem a hierarquia.
+
+
+## Refinamento visual — setembro de 2026
+
+A homepage usa Manrope Variable em títulos e corpo, com JetBrains Mono em metadados e rótulos técnicos. O nome tem teto de 96px, tracking de -0.04em e subtítulo de 24–32px. O botão principal tem fundo claro, texto escuro e altura mínima de 48px; contato é uma ação secundária com borda. O pontilhado fica restrito ao início, com opacidade de 24% e desaparecimento gradual.
+
+O Studio apresenta uma captura por vez, quatro botões de miniaturas com estado pressionado e legenda acessível. O dossiê técnico usa details/summary nativo. A composição mobile tem gutters de 20px e crachá estático em área de 260px para evitar custo 3D e cortes em telas pequenas; a cena interativa permanece no desktop. Essas decisões substituem as descrições anteriores de monospace integral e galeria editorial longa para esta superfície.
