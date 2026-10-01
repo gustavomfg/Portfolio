@@ -84,13 +84,11 @@ function DialogContent({ project, onClose }: { project: Project; onClose: () => 
         <div
           className={`dialog-visual ${project.image ? "dialog-visual--image" : "dialog-visual--empty"}`}
           data-project-key={project.key.toUpperCase()}
-          role={project.image ? "img" : undefined}
-          aria-label={project.image ? `Registro visual de ${project.name}` : undefined}
         >
           {project.image ? (
             <Image
               src={project.image}
-              alt={`Tela de ${project.name}`}
+              alt={project.imageAlt ?? `Registro visual de ${project.name}`}
               fill
               sizes="(max-width: 700px) 100vw, 85vw"
               className="dialog-visual-image"

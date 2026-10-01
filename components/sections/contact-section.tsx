@@ -117,11 +117,11 @@ export function ContactSection() {
               Vamos conversar sobre uma <em>oportunidade?</em>
             </h2>
             <p className="contact-copy">
-              Busco uma primeira oportunidade para colaborar em software real e continuar evoluindo.
+              Busco minha primeira oportunidade profissional em tecnologia para colaborar em software real e continuar evoluindo.
             </p>
             <div className="contact-signature" aria-label="Identidade do contato">
               <span>GUSTAVO MAQUIAS</span>
-              <span>DESENVOLVEDOR FULL STACK</span>
+              <span>DESENVOLVEDOR DE SOFTWARE</span>
             </div>
           </div>
 

@@ -5,9 +5,9 @@ import "@fontsource-variable/manrope/wght.css";
 import "./globals.css";
 import { siteUrl } from "@/app/site-config";
 
-const title = "Gustavo Maquias — Análise e Desenvolvimento de Sistemas";
+const title = "Gustavo Maquias — Desenvolvedor de Software";
 const description =
-  "Portfólio de Gustavo Maquias, estudante de Análise e Desenvolvimento de Sistemas com foco em desenvolvimento Full Stack, arquitetura e aplicações web e desktop.";
+  "Portfólio de Gustavo Maquias, estudante de Análise e Desenvolvimento de Sistemas na UniFil e desenvolvedor de aplicações web e desktop com foco em arquitetura e backend.";
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,

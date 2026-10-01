@@ -76,7 +76,7 @@ export function Navbar({ items }: NavbarProps) {
         <GFMark />
         <span className="brand-copy">
           <strong>GUSTAVO MAQUIAS</strong>
-          <small>ADS • FULL STACK</small>
+          <small>ADS • SOFTWARE</small>
         </span>
       </a>
 

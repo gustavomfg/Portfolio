@@ -324,10 +324,10 @@ export function HeroLanyard({ active = true, onReady, onContextLost }: HeroLanya
     <div
       className="hero-lanyard"
       role="img"
-      aria-label="Identidade visual de Gustavo Maquias, desenvolvedor Full Stack"
+      aria-label="Identidade visual de Gustavo Maquias, desenvolvedor de software"
     >
       <span className="sr-only">
-        Gustavo Maquias, desenvolvedor Full Stack. Identidade visual em formato de crachá técnico.
+        Gustavo Maquias, desenvolvedor de software. Identidade visual em formato de crachá técnico.
       </span>
       <div className="hero-lanyard-canvas" aria-hidden="true">
         <Canvas
@@ -440,7 +440,7 @@ function BadgeFace({ back = false }: { back?: boolean }) {
       context.fillText("MAQUIAS", 548, 535);
       context.fillStyle = "#c6b3ff";
       context.font = "500 34px JetBrains Mono, monospace";
-      context.fillText("FULL STACK", 548, 655);
+      context.fillText("SOFTWARE", 548, 655);
       context.fillText("DEVELOPER", 548, 712);
       context.strokeStyle = "rgba(255,255,255,.14)";
       context.lineWidth = 2;

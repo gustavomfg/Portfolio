@@ -18,7 +18,7 @@ Projects exist to demonstrate technical ability, engineering practices and conti
 
 ## Gustavo Maquias
 
-I am a Systems Analysis and Development student focused on becoming a Full Stack Developer.
+I am a Systems Analysis and Development student at UniFil (2025–2028), focused on beginning my software development career.
 
 I learn primarily by building real software instead of isolated examples or academic exercises.
 
@@ -125,9 +125,16 @@ Primary academic language:
 
 - Java
 
+Primary project language:
+
+- TypeScript
+
 Currently learning:
 
 - Python
+
+Used in projects:
+
 - Rust
 
 ---
@@ -183,15 +190,27 @@ Main areas explored:
 
 Software engineering project focused on architecture validation, project inspection and developer tooling.
 
-The project explores modular inspection pipelines, engineering-oriented analysis and maintainable software design.
+The Python tool produces deterministic, evidence-based reports about architecture and essential documentation without modifying the inspected project. Its keyboard-friendly dashboard is optional.
 
 ---
 
-## Nocturne Control
+## Solaris (Nocturne Control repository)
 
-Web application focused on centralizing utilities and services through a modern interface.
+Experimental portfolio study in WebGL2, procedural visuals and interaction.
 
-The project explores responsive frontend architecture, service integration and user experience.
+The study explores responsive composition, mouse and touch input, reduced motion, and a 2D fallback.
+
+---
+
+## SysMon
+
+Rust terminal system monitor for CPU, memory, GPU, network, storage, temperatures and processes.
+
+---
+
+## BatPet
+
+Experimental Rust desktop companion in pixel-art with cursor-reactive character animation and a flight cycle between perches.
 
 ---
 
@@ -200,6 +219,19 @@ The project explores responsive frontend architecture, service integration and u
 Personal portfolio created to present my professional identity, technical evolution and software projects.
 
 Its purpose is to communicate who I am as a developer rather than promote a software brand.
+
+---
+
+## Education and Certification
+
+- Systems Analysis and Development, UniFil (2025–2028)
+- GitHub Fundamentals, DataCamp (August 2026)
+
+## Languages
+
+- Portuguese: native
+- English: intermediate
+- Italian: basic
 
 ---
 
@@ -297,6 +329,14 @@ Nocturne Inspector
 
 https://github.com/gustavomfg/nocturne-inspector
 
-Nocturne Control
+Solaris (repository: nocturne-control)
 
 https://github.com/gustavomfg/nocturne-control
+
+SysMon
+
+https://github.com/gustavomfg/sysmon
+
+BatPet
+
+https://github.com/gustavomfg/My-Bat-Pet

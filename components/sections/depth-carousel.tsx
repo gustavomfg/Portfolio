@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
+import { ArrowUpRight, Code2 } from "lucide-react";
 import gsap from "gsap";
 import Image from "next/image";
 import { SYSMON_EVIDENCE } from "@/data/portfolio";
@@ -409,6 +410,10 @@ export function SysmonDepthShowcase() {
           <h3 id="sysmon-title">SysMon</h3>
           <p>Monitor de sistema em Rust para telemetria de CPU, memória, GPU, rede, armazenamento, temperaturas e processos. A arquitetura separa coleta, interpretação e visualização para preservar contexto.</p>
           <p className="sysmon-stack">{SYSMON_EVIDENCE.stack.join(" · ")}</p>
+          <a className="studio-source-link" href="https://github.com/gustavomfg/sysmon" target="_blank" rel="noreferrer">
+            <Code2 size={15} aria-hidden="true" /> Ver código-fonte
+            <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
         </div>
       </div>
       <DepthCarousel items={SYSMON_CAROUSEL_ITEMS} className="sysmon-depth-carousel" onChange={setActiveIndex} />

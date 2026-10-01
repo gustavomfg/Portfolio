@@ -10,17 +10,17 @@ export function HeroSection() {
         <div className="hero-copy">
           <h1>
             <SplitText text="Gustavo Maquias" />
-            <span>Desenvolvedor Full Stack</span>
+            <span>Desenvolvedor de software</span>
           </h1>
           <p className="hero-intro">
-            Estudante de ADS construindo aplicações web e desktop, com foco em arquitetura, backend e engenharia de software
+            Estudante de ADS na UniFil. Construo aplicações web e desktop com foco em arquitetura e backend.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#projeto-studio">
-              Ver projeto principal <ArrowDown size={17} aria-hidden="true" />
+              Ver Nocturne Studio <ArrowDown size={17} aria-hidden="true" />
             </a>
             <a className="button button-ghost" href="#contato">
-              Entrar em contato <Mail size={17} aria-hidden="true" />
+              Contato <Mail size={17} aria-hidden="true" />
             </a>
           </div>
           <nav className="hero-links" aria-label="Links profissionais">

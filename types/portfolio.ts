@@ -10,6 +10,7 @@ export interface Project {
   id: string;
   key: string;
   image?: string | null;
+  imageAlt?: string;
   name: string;
   role: string;
   description: string;

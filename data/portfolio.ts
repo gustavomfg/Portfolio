@@ -7,11 +7,12 @@ export const NAV_ITEMS = [
 ] as const satisfies readonly NavItem[];
 
 export const TECHNICAL_PROFILE = [
-  { label: "Formação", value: "Análise e Desenvolvimento de Sistemas" },
+  { label: "Formação", value: "ADS · UniFil (2025–2028)" },
   { label: "Direção principal", value: "Java em aprofundamento contínuo" },
   { label: "Uso diário", value: "TypeScript e JavaScript" },
   { label: "Construção", value: "React, Node.js e Electron" },
-  { label: "Aprendendo", value: "Python e Rust" },
+  { label: "Em desenvolvimento", value: "Python no Inspector · Rust em projetos" },
+  { label: "Certificação", value: "Fundamentos do GitHub · DataCamp (2026)" },
 ] as const satisfies readonly TechnicalProfileItem[];
 
 export const PROJECTS = [
@@ -71,16 +72,17 @@ export const PROJECTS = [
     id: "03",
     key: "inspector",
     name: "Nocturne Inspector",
-    role: "Inspeção e validação de projetos",
+    role: "Análise de arquitetura e documentação",
     description:
-      "Projeto de engenharia voltado à inspeção de projetos, validação de arquitetura e criação de ferramentas para desenvolvedores.",
-    tags: ["Desktop", "Diagnostics", "Engineering"],
+      "Ferramenta em Python que gera relatórios determinísticos e baseados em evidências sobre arquitetura e documentação, sem alterar o projeto analisado.",
+    tags: ["Python", "CLI", "Textual TUI"],
     problem:
-      "Transformar análises de estrutura e arquitetura em informações úteis para compreender e aprimorar projetos de software.",
+      "Tornar visíveis problemas de documentação e arquitetura antes da implementação, preservando uma análise reproduzível e somente leitura.",
     highlights: [
-      "Pipeline modular de inspeção",
-      "Análises técnicas apresentadas com clareza",
-      "Arquitetura preparada para evolução contínua",
+      "Inspectors especializados em documentação essencial e arquitetura",
+      "Relatórios determinísticos com evidências rastreáveis",
+      "A análise não modifica o projeto inspecionado",
+      "Dashboard TUI opcional, acessível por teclado",
     ],
     links: [
       {
@@ -95,17 +97,18 @@ export const PROJECTS = [
   {
     id: "04",
     key: "control",
-    name: "Nocturne Control",
-    role: "Aplicação web e integração",
+    name: "Solaris",
+    role: "Estudo experimental de WebGL2 e interação",
     description:
-      "Aplicação web em que exploro a centralização de utilitários e serviços por meio de uma interface moderna e responsiva.",
-    tags: ["Web", "React", "Services"],
+      "Experimento visual de portfólio em que gestos alteram uma faixa procedural, sua iluminação e atmosfera, com controles para mouse e toque.",
+    tags: ["React", "WebGL2", "GLSL", "GSAP"],
     problem:
-      "Organizar diferentes utilitários e serviços em uma experiência centralizada, clara e consistente em diferentes dispositivos.",
+      "Investigar como movimento e interação podem transformar uma composição WebGL2 em uma experiência clara, responsiva e acessível.",
     highlights: [
-      "Arquitetura frontend responsiva",
-      "Integração de serviços em uma única interface",
-      "Atenção à usabilidade e à consistência visual",
+      "Faixa procedural renderizada em WebGL2 e GLSL",
+      "Entrada por mouse e toque, com alternativa 2D quando WebGL2 não está disponível",
+      "Quatro paletas visuais e controle de intensidade",
+      "Áudio opcional, silencioso por padrão, e suporte a movimento reduzido",
     ],
     links: [
       {
@@ -113,14 +116,47 @@ export const PROJECTS = [
         href: "https://github.com/gustavomfg/nocturne-control",
         type: "source",
       },
+      {
+        label: "Abrir experiência",
+        href: "https://gustavomfg.github.io/nocturne-control/",
+        type: "demo",
+      },
     ],
     icon: "radar",
     accent: "cyan",
   },
+  {
+    id: "05",
+    key: "batpet",
+    name: "BatPet",
+    role: "Companheiro de desktop em Rust",
+    description:
+      "Mascote de desktop em pixel-art que reage à atenção e à proximidade do cursor, com um ciclo experimental de voo entre poleiros.",
+    image: "/batpet/poses.png",
+    imageAlt: "Morcego em pixel-art em estados de repouso, atenção e reação ao cursor.",
+    tags: ["Rust", "Bevy", "Desktop"],
+    problem:
+      "Explorar animação e character acting responsivos em um companheiro de desktop sem perder a identidade visual em pixel-art.",
+    highlights: [
+      "Olhar e postura reagem à posição e à proximidade do cursor",
+      "Ciclo de voo com estados de decolagem, voo, retorno e pouso",
+      "Habitat experimental com múltiplos poleiros",
+      "Textura original preservada e movimentos quantizados na grade pixel-art",
+    ],
+    links: [
+      {
+        label: "Ver código-fonte",
+        href: "https://github.com/gustavomfg/My-Bat-Pet",
+        type: "source",
+      },
+    ],
+    icon: "radar",
+    accent: "violet",
+  },
 ] as const satisfies readonly Project[];
 
 export const NOCTURNE_STUDIO_EVIDENCE = {
-  version: "v0.9.5-beta",
+  version: "v1.0.1",
   keyEvidence: [
     "Workspace Memory, Local Second Brain e Awareness explicável por execução",
     "Review Mode para arquitetura, segurança, testes, performance, documentação e manutenibilidade",

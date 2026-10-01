@@ -36,9 +36,9 @@ A transição profissional de Gustavo da indústria para o desenvolvimento pode 
 
 - Gustavo é estudante de Análise e Desenvolvimento de Sistemas e busca iniciar sua carreira como desenvolvedor Full Stack.
 - Seus principais interesses são arquitetura de software, backend, aplicações desktop e tecnologias web modernas.
-- TypeScript e JavaScript são linguagens de uso diário; Java é sua principal linguagem acadêmica; Python e Rust estão em aprendizado.
+- TypeScript e JavaScript são linguagens de uso diário; Java é sua principal linguagem acadêmica; Python está em aprendizado; Rust tem evidência em projetos.
 - As tecnologias confirmadas incluem React, Node.js, REST APIs, Electron, HTML, CSS e SQLite, além das ferramentas de desenvolvimento registradas em `IDENTITY.md`.
-- Nocturne Studio e SysMon são projetos prioritários e devem receber destaque proporcional à profundidade técnica de cada um.
+- Nocturne Studio e SysMon são projetos prioritários e devem receber destaque proporcional à profundidade técnica de cada um. Solaris, Nocturne Inspector e BatPet também devem ser apresentados de acordo com suas evidências públicas.
 - Java deve ganhar evidência progressivamente. O futuro projeto Full Stack com Java e Spring Boot só deve ser apresentado como concluído ou público quando houver evidência verificável de que está pronto.
 - Não inventar ou exagerar experiência, métricas, números, tecnologias, resultados, conquistas, responsabilidades ou maturidade profissional.
 - Não apresentar Gustavo como desenvolvedor sênior. A comunicação deve transmitir competência, curiosidade técnica, capacidade de construir software real e potencial de crescimento.
@@ -59,15 +59,19 @@ A transição profissional de Gustavo da indústria para o desenvolvimento pode 
 
 - `IDENTITY.md`: fonte canônica da identidade profissional, competências, filosofia de engenharia, objetivos, contatos e projetos públicos.
 - `data/portfolio.ts`: conteúdo estruturado atualmente exibido no portfólio.
+- `public/curriculo-gustavo-maquias.pdf`: currículo atual publicado sem telefone nem localização pessoal.
+- `public/batpet/poses.png`: evidência visual de estados do BatPet.
 - `README.md`: arquitetura, stack, comandos e práticas de qualidade deste projeto.
 - Repositório público do portfólio: https://github.com/gustavomfg/Portfolio
 - Nocturne Studio: https://github.com/gustavomfg/nocturne-studio
 - Nocturne Inspector: https://github.com/gustavomfg/nocturne-inspector
 - Nocturne Control: https://github.com/gustavomfg/nocturne-control
+- SysMon: https://github.com/gustavomfg/sysmon
+- BatPet: https://github.com/gustavomfg/My-Bat-Pet
 - Perfil no GitHub: https://github.com/gustavomfg
 - Perfil no LinkedIn: https://www.linkedin.com/in/gustavomfg
 - Testes automatizados locais cobrem componentes, navegação, responsividade e acessibilidade com axe.
-- Não há no repositório atual um arquivo de currículo, materiais do SysMon, estudos de caso, depoimentos, métricas profissionais ou outros elementos de prova; nenhum deles deve ser fabricado.
+- Não há métricas profissionais, depoimentos ou alegações de adoção de produto verificadas neste repositório. Não inventá-las.
 
 ## Product Principles
 
