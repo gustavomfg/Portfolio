@@ -102,6 +102,8 @@ export const PROJECTS = [
     description:
       "Experimento visual de portfólio em que gestos alteram uma faixa procedural, sua iluminação e atmosfera, com controles para mouse e toque.",
     tags: ["React", "WebGL2", "GLSL", "GSAP"],
+    image: "/solaris/solaris-ribbon.webp",
+    imageAlt: "Render da escultura de fita luminosa criada para a experiência Solaris.",
     problem:
       "Investigar como movimento e interação podem transformar uma composição WebGL2 em uma experiência clara, responsiva e acessível.",
     highlights: [

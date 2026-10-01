@@ -1,10 +1,9 @@
 import { ArrowUpRight, Code2 } from "lucide-react";
-import Image from "next/image";
 import { Reveal } from "@/components/animations/reveal";
 import { SysmonDepthShowcase } from "@/components/sections/depth-carousel";
 import { NocturneStudioEvidence } from "@/components/sections/nocturne-studio-evidence";
+import { ProjectEvidence } from "@/components/sections/project-evidence";
 import { ProjectExplorer, ProjectTrigger } from "@/components/sections/project-explorer";
-import { SmokedGlassList } from "@/components/sections/smoked-glass-list";
 import { NOCTURNE_STUDIO_EVIDENCE } from "@/data/portfolio";
 import type { Project } from "@/types/portfolio";
 
@@ -95,50 +94,32 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             <h3 id="other-projects-title">Outros projetos</h3>
             <p>Mais formas de construir software</p>
           </div>
-          <SmokedGlassList>
+          <div className="project-index-list">
             {secondaryProjects.map((project) => (
-              <article className={`project-index-item${project.key === "control" ? " project-index-item--control" : ""}${project.key === "inspector" ? " project-index-item--inspector" : ""}`} data-smoked-glass-item="true" key={project.key}>
-                {project.key === "control" ? (
-                  <Image
-                    className="project-index-evidence"
-                    src="/nocturne-control/dashboard.webp"
-                    alt=""
-                    aria-hidden="true"
-                    width={1920}
-                    height={959}
-                    sizes="(max-width: 700px) calc(100vw - 32px), 1240px"
-                    loading="lazy"
-                    draggable={false}
-                  />
-                ) : null}
-                {project.key === "inspector" ? (
-                  <Image
-                    className="project-index-evidence"
-                    src="/nocturne-inspector/inspector.png"
-                    alt=""
-                    aria-hidden="true"
-                    width={1294}
-                    height={811}
-                    sizes="(max-width: 700px) calc(100vw - 32px), 1240px"
-                    loading="lazy"
-                    draggable={false}
-                  />
-                ) : null}
-                <div className="project-index-number">{project.id}</div>
+              <article className={`project-index-item project-index-item--${project.key}`} key={project.key}>
+                <div className="project-index-artwork">
+                  <ProjectEvidence project={project} sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1000px) 80vw, 46vw" />
+                  <span className="project-index-artwork-label">{project.id} <i aria-hidden="true">/</i> PROJETO</span>
+                </div>
                 <div className="project-index-copy">
-                  <p className="project-role">{project.role}</p>
+                  <div className="project-index-copy-meta">
+                    <span className="project-index-number">{project.id}</span>
+                    <p className="project-role">{project.role}</p>
+                  </div>
                   <h4>{project.name}</h4>
                   <p>{project.description}</p>
                 </div>
                 <div className="project-index-meta">
-                  <span>{project.tags.join(" · ")}</span>
+                  <ul className="project-index-tags" aria-label={`Tecnologias de ${project.name}`}>
+                    {project.tags.map((tag) => <li key={tag}>{tag}</li>)}
+                  </ul>
                   <ProjectTrigger index={projects.indexOf(project)} name={project.name}>
-                    Ver detalhes <ArrowUpRight size={15} aria-hidden="true" />
+                    Ver estudo <ArrowUpRight size={15} aria-hidden="true" />
                   </ProjectTrigger>
                 </div>
               </article>
             ))}
-          </SmokedGlassList>
+          </div>
         </section>
       </section>
     </ProjectExplorer>
