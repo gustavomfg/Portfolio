@@ -26,7 +26,7 @@ test("navegação, diálogo e acessibilidade no desktop", async ({ page }, testI
 
   await expect(page.getByRole("main")).toHaveCount(1);
   await expect(page).toHaveTitle(
-    "Gustavo Maquias — Análise e Desenvolvimento de Sistemas",
+    "Gustavo Maquias — Desenvolvedor de Software",
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
