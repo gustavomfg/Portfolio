@@ -73,7 +73,7 @@ export function DotGrid() {
     };
 
     const resize = () => {
-      width = window.innerWidth;
+      width = canvas.parentElement?.clientWidth ?? document.documentElement.clientWidth;
       height = window.innerHeight;
       dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.floor(width * dpr);
