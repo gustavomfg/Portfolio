@@ -5,13 +5,15 @@ allowBuilds:
 # Keep compatible patched versions pinned while Next.js dependency ranges catch up:
 # - postcss >=8.5.18 fixes GHSA-6g55-p6wh-862q, GHSA-r28c-9q8g-f849, and
 #   GHSA-qx2v-qp2m-jg93.
-# - sharp >=0.35.4 fixes libheif advisories GHSA-g89c-p67h-r497 and
-#   GHSA-2jg2-4ch7-h545.
+# - sharp >=0.35.5 fixes libheif advisories GHSA-g89c-p67h-r497 and
+#   GHSA-2jg2-4ch7-h545, plus CVE-2026-96889.
+# - source-map-js >=1.2.2 fixes GHSA-68fv-2mgg-jv7q.
 # - brace-expansion >=1.1.21 and >=5.0.12 include their security fixes.
 
 overrides:
   postcss: 8.5.23
-  sharp: 0.35.4
+  sharp: 0.35.5
+  source-map-js: 1.2.2
   browserslist: 4.28.7
   'minimatch@3>brace-expansion': 1.1.21
   'minimatch@10>brace-expansion': 5.0.12
