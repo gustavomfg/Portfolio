@@ -2,6 +2,11 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
 
+auditConfig:
+  # braces has no patched release for this advisory yet; keep other findings blocking.
+  ignoreGhsas:
+    - GHSA-vfj7-8cjw-p6xm
+
 # Keep compatible patched versions pinned while Next.js dependency ranges catch up:
 # - postcss >=8.5.18 fixes GHSA-6g55-p6wh-862q, GHSA-r28c-9q8g-f849, and
 #   GHSA-qx2v-qp2m-jg93.
