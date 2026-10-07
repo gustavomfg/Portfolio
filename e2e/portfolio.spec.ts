@@ -372,3 +372,59 @@ test("limites responsivos mantêm superfícies principais contidas", async ({ pa
     }
   }
 });
+
+test("paleta de comandos abre estudos de caso pelo teclado", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.goto("/");
+
+  const trigger = page.getByRole("button", { name: "Abrir paleta de comandos" });
+  await expect(trigger).toBeVisible();
+
+  await page.keyboard.press("Control+k");
+  const search = page.getByRole("combobox", { name: "Buscar seções, projetos e ações" });
+  await expect(search).toBeFocused();
+
+  const openPaletteAccessibility = await new AxeBuilder({ page }).analyze();
+  expect(openPaletteAccessibility.violations).toEqual([]);
+
+  await search.fill("inspector");
+  await expect(page.getByRole("option").first()).toContainText("Nocturne Inspector");
+  await page.keyboard.press("Enter");
+
+  await expect(search).toBeHidden();
+  await expect(page.getByRole("dialog", { name: "Nocturne Inspector" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog", { name: "Nocturne Inspector" })).toBeHidden();
+
+  await trigger.click();
+  await expect(search).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(search).toBeHidden();
+  await expect(trigger).toBeFocused();
+});
+
+test("BatPet reage à proximidade do cursor no desktop", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium");
+  await page.goto("/");
+
+  const batpet = page.locator(".batpet");
+  const sprite = batpet.locator(".batpet-sprite");
+  await expect(sprite).toBeVisible();
+
+  const box = await sprite.boundingBox();
+  expect(box).not.toBeNull();
+  if (!box) return;
+
+  await page.mouse.move(box.x - 320, box.y + 80);
+  await expect(batpet).toHaveAttribute("data-pose", "lookLeft");
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await expect(batpet).toHaveAttribute("data-pose", "shy");
+});
+
+test("BatPet fica fora do layout móvel", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile-chromium");
+  await page.goto("/");
+
+  await expect(page.locator(".batpet-sprite")).toBeHidden();
+  await expect(page.getByRole("button", { name: "Abrir paleta de comandos" })).toBeVisible();
+});

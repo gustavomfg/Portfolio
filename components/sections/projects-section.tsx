@@ -85,7 +85,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           </details>
         </Reveal>
 
-        <section className="priority-secondary" aria-labelledby="sysmon-title">
+        <section className="priority-secondary" id="sysmon" aria-labelledby="sysmon-title">
           <SysmonDepthShowcase />
         </section>
 
@@ -108,6 +108,11 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                   </div>
                   <h4>{project.name}</h4>
                   <p>{project.description}</p>
+                  {project.key === "batpet" ? (
+                    <p className="project-index-live">
+                      <span aria-hidden="true" /> Versão web pendurada no topo desta página, reagindo ao seu cursor.
+                    </p>
+                  ) : null}
                 </div>
                 <div className="project-index-meta">
                   <ul className="project-index-tags" aria-label={`Tecnologias de ${project.name}`}>

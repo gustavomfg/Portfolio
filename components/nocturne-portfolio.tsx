@@ -5,20 +5,24 @@ import { ContactSection } from "@/components/sections/contact-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { DotGrid } from "@/components/atmosphere/dot-grid";
+import { CommandPalette } from "@/components/interactive/command-palette";
 import { NAV_ITEMS, PROJECTS, TECHNICAL_PROFILE } from "@/data/portfolio";
 
 export function NocturnePortfolio() {
   return (
-    <main id="conteudo">
-      <a className="skip-link" href="#projetos">Pular para os projetos</a>
+    <>
+      <main id="conteudo">
+        <a className="skip-link" href="#projetos">Pular para os projetos</a>
 
-      <DotGrid />
-      <Navbar items={NAV_ITEMS} />
-      <HeroSection />
-      <ProjectsSection projects={PROJECTS} />
-      <AboutSection profile={TECHNICAL_PROFILE} />
-      <ContactSection />
-      <Footer />
-    </main>
+        <DotGrid />
+        <Navbar items={NAV_ITEMS} />
+        <HeroSection />
+        <ProjectsSection projects={PROJECTS} />
+        <AboutSection profile={TECHNICAL_PROFILE} />
+        <ContactSection />
+        <Footer />
+      </main>
+      <CommandPalette />
+    </>
   );
 }
