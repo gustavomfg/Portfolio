@@ -1,11 +1,14 @@
 "use client";
 
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, Search, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
+import { BatPetCompanion } from "@/components/interactive/batpet-companion";
 import { GFMark } from "@/components/ui/gf-mark";
 import { usePortfolioNavigation } from "@/hooks/use-portfolio-navigation";
 import { useScrollProgress } from "@/hooks/use-scroll-progress";
+import { useShortcutLabel } from "@/hooks/use-shortcut-label";
+import { openCommandPalette } from "@/lib/portfolio-events";
 import type { NavItem } from "@/types/portfolio";
 
 interface NavbarProps {
@@ -20,6 +23,7 @@ export function Navbar({ items }: NavbarProps) {
     closeMenu,
   } = usePortfolioNavigation(items);
   const reduceMotion = useReducedMotion();
+  const shortcut = useShortcutLabel();
   const { headerRef, progressRef } = useScrollProgress();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileNavRef = useRef<HTMLElement>(null);
@@ -94,6 +98,22 @@ export function Navbar({ items }: NavbarProps) {
       </nav>
 
       <button
+        className="command-trigger"
+        type="button"
+        aria-label="Abrir paleta de comandos"
+        aria-haspopup="dialog"
+        aria-keyshortcuts="Control+K Meta+K"
+        onClick={() => {
+          closeMenu();
+          openCommandPalette();
+        }}
+      >
+        <Search size={15} aria-hidden="true" />
+        <span className="command-trigger-label">Buscar</span>
+        <kbd aria-hidden="true">{shortcut}</kbd>
+      </button>
+
+      <button
         ref={menuButtonRef}
         className="menu-button"
         type="button"
@@ -130,6 +150,8 @@ export function Navbar({ items }: NavbarProps) {
           </motion.nav>
         )}
       </AnimatePresence>
+
+      <BatPetCompanion />
     </header>
   );
 }

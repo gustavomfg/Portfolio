@@ -3,12 +3,14 @@
 import {
   createContext,
   useContext,
+  useEffect,
   type MouseEvent,
   type ReactNode,
 } from "react";
 import { ProjectDialog } from "@/components/sections/project-dialog";
 import { useProjectDialog } from "@/hooks/use-project-dialog";
 import { usePointerGlow } from "@/hooks/use-pointer-glow";
+import { OPEN_PROJECT_EVENT, type OpenProjectDetail } from "@/lib/portfolio-events";
 import type { Project } from "@/types/portfolio";
 
 const ProjectExplorerContext = createContext<ReturnType<typeof useProjectDialog>["openProject"] | null>(null);
@@ -23,6 +25,19 @@ export function ProjectExplorer({ children, projects }: ProjectExplorerProps) {
   const selectedProject = projectDialog.selectedProject === null
     ? null
     : projects[projectDialog.selectedProject] ?? null;
+  const { openProject } = projectDialog;
+
+  useEffect(() => {
+    const handleOpenProject = (event: Event) => {
+      const { key } = (event as CustomEvent<OpenProjectDetail>).detail;
+      const index = projects.findIndex((project) => project.key === key);
+
+      if (index !== -1) openProject(index, null);
+    };
+
+    window.addEventListener(OPEN_PROJECT_EVENT, handleOpenProject);
+    return () => window.removeEventListener(OPEN_PROJECT_EVENT, handleOpenProject);
+  }, [openProject, projects]);
 
   return (
     <ProjectExplorerContext value={projectDialog.openProject}>
